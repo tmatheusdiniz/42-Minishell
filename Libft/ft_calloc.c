@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/02/11 11:09:42 by alberto          ###   ########.fr       */
+/*   Created: 2024/04/16 13:34:53 by cda-fons          #+#    #+#             */
+/*   Updated: 2024/04/27 16:09:39 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "libft.h"
 
-int main()
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	char *input;
-	//int argc, char const **argv, char **envp
-	while (1)
+	void	*ptr;
+	size_t	i;
+
+	ptr = malloc(nmemb * size);
+	if (!ptr)
+		return (0);
+	i = 0;
+	while (i < (nmemb * size))
 	{
-		input = readline(NAME_SHELL);
-		printf("%s\n",input);
+		((char *)ptr)[i] = 0;
+		i++;
 	}
-	return 0;
+	return (ptr);
 }

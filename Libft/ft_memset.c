@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/02/11 11:09:42 by alberto          ###   ########.fr       */
+/*   Created: 2024/04/12 17:52:14 by cda-fons          #+#    #+#             */
+/*   Updated: 2024/04/12 19:38:20 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "libft.h"
 
-int main()
+void	*ft_memset(void *b, int c, size_t len)
 {
-	char *input;
-	//int argc, char const **argv, char **envp
-	while (1)
+	char	*ptb;
+
+	ptb = (char *)b;
+	while (len)
 	{
-		input = readline(NAME_SHELL);
-		printf("%s\n",input);
+		ptb[len - 1] = c;
+		len--;
 	}
-	return 0;
+	return (b);
 }

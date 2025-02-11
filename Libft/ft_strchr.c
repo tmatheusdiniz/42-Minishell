@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/02/11 11:09:42 by alberto          ###   ########.fr       */
+/*   Created: 2024/04/11 11:01:30 by cda-fons          #+#    #+#             */
+/*   Updated: 2024/04/27 16:21:39 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "libft.h"
 
-int main()
+char	*ft_strchr(const char *str, int c)
 {
-	char *input;
-	//int argc, char const **argv, char **envp
-	while (1)
+	int	i;
+
+	i = 0;
+	while (str[i] != (char)c)
 	{
-		input = readline(NAME_SHELL);
-		printf("%s\n",input);
+		if (!str[i])
+			return (0);
+		i++;
 	}
-	return 0;
+	return ((char *)&str[i]);
 }

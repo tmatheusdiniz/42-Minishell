@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/02/11 11:09:42 by alberto          ###   ########.fr       */
+/*   Created: 2024/04/10 14:07:29 by cda-fons          #+#    #+#             */
+/*   Updated: 2024/04/23 18:00:33 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "libft.h"
 
-int main()
+size_t	ft_strlen(const char *str)
 {
-	char *input;
-	//int argc, char const **argv, char **envp
-	while (1)
-	{
-		input = readline(NAME_SHELL);
-		printf("%s\n",input);
-	}
-	return 0;
+	size_t	i;
+
+	i = 0;
+	while (str[i] != 0)
+		i++;
+	return (i);
 }

@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/02/11 11:09:42 by alberto          ###   ########.fr       */
+/*   Created: 2024/04/27 13:27:16 by cda-fons          #+#    #+#             */
+/*   Updated: 2024/04/29 17:14:52 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "libft.h"
 
-int main()
+t_list	*ft_lstlast(t_list *lst)
 {
-	char *input;
-	//int argc, char const **argv, char **envp
-	while (1)
-	{
-		input = readline(NAME_SHELL);
-		printf("%s\n",input);
-	}
-	return 0;
+	if (!lst)
+		return (lst);
+	while ((lst->next) != NULL)
+		lst = lst->next;
+	return (lst);
 }

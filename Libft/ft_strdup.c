@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/02/11 11:09:42 by alberto          ###   ########.fr       */
+/*   Created: 2024/04/16 17:17:15 by cda-fons          #+#    #+#             */
+/*   Updated: 2024/04/22 15:05:16 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "libft.h"
 
-int main()
+char	*ft_strdup(const char *s)
 {
-	char *input;
-	//int argc, char const **argv, char **envp
-	while (1)
+	char	*str;
+	size_t	i;
+
+	str = (char *)malloc(sizeof(char) * (ft_strlen((char *)s) + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (s[i] != 0)
 	{
-		input = readline(NAME_SHELL);
-		printf("%s\n",input);
+		str[i] = s[i];
+		i++;
 	}
-	return 0;
+	str[i] = '\0';
+	return (str);
 }

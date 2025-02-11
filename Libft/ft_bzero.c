@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/02/11 11:09:42 by alberto          ###   ########.fr       */
+/*   Created: 2024/04/12 17:34:35 by cda-fons          #+#    #+#             */
+/*   Updated: 2024/04/16 17:13:20 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "libft.h"
 
-int main()
+void	ft_bzero(void *s, size_t n)
 {
-	char *input;
-	//int argc, char const **argv, char **envp
-	while (1)
+	size_t			i;
+	unsigned char	*ps;
+
+	i = 0;
+	ps = s;
+	while (i < n)
 	{
-		input = readline(NAME_SHELL);
-		printf("%s\n",input);
+		ps[i] = '\0';
+		i++;
 	}
-	return 0;
 }

@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/02/11 11:09:42 by alberto          ###   ########.fr       */
+/*   Created: 2024/04/27 14:34:59 by cda-fons          #+#    #+#             */
+/*   Updated: 2024/04/29 16:32:01 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "libft.h"
 
-int main()
+int	ft_lstsize(t_list *lst)
 {
-	char *input;
-	//int argc, char const **argv, char **envp
-	while (1)
+	size_t	i;
+
+	i = 0;
+	while (lst)
 	{
-		input = readline(NAME_SHELL);
-		printf("%s\n",input);
+		lst = lst->next;
+		i++;
 	}
-	return 0;
+	return (i);
 }

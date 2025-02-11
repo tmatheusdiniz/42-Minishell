@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/02/11 11:09:42 by alberto          ###   ########.fr       */
+/*   Created: 2024/04/29 18:47:12 by cda-fons          #+#    #+#             */
+/*   Updated: 2024/04/29 20:17:41 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "libft.h"
 
-int main()
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	char *input;
-	//int argc, char const **argv, char **envp
-	while (1)
+	t_list	*swap;
+	t_list	*swap2;
+
+	swap = *lst;
+	swap2 = *lst;
+	while (swap)
 	{
-		input = readline(NAME_SHELL);
-		printf("%s\n",input);
+		swap2 = swap2->next;
+		(del)(swap->content);
+		free(swap);
+		swap = swap2;
 	}
-	return 0;
+	*lst = NULL;
 }

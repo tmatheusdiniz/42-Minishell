@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_words.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/02/11 11:09:42 by alberto          ###   ########.fr       */
+/*   Created: 2024/07/04 20:42:13 by cda-fons          #+#    #+#             */
+/*   Updated: 2025/01/20 13:14:28 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "libft.h"
 
-int main()
+size_t	ft_words(char *str, char c)
 {
-	char *input;
-	//int argc, char const **argv, char **envp
-	while (1)
+	int	i;
+	int	words;
+
+	i = 0;
+	words = 0;
+	while (str[i])
 	{
-		input = readline(NAME_SHELL);
-		printf("%s\n",input);
+		if (str[i] == c)
+			i++;
+		else
+		{
+			words++;
+			while (str[i] && str[i] != c)
+			{
+				i++;
+			}
+		}
 	}
-	return 0;
+	return (words);
 }
