@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/02/11 11:09:42 by alberto          ###   ########.fr       */
+/*   Updated: 2025/03/01 17:34:10 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,25 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int main()
+bool	start_check(t_mini *mini, int ac, char **av)
 {
-	char *input;
+	
+}
+
+bool	init_data(t_mini *mini, char **env)
+{
+	
+}
+
+int main(int argc, char const **argv, char **envp)
+{
+	t_mini mini;
+	
 	//int argc, char const **argv, char **envp
-	while (1)
+	ft_memset(&mini, 0, sizeof(t_mini));
+	if (!start_check(&mini, argc, argv) || !init_data(&mini, env))
 	{
-		input = readline(NAME_SHELL);
-		printf("%s\n",input);
+		exit_mini(&mini, EXIT_FAILURE);
 	}
-	return 0;
+		
 }

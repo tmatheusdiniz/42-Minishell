@@ -6,7 +6,7 @@ NAME = Minishell
 SRC_DIR = ./src
 SRC_BUILT = $(SRC_DIR)/builtins
 
-SRCS = $(SRC_DIR)/main.c $(SRC_BUILT)/echo.c $(SRC_BUILT)/pwd.c
+SRCS = $(SRC_DIR)/main.c $(SRC_BUILT)/echo.c $(SRC_BUILT)/pwd.c $(SRC_DIR)/errors/safe_utils.c
 
 OBJS = $(SRCS:.c=.o)
 

@@ -9,7 +9,7 @@ int	pwd(void)
 	else
 	{
 		perror("pwd error:");
-		return(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }

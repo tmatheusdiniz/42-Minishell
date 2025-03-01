@@ -25,4 +25,31 @@
 
 # define NAME_SHELL "Minishell: "
 
+
+typedef	struct	s_mini
+{
+	char	**args;
+	char	**env;
+}				t_mini;
+
+
+//safe_utils.c
+void safe_cd(char *chdir_arg, int flag);
+
+//exits.c
+void	exit_mini(t_mini *mini, int errnbr);
+
+//			builtins
+//cd
+int	cd(char **args);
+char *get_target(char **args);
+int	change_dir(char *target);
+void update_env(char *cwd);
+
+//env
+int	env(char **args);
+
+//pwd
+int	pwd(void);
+
 #endif
