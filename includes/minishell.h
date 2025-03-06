@@ -36,12 +36,16 @@ typedef	struct	s_mini
 //safe_utils.c
 void safe_cd(char *chdir_arg, int flag);
 
+//errors_utils.c
+void	error_message(int errnbr, char *message);
+void	mini_errors(t_mini *mini, char *message, int errnbr);
+
 //exits.c
 void	exit_mini(t_mini *mini, int errnbr);
 
 //			builtins
 //cd
-int	cd(char **args);
+void	cd(t_mini *mini);
 char *get_target(char **args);
 int	change_dir(char *target);
 void update_env(char *cwd);

@@ -42,6 +42,7 @@ void	cd(t_mini *mini)
 {
 	char *target;
 
+	char *target = getenv();
 	if (!target)
 		return (ft_error("cd: OLDPWD not set\n"));
 	if (mini->args[1] && ft_strncmp(mini->args[1], "-", 2) == 0)
