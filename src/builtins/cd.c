@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/06 15:24:13 by cda-fons          #+#    #+#             */
+/*   Updated: 2025/03/06 15:24:25 by cda-fons         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 int ft_error(char *str)
@@ -50,7 +62,7 @@ void	cd(t_mini *mini)
 	change_dir(target);
 }
 
-int main(int argc, char *argv[])
+/* int main(int argc, char *argv[])
 {
 	t_mini	*mini = (t_mini *)malloc(sizeof(t_mini));
 
@@ -58,4 +70,4 @@ int main(int argc, char *argv[])
 	mini->args = argv;
     cd(mini);
     return 0;
-}
+} */
