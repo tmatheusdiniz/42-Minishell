@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:13 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/08 16:59:01 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/03/08 23:52:44 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,15 @@ void update_env(char *cwd)
 	if (oldpwd)
 		setenv("OLDPWD", oldpwd, 1);
 	setenv("PWD", cwd, 1);
+	printf("updated_env OLDPWD com getenv final: %s\n", getenv("OLDPWD"));
+	printf("updated_env PWD com getenv final: %s\n", getenv("PWD"));
 }
 
 int	change_dir(char *target)
 {
 	char cwd[PATH_MAX];
 
-	printf("change_dir target: %s\n", target);
+	printf("change_dir target: %s\n", &target[1]);
 	if (!target)
 		return (ft_error("cd: HOME not set\n"));
 	if (chdir(target) != 0)
@@ -39,7 +41,6 @@ int	change_dir(char *target)
 		return (ft_error("getcwd"));
 	update_env(cwd);
 	return (0);
-
 }
 
 char *get_target(char **args)
