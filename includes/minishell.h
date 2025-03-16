@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/06 15:25:00 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/03/16 18:12:38 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 
 typedef	struct	s_mini
 {
-	char	**args;
+	char	*input;
 	char	**env;
 }				t_mini;
 
