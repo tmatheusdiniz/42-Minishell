@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/16 18:12:38 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:42:30 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,32 +40,31 @@
 
 typedef	struct	s_mini
 {
-	char	*input;
 	char	**env;
 }				t_mini;
 
-
-//safe_utils.c
-void safe_cd(char *chdir_arg, int flag);
 
 //errors_utils.c
 void	error_message(int errnbr, char *message);
 void	mini_errors(t_mini *mini, char *message, int errnbr);
 
-//exits.c
-void	exit_mini(t_mini *mini, int errnbr);
-
 //			builtins
 //cd
-void	cd(t_mini *mini);
-char *get_target(char **args);
-int	change_dir(char *target);
-void update_env(char *cwd);
+int	cd(t_mini *mini, char **input);
+char	*get_target(char *input, t_mini *mini);
+int	change_dir(t_mini *mini, char *target);
+void	update_env(t_mini *mini);
 
 //env
 int	env(char **args);
 
 //pwd
 int	pwd(void);
+
+//echo
+int	echo(char *str);
+
+//utils.c
+int get_index_env(t_mini *mini, char *var);
 
 #endif

@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exits.c                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 15:23:39 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/06 15:23:40 by cda-fons         ###   ########.fr       */
+/*   Created: 2025/03/17 15:06:02 by cda-fons          #+#    #+#             */
+/*   Updated: 2025/03/17 15:12:24 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	exit_mini(t_mini *mini, int errnbr)
+int get_index_env(t_mini *mini, char *var)
 {
-	if (mini)
+	int	i;
+	int	len;
+	
+	i = 0;
+	len = strlen(var);
+	
+	while (mini->env[i])
 	{
-		free(mini);
+		if (ft_strncmp(mini->env[i], var, len) == 0 && mini->env[i][len] == '=')
+			return (i);
+		i++;
 	}
-	exit(errnbr);
+	return (-1);
 }

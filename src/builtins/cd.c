@@ -6,84 +6,78 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:13 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/16 18:31:35 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:58:52 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
 
-int ft_error(char *str)
+void	update_env(t_mini *mini)
 {
-	printf("%s\n", str);
-	return (1);
-}
+	char	cwd[PATH_MAX];
+	char	*oldpwd;
+	char	*pwd;
+	int	indexoldpwd;
+	int	indexpwd;
 
-void update_env(char *cwd)
-{
-	char *oldpwd = getenv("PWD");
-	if (oldpwd)
-		setenv("OLDPWD", oldpwd, 1);
-	setenv("PWD", cwd, 1);
-	printf("updated_env OLDPWD com getenv final: %s\n", getenv("OLDPWD"));
-	printf("updated_env PWD com getenv final: %s\n", getenv("PWD"));
-}
-
-int	change_dir(char *target)
-{
-	char cwd[PATH_MAX];
-
-	printf("change_dir target: %s\n", target);
-	if (!target)
-		return (ft_error("cd: HOME not set\n"));
-	if (chdir(target) != 0)
-		return (ft_error("cd deu errado aqui no chdir"));
 	if (!getcwd(cwd, sizeof(cwd)))
-		return (ft_error("getcwd"));
-	update_env(cwd);
+		mini_errors(mini, "getcwd", 1);
+	indexoldpwd = get_index_env(mini, "OLDPWD");
+	if (indexoldpwd != -1)
+	{
+		oldpwd = mini->env[get_index_env(mini, "PWD")] + (ft_strlen("PWD") + 1);
+		if (oldpwd)
+		{
+			free(mini->env[indexoldpwd]);
+			ft_strncpy(mini->env[indexoldpwd], oldpwd, ft_strlen(oldpwd));
+		}
+	}
+	indexpwd = get_index_env(mini, "PWD");
+	if (indexpwd != -1)
+	{
+		pwd = getenv("PWD");
+		free(mini->env[indexpwd]);
+		ft_strncpy(mini->env[indexpwd], pwd, ft_strlen(pwd));
+	}
+}
+
+int	change_dir(t_mini *mini, char *target)
+{
+	if (!target)
+		mini_errors(mini, "Minishell: cd: HOME not set", 1);
+	if (chdir(target) != 0)
+		mini_errors(mini, "cd deu errado aqui no chdir", 1);
+	update_env(mini);
 	return (0);
 }
 
-char *get_target(char *args)
+char	*get_target(char *input, t_mini *mini)
 {
-	if (!args)
+	if (!input)
 	{
 		printf("return home: %s\n", getenv("HOME"));
 		return (getenv("HOME"));
 	}
-	if (ft_strncmp(args, "-", ft_strlen(args)) == 0)
-		return (getenv("OLDPWD"));
-	return (args);
+	if (ft_strncmp(input, "-", ft_strlen(input)) == 0)
+		return (mini->env[get_index_env(mini, "OLDPWD")]);
+	return (input);
 }
 
-void	cd(t_mini *mini)
+int	cd(t_mini *mini, char **input)
 {
-	char *target;
-
-	target = get_target(mini->input);
+	char	*target;
+	
+	printf("input[0] no cd -> %s\n", input[0]);
+	printf("input[1] no cd -> %s\n", input[1]);
+	//printf("input[2] no cd -> %s\n", input[2]);
+	if (input[2])
+		mini_errors(mini, "Minishell: cd: too many arguments", 1);
+	target = get_target(input[1], mini);
 	if (!target)
-		return ;
+		mini_errors(mini, "sem target no cd", 1);
 	printf("return do get_target no cd: %s\n", target);
-	if (mini->input && ft_strncmp(mini->input, "-", 2) == 0)
+	if (input[1] && ft_strncmp(input[1], "-", 2) == 0)
 		printf("id dentro do cd : %s\n", target);
-	change_dir(target);
-}
-
-int main(int argc, char *argv[])
-{
-	
-	t_mini	*mini = (t_mini *)malloc(sizeof(t_mini));
-	(void)argv;
-	(void)argc;
-	char *input;
-	
-	while(1)
-	{
-		input = readline("");
-		printf("input no main: %s\n", input);
-		mini->input = input;
-		cd(mini);
-	}
-	return 0;
+	change_dir(mini, target);
+	return (0);
 }
