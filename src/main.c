@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/17 19:12:12 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/03/23 00:51:23 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int main(int argc, char const **argv, char **envp)
 		if (!ft_strncmp(input, "echo", 4))
 		{
 			printf("Entrou no echo do main\n");
-			echo(input);
+			echo(teste);
 		}
 	}
 	//exit_mini(mini, EXIT_FAILURE);	

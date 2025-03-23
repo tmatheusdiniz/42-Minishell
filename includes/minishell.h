@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/17 18:42:30 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/03/18 01:02:25 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef	struct	s_mini
 
 
 //errors_utils.c
-void	error_message(int errnbr, char *message);
+void	error_message(char *message);
 void	mini_errors(t_mini *mini, char *message, int errnbr);
 
 //			builtins
