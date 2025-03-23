@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/18 01:02:25 by alberto          ###   ########.fr       */
+/*   Updated: 2025/03/23 17:02:57 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef	struct	s_mini
 
 
 //errors_utils.c
-void	error_message(char *message);
+void	error_message(char *message, int errnbr);
 void	mini_errors(t_mini *mini, char *message, int errnbr);
 
 //			builtins
@@ -53,18 +53,21 @@ void	mini_errors(t_mini *mini, char *message, int errnbr);
 int	cd(t_mini *mini, char **input);
 char	*get_target(char *input, t_mini *mini);
 int	change_dir(t_mini *mini, char *target);
-void	update_env(t_mini *mini);
+void	update_oldpwd(t_mini *mini);
+void	update_pwd(t_mini *mini);
 
 //env
+char **duplicate_env(char **envp);
 int	env(char **args);
 
 //pwd
 int	pwd(void);
 
 //echo
-int	echo(char *str);
+int	echo(char **input);
 
 //utils.c
 int get_index_env(t_mini *mini, char *var);
+char *check_space(char *input);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/23 00:51:23 by alberto          ###   ########.fr       */
+/*   Updated: 2025/03/23 14:32:41 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_mini	*init_mini(char **envp)
 	mini = ft_calloc(sizeof(t_mini), 1);
 	if (!mini)
 		mini_errors(mini, "Calloc: Calloc failed", 0);
-	mini->env = envp;
+	mini->env = duplicate_env(envp);
 	return(mini);
 }
 
@@ -29,7 +29,7 @@ int main(int argc, char const **argv, char **envp)
 {
 	t_mini *mini;
 	char *input;
-	char **teste;
+	char **input_split;
 
 	(void)argv;
 	(void)argc;
@@ -37,19 +37,22 @@ int main(int argc, char const **argv, char **envp)
 	while(1)
 	{
 		input = readline("Minishell: ");
-		teste = ft_split(input, ' ');
-		if (!ft_strncmp(input, "cd", 2))
-		{
-			printf("Entrou no cd do main\n");
-			cd(mini, teste);
-		}
-		if (!ft_strncmp(input, "pwd", 3))
+		input_split = ft_split(input, ' ');
+		input_split[0] = check_space(input_split[0]);
+		if (!ft_strncmp(input_split[0], "cd", ft_strlen(input_split[0])))
+			cd(mini, input_split);
+		else if (!ft_strncmp(input_split[0], "pwd", ft_strlen(input_split[0])))
 			pwd();
-		if (!ft_strncmp(input, "echo", 4))
+		else if (!ft_strncmp(input_split[0], "echo", ft_strlen(input_split[0])))
+			echo(input_split);
+		else if (!ft_strncmp(input_split[0], "env", ft_strlen(input_split[0])))
 		{
-			printf("Entrou no echo do main\n");
-			echo(teste);
-		}
+			if (input_split[1])
+				printf("env: '%s': No such file or directory\n", input_split[1]);
+			else
+				env(mini->env);
+		}	
+		else
+			printf("Command '%s' not found\n", input_split[0]);
 	}
-	//exit_mini(mini, EXIT_FAILURE);	
 }
