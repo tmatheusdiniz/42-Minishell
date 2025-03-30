@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:13 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/23 17:24:03 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/03/30 23:15:06 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
 
 void	update_oldpwd(t_mini *mini)
 {
@@ -20,35 +21,38 @@ void	update_oldpwd(t_mini *mini)
 	indexoldpwd = get_index_env(mini, "OLDPWD");
 	if (indexoldpwd != -1)
 	{
-		oldpwd = mini->env[get_index_env(mini, "PWD")] + (ft_strlen("PWD") + 1);
+		oldpwd = mini->env[get_index_env(mini, "PWD")] + 4;
 		if (oldpwd)
 		{
 			free(mini->env[indexoldpwd]);
-			mini->env[indexoldpwd] = malloc(ft_strlen("OLDPWD=") + ft_strlen(oldpwd) + 1);
+			mini->env[indexoldpwd] = malloc(sizeof(char ) * (ft_strlen("OLDPWD=") + ft_strlen(oldpwd) + 1));
 			if (!mini->env[indexoldpwd])
 				mini_errors(mini, "Malloc Error: update oldpwd", 1);
-			ft_strncpy(mini->env[indexoldpwd], "OLDPWD=", ft_strlen("OLDPWD="));
-			ft_strlcat(mini->env[indexoldpwd], oldpwd, ft_strlen(oldpwd));
+			ft_strcpy(mini->env[indexoldpwd], "OLDPWD=");
+			ft_strcat(mini->env[indexoldpwd], oldpwd);
 		}
 	}
 }
 
 void	update_pwd(t_mini *mini)
 {
-	char	*pwd;
-	int	indexpwd;
+	char	pwd[PATH_MAX];
+	int		indexpwd;
 
+	if (getcwd(pwd, sizeof(pwd)) == NULL)
+	{
+		perror("pwd error:");
+		return ;
+	}
 	indexpwd = get_index_env(mini, "PWD");
 	if (indexpwd != -1)
 	{
-		pwd = getenv("PWD");
-		printf("aqui ta o PWD que o getenv me trouxe -> %s", pwd);
 		free(mini->env[indexpwd]);
-		mini->env[indexpwd] = malloc(ft_strlen("PWD=") + ft_strlen(pwd) + 1);
+		mini->env[indexpwd] = malloc(sizeof(char ) * (ft_strlen("PWD=") + ft_strlen(pwd) + 1));
 		if (!mini->env[indexpwd])
 			mini_errors(mini, "Malloc Error: update pwd", 1);
-		ft_strncpy(mini->env[indexpwd], "PWD=", ft_strlen("PWD="));
-		ft_strlcat(mini->env[indexpwd], pwd, ft_strlen(pwd));
+		ft_strcpy(mini->env[indexpwd], "PWD=");
+		ft_strcat(mini->env[indexpwd], pwd);
 	}
 }
 
@@ -71,7 +75,7 @@ char	*get_target(char *input, t_mini *mini)
 	if (!input)
 		return (getenv("HOME"));
 	if (ft_strncmp(input, "-", ft_strlen(input)) == 0)
-		return (mini->env[get_index_env(mini, "OLDPWD")]);
+		return (mini->env[get_index_env(mini, "OLDPWD")] + 7);
 	return (input);
 }
 
