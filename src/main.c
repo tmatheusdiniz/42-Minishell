@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/23 14:32:41 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:25:32 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,25 @@
 
 t_mini	*init_mini(char **envp)
 {
-	t_mini *mini;
-	
+	t_mini	*mini;
+
 	mini = ft_calloc(sizeof(t_mini), 1);
 	if (!mini)
 		mini_errors(mini, "Calloc: Calloc failed", 0);
 	mini->env = duplicate_env(envp);
-	return(mini);
+	return (mini);
 }
 
-int main(int argc, char const **argv, char **envp)
+int	main(int argc, char const **argv, char **envp)
 {
-	t_mini *mini;
-	char *input;
-	char **input_split;
+	t_mini	*mini;
+	char	*input;
+	char	**input_split;
 
 	(void)argv;
 	(void)argc;
 	mini = init_mini(envp);
-	while(1)
+	while (1)
 	{
 		input = readline("Minishell: ");
 		input_split = ft_split(input, ' ');
@@ -51,7 +51,9 @@ int main(int argc, char const **argv, char **envp)
 				printf("env: '%s': No such file or directory\n", input_split[1]);
 			else
 				env(mini->env);
-		}	
+		}
+		else if (!ft_strncmp(input_split[0], "unset", ft_strlen(input_split[0])))
+			unset(mini, input_split[1]);
 		else
 			printf("Command '%s' not found\n", input_split[0]);
 	}

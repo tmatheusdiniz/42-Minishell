@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:13 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/30 23:15:06 by alberto          ###   ########.fr       */
+/*   Updated: 2025/04/01 15:38:20 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
 void	update_oldpwd(t_mini *mini)
 {
 	char	*oldpwd;
-	int	indexoldpwd;
+	int		indexoldpwd;
 
 	indexoldpwd = get_index_env(mini, "OLDPWD");
 	if (indexoldpwd != -1)
@@ -25,7 +24,8 @@ void	update_oldpwd(t_mini *mini)
 		if (oldpwd)
 		{
 			free(mini->env[indexoldpwd]);
-			mini->env[indexoldpwd] = malloc(sizeof(char ) * (ft_strlen("OLDPWD=") + ft_strlen(oldpwd) + 1));
+			mini->env[indexoldpwd] = malloc(sizeof(char )
+					* (ft_strlen("OLDPWD=") + ft_strlen(oldpwd) + 1));
 			if (!mini->env[indexoldpwd])
 				mini_errors(mini, "Malloc Error: update oldpwd", 1);
 			ft_strcpy(mini->env[indexoldpwd], "OLDPWD=");
@@ -48,7 +48,8 @@ void	update_pwd(t_mini *mini)
 	if (indexpwd != -1)
 	{
 		free(mini->env[indexpwd]);
-		mini->env[indexpwd] = malloc(sizeof(char ) * (ft_strlen("PWD=") + ft_strlen(pwd) + 1));
+		mini->env[indexpwd] = malloc(sizeof(char )
+				* (ft_strlen("PWD=") + ft_strlen(pwd) + 1));
 		if (!mini->env[indexpwd])
 			mini_errors(mini, "Malloc Error: update pwd", 1);
 		ft_strcpy(mini->env[indexpwd], "PWD=");
@@ -82,8 +83,8 @@ char	*get_target(char *input, t_mini *mini)
 int	cd(t_mini *mini, char **input)
 {
 	char	*target;
-	
- 	if (input[2])
+
+	if (input[2])
 		printf("Minishell: cd: too many arguments\n");
 	else
 	{

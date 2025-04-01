@@ -7,7 +7,7 @@ SRC_DIR = ./src
 SRC_BUILT = $(SRC_DIR)/builtins
 
 SRCS = $(SRC_DIR)/main.c $(SRC_BUILT)/echo.c $(SRC_BUILT)/pwd.c $(SRC_BUILT)/cd.c $(SRC_BUILT)/env.c \
-	$(SRC_DIR)/errors/errors_utils.c $(SRC_DIR)/utils/utils.c
+	$(SRC_BUILT)/unset.c $(SRC_DIR)/errors/errors_utils.c $(SRC_DIR)/utils/utils.c
 
 OBJS = $(SRCS:.c=.o)
 

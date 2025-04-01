@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:23:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/23 17:00:26 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:23:04 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	mini_errors(t_mini *mini, char *message, int errnbr)
 {
 	free(mini);
 	error_message(message, errnbr);
-	
 }
+
 /// @brief 
 /// @param errnbr 
-/// @param message 
+/// @param message
 void	error_message(char *message, int errnbr)
 {
 	errnbr = 2;
