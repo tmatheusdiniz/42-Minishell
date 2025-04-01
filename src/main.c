@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/01 16:25:32 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/01 21:00:31 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,14 @@ int	main(int argc, char const **argv, char **envp)
 	(void)argv;
 	(void)argc;
 	mini = init_mini(envp);
+	input = NULL;
 	while (1)
 	{
+		signal_init();
 		input = readline("Minishell: ");
+		if (!*input)
+			continue;
+		add_history(input);
 		input_split = ft_split(input, ' ');
 		input_split[0] = check_space(input_split[0]);
 		if (!ft_strncmp(input_split[0], "cd", ft_strlen(input_split[0])))

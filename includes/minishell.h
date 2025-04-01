@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/01 15:35:54 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/01 20:37:08 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,9 @@ int		unset(t_mini *mini, char *var);
 //utils.c
 int		get_index_env(t_mini *mini, char *var);
 char	*check_space(char *input);
+
+//signals
+void	signal_init(void);
+void	signal_handler(int sig);
 
 #endif
