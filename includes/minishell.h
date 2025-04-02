@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/01 20:37:08 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:12:55 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_mini
 //errors_utils.c
 void	error_message(char *message, int errnbr);
 void	mini_errors(t_mini *mini, char *message, int errnbr);
+void	mini_quit(t_mini *mini, char *message, int errnbr);
 
 //			builtins
 //cd

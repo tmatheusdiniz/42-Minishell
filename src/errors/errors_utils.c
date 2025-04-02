@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:23:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/01 16:23:04 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:12:06 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,16 @@ void	mini_errors(t_mini *mini, char *message, int errnbr)
 }
 
 /// @brief 
-/// @param errnbr 
 /// @param message
 void	error_message(char *message, int errnbr)
 {
 	errnbr = 2;
-	ft_putendl_fd(message, errnbr);
+	ft_putendl_fd(message, 2);
+}
+void	mini_quit(t_mini *mini, char *message, int errnbr)
+{
+	free(mini->env);
+	free(mini);
+	error_message(message, 2);
+	exit(errnbr);
 }
