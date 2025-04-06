@@ -23,6 +23,7 @@ void	mini_errors(t_mini *mini, char *message, int errnbr)
 }
 
 /// @brief 
+/// @param errnbr 
 /// @param message
 void	error_message(char *message, int errnbr)
 {
