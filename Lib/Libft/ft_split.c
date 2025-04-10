@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:45:13 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/07/04 20:45:33 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/10 00:14:15 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	**fill(char *str, char c, char **list, size_t size)
 		y = x;
 		while (str[y] != c && str[y])
 			y++;
-		list[i] = malloc(sizeof(char) * ((y - x) + 1));
+		list[i] = ft_calloc(sizeof(char), ((y - x) + 1));
 		if (!list[i])
 		{
 			memfree(list, i);
@@ -80,7 +80,7 @@ char	**ft_split(char	*str, char c)
 	size_t	size;
 
 	size = i_words(str, c);
-	list = (char **)malloc(sizeof(char *) * (size + 1));
+	list = (char **)ft_calloc(sizeof(char *), (size + 1));
 	if (!list)
 		return (0);
 	list = fill(str, c, list, size);

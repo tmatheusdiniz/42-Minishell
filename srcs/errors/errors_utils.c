@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:23:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/02 15:12:06 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/06 20:22:35 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	mini_errors(t_mini *mini, char *message, int errnbr)
 void	error_message(char *message, int errnbr)
 {
 	errnbr = 2;
-	ft_putendl_fd(message, 2);
+	ft_putendl_fd(message, errnbr);
 }
 void	mini_quit(t_mini *mini, char *message, int errnbr)
 {

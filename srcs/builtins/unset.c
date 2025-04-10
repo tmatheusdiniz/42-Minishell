@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:22:19 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/01 16:21:57 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/10 00:24:45 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**new_env(t_mini *mini, int index_to_unset)
 	char	**changed_env;
 
 	size_of_env = size_env(mini);
-	changed_env = (char **)malloc(sizeof(char *) * size_of_env);
+	changed_env = (char **)ft_calloc(sizeof(char *), size_of_env);
 	if (!changed_env)
 		return (NULL);
 	h = 0;
@@ -39,7 +39,7 @@ char	**new_env(t_mini *mini, int index_to_unset)
 	{
 		if (i == index_to_unset)
 			i++;
-		changed_env[h] = (char *)malloc(sizeof(char) * ft_strlen(mini->env[i]));
+		changed_env[h] = (char *)ft_calloc(sizeof(char), ft_strlen(mini->env[i]));
 		if (!changed_env[h])
 			return (NULL);
 		changed_env[h++] = ft_strdup(mini->env[i++]);

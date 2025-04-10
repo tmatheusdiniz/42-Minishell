@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:02 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/01 16:19:05 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/06 20:25:19 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**duplicate_env(char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	duplicate = (char **)malloc(sizeof(char *) * i + 1);
+	duplicate = (char **)ft_calloc(sizeof(char *), i + 1);
 	if (!duplicate)
 		return (NULL);
 	i = 0;
