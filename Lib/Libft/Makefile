@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alberto <alberto@student.42.fr>            +#+  +:+       +#+         #
+#    By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/23 17:36:04 by cda-fons          #+#    #+#              #
-#    Updated: 2025/03/30 23:16:18 by alberto          ###   ########.fr        #
+#    Updated: 2025/04/10 14:54:01 by cda-fons         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
     ft_strmapi.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c \
     ft_substr.c ft_tolower.c ft_toupper.c ft_putstr_fd.c ft_putendl_fd.c \
     ft_putnbr_fd.c get_next_line.c ft_words.c ft_atoi_hexa.c ft_strncpy.c \
-    ft_strcat.c ft_strcpy.c
+    ft_strcat.c ft_strcpy.c ft_free_split.c
 BONUS_SRCS = ft_lstadd_front.c ft_lstlast.c ft_lstnew.c ft_lstsize.c ft_lstadd_back.c \
     ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 NAME = libft.a

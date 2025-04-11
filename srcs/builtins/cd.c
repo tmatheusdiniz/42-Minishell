@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:13 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/10 00:19:42 by alberto          ###   ########.fr       */
+/*   Updated: 2025/04/10 15:30:04 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	update_oldpwd(t_mini *mini)
 		if (oldpwd)
 		{
 			free(mini->env[indexoldpwd]);
+			printf("no oldpwd esta assim ->%s\n", mini->env[indexoldpwd]);
 			mini->env[indexoldpwd] = ft_calloc(sizeof(char),
 					(ft_strlen("OLDPWD=") + ft_strlen(oldpwd) + 1));
 			if (!mini->env[indexoldpwd])
@@ -48,10 +49,11 @@ void	update_pwd(t_mini *mini)
 	if (indexpwd != -1)
 	{
 		free(mini->env[indexpwd]);
+		printf("no updatepwd esta assim ->%s\n", mini->env[indexpwd]);
 		mini->env[indexpwd] = ft_calloc(sizeof(char),
 				(ft_strlen("PWD=") + ft_strlen(pwd) + 1));
 		if (!mini->env[indexpwd])
-			mini_errors(mini, "Malloc Error: update pwd", 1);
+			free_mini(mini, "Malloc Error: update pwd", 1, NULL);
 		ft_strcpy(mini->env[indexpwd], "PWD=");
 		ft_strcat(mini->env[indexpwd], pwd);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/06 23:19:15 by alberto          ###   ########.fr       */
+/*   Updated: 2025/04/10 13:24:34 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char const **argv, char **envp)
 		input = readline("Minishell: ");
 		if (!input)
 		{
-			mini_quit(mini, "exit", SIGQUIT);
+			free_mini(mini, "exit", SIGQUIT, input_split);
 			break ;
 		}
 		if (!*input)

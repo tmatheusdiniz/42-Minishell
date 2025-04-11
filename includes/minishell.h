@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/06 20:22:06 by alberto          ###   ########.fr       */
+/*   Updated: 2025/04/10 13:20:17 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ typedef struct s_mini
 //errors_utils.c
 void	error_message(char *message, int errnbr);
 void	mini_errors(t_mini *mini, char *message, int errnbr);
-void	mini_quit(t_mini *mini, char *message, int errnbr);
-
 //			builtins
 //cd
 int		cd(t_mini *mini, char **input);
@@ -73,6 +71,9 @@ int		unset(t_mini *mini, char *var);
 //utils.c
 int		get_index_env(t_mini *mini, char *var);
 char	*check_space(char *input);
+
+//free.c
+void	free_mini(t_mini *mini, char *message, int errnbr, char **input_split);
 
 //signals
 void	signal_init(void);

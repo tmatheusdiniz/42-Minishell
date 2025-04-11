@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors_utils.c                                     :+:      :+:    :+:   */
+/*   ft_free_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 15:23:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/10 13:19:17 by cda-fons         ###   ########.fr       */
+/*   Created: 2025/04/10 14:49:54 by cda-fons          #+#    #+#             */
+/*   Updated: 2025/04/10 14:53:40 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-/// @brief 
-/// @param mini 
-/// @param message 
-/// @param errnbr 
-void	mini_errors(t_mini *mini, char *message, int errnbr)
+void    ft_free_split(char **split)
 {
-	free(mini);
-	error_message(message, errnbr);
-}
+    int i;
 
-/// @brief 
-/// @param errnbr 
-/// @param message
-void	error_message(char *message, int errnbr)
-{
-	errnbr = 2;
-	ft_putendl_fd(message, errnbr);
-}
+    i = 0;
 
+    while (split[i])
+        free(split[i++]);
+    free(split);   
+}
