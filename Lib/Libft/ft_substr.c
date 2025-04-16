@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 18:10:41 by cda-fons          #+#    #+#             */
-/*   Updated: 2024/04/27 16:55:37 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/16 20:41:11 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		len = 0;
 	if (len > size - start)
 		len = size - start;
-	sub = malloc(len + 1);
+	sub = (char *)malloc(sizeof(char) * len + 1);
 	if (!sub)
-		return (0);
+		return (NULL);
 	while (i < len)
 	{
 		sub[i] = s[start + i];

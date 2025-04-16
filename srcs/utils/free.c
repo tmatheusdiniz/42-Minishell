@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:18:17 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/11 21:13:00 by alberto          ###   ########.fr       */
+/*   Updated: 2025/04/16 17:43:50 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 
 void	free_mini(t_mini *mini, char *message, int errnbr, char **input_split)
 {
-    if (mini)
-    {
-        ft_free_split(mini->env);
-        free(mini);
-    }
-    if (input_split)
-    {
-        ft_free_split(input_split);
-    }
+	if (mini)
+	{
+		ft_free_split(mini->env);
+		free(mini);
+	}
+	if (input_split)
+		ft_free_split(input_split);
 	error_message(message, 2);
-    exit(errnbr);
+	exit(errnbr);
 }

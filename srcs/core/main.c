@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/10 13:24:34 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/16 20:57:48 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,5 @@ int	main(int argc, char const **argv, char **envp)
 		if (!*input)
 			continue;
 		add_history(input);
-		input_split = ft_split(input, ' ');
-		input_split[0] = check_space(input_split[0]);
-		if (!ft_strncmp(input_split[0], "cd", ft_strlen(input_split[0])))
-			cd(mini, input_split);
-		else if (!ft_strncmp(input_split[0], "pwd", ft_strlen(input_split[0])))
-			pwd();
-		else if (!ft_strncmp(input_split[0], "echo", ft_strlen(input_split[0])))
-			echo(input_split);
-		else if (!ft_strncmp(input_split[0], "env", ft_strlen(input_split[0])))
-		{
-			if (input_split[1])
-				printf("env: '%s': No such file or directory\n", input_split[1]);
-			else
-				env(mini->env);
-		}
-		else if (!ft_strncmp(input_split[0], "unset", ft_strlen(input_split[0])))
-			unset(mini, input_split[1]);
-		else
-			printf("Command '%s' not found\n", input_split[0]);
 	}
 }

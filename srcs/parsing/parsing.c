@@ -3,21 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/11 21:44:01 by alberto          ###   ########.fr       */
+/*   Updated: 2025/04/16 20:52:57 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-bool	parsing(char *input)
+char	**parsing(char *input, t_mini *mini)
 {
-	int		i;
+	char	**input_split;
 
-	i = 0;
-	if ()
-	if (input[i])
-	return (true);
+	input_split = split_token(input);
+	return (input_split);
+}
+
+void	cmds(char **input_split, t_mini *mini)
+{
+	if (!ft_strncmp(input_split[0], "cd", ft_strlen(input_split[0])))
+		cd(mini, input_split);
+	else if (!ft_strncmp(input_split[0], "pwd", ft_strlen(input_split[0])))
+		pwd();
+	else if (!ft_strncmp(input_split[0], "echo", ft_strlen(input_split[0])))
+		echo(input_split);
+	else if (!ft_strncmp(input_split[0], "env", ft_strlen(input_split[0])))
+	{
+		if (input_split[1])
+			printf("env: '%s': No such file or directory\n", input_split[1]);
+		else
+			env(mini->env);
+	}
+	else if (!ft_strncmp(input_split[0], "unset", ft_strlen(input_split[0])))
+		unset(mini, input_split[1]);
+	else
+		printf("Command '%s' not found\n", input_split[0]);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:22:19 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/10 00:24:45 by alberto          ###   ########.fr       */
+/*   Updated: 2025/04/16 17:31:07 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ char	**new_env(t_mini *mini, int index_to_unset)
 	{
 		if (i == index_to_unset)
 			i++;
-		changed_env[h] = (char *)ft_calloc(sizeof(char), ft_strlen(mini->env[i]));
+		changed_env[h] = (char *)ft_calloc(sizeof(char),
+				ft_strlen(mini->env[i]));
 		if (!changed_env[h])
 			return (NULL);
 		changed_env[h++] = ft_strdup(mini->env[i++]);

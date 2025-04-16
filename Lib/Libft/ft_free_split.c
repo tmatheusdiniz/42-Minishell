@@ -6,19 +6,18 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:49:54 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/10 14:53:40 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/16 17:42:31 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void    ft_free_split(char **split)
+void	ft_free_split(char **split)
 {
-    int i;
+	int	i;
 
-    i = 0;
-
-    while (split[i])
-        free(split[i++]);
-    free(split);   
+	i = 0;
+	while (split[i])
+		free(split[i++]);
+	free(split);
 }

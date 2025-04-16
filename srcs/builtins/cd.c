@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:13 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/10 15:30:04 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/16 17:30:37 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,10 @@ int	cd(t_mini *mini, char **input)
 			if (get_index_env(mini, "HOME") == -1)
 			{
 				error_message("Minishell: cd: HOME not set", 2);
-				return (0);	
+				return (0);
 			}
 			else
-				target =  mini->env[get_index_env(mini, "HOME")] + 5;
+				target = mini->env[get_index_env(mini, "HOME")] + 5;
 		}
 		else
 			target = get_target(input[1], mini);
