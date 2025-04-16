@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 13:18:17 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/11 21:13:00 by alberto          ###   ########.fr       */
+/*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
+/*   Updated: 2025/04/11 21:44:01 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_mini(t_mini *mini, char *message, int errnbr, char **input_split)
+bool	parsing(char *input)
 {
-    if (mini)
-    {
-        ft_free_split(mini->env);
-        free(mini);
-    }
-    if (input_split)
-    {
-        ft_free_split(input_split);
-    }
-	error_message(message, 2);
-    exit(errnbr);
+	int		i;
+
+	i = 0;
+	if ()
+	if (input[i])
+	return (true);
 }
