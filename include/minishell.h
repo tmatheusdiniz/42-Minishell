@@ -13,6 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../lib/Libft/include/libft.h"
 # include <errno.h> 
 # include <stdio.h> 
 # include <unistd.h> 
@@ -32,11 +33,6 @@
 # include <sys/ioctl.h>
 # include <stdlib.h>
 # include <stdbool.h>
-<<<<<<< HEAD:include/minishell.h
-# include "../lib/Libft/include/libft.h"
-=======
-# include "../Lib/Libft/libft.h"
->>>>>>> 08127014cf98e6532efbcb8d8a966a35efa88dc0:includes/minishell.h
 # include <sys/stat.h>
 
 # define NAME_SHELL "Minishell: "
@@ -46,18 +42,15 @@ typedef struct s_mini
 	char	**env;
 }				t_mini;
 
-<<<<<<< HEAD:include/minishell.h
 // core
 int		main(int argc, char const **argv, char **envp);
 
 // ----------builtins----------
 
-=======
 //errors_utils.c
 void	error_message(char *message, int errnbr);
 void	mini_errors(t_mini *mini, char *message, int errnbr);
 //			builtins
->>>>>>> 08127014cf98e6532efbcb8d8a966a35efa88dc0:includes/minishell.h
 //cd
 int		cd(t_mini *mini, char **input);
 char	*get_target(char *input, t_mini *mini);
@@ -86,13 +79,10 @@ int		unset(t_mini *mini, char *var);
 int		get_index_env(t_mini *mini, char *var);
 char	*check_space(char *input);
 
-<<<<<<< HEAD:include/minishell.h
 // errors
 void	error_message(char *message, int errnbr);
 void	mini_errors(t_mini *mini, char *message, int errnbr);
 
-#endif
-=======
 //free.c
 void	free_mini(t_mini *mini, char *message, int errnbr, char **input_split);
 
@@ -101,4 +91,3 @@ void	signal_init(void);
 void	signal_handler(int sig);
 
 #endif
->>>>>>> 08127014cf98e6532efbcb8d8a966a35efa88dc0:includes/minishell.h
