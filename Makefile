@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
@@ -23,6 +24,20 @@ RESET	= \033[0m
 
 #Program's name
 NAME		= bin/minishell
+=======
+CC = cc
+LDFLAGS = -lreadline -lncurses
+CFLAGS = -Wall -Wextra -Werror -g
+LIBFT = Lib/Libft/libft.a
+NAME = Minishell
+SRC_DIR = ./srcs
+SRC_BUILT = $(SRC_DIR)/builtins
+
+SRCS = 	$(SRC_DIR)/core/main.c $(SRC_BUILT)/echo.c $(SRC_BUILT)/pwd.c $(SRC_BUILT)/cd.c $(SRC_BUILT)/env.c \
+		$(SRC_BUILT)/unset.c $(SRC_DIR)/errors/errors_utils.c $(SRC_DIR)/utils/utils.c $(SRC_DIR)/signals/signals.c \
+		$(SRC_DIR)/utils/free.c
+OBJS = $(SRCS:.c=.o)
+>>>>>>> 08127014cf98e6532efbcb8d8a966a35efa88dc0
 
 # Commands/flags
 CC			= cc

@@ -6,11 +6,15 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/01 16:25:32 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:24:34 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+<<<<<<< HEAD
 #include "../../include/minishell.h"
+=======
+#include "../../includes/minishell.h"
+>>>>>>> 08127014cf98e6532efbcb8d8a966a35efa88dc0
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -34,9 +38,19 @@ int	main(int argc, char const **argv, char **envp)
 	(void)argv;
 	(void)argc;
 	mini = init_mini(envp);
+	input = NULL;
 	while (1)
 	{
+		signal_init();
 		input = readline("Minishell: ");
+		if (!input)
+		{
+			free_mini(mini, "exit", SIGQUIT, input_split);
+			break ;
+		}
+		if (!*input)
+			continue;
+		add_history(input);
 		input_split = ft_split(input, ' ');
 		input_split[0] = check_space(input_split[0]);
 		if (!ft_strncmp(input_split[0], "cd", ft_strlen(input_split[0])))
