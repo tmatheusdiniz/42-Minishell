@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../include/minishell.h"
 
 bool	check_flag(char *str)
 {

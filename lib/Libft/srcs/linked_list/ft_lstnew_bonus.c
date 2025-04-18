@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 15:23:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/01 16:19:38 by cda-fons         ###   ########.fr       */
+/*   Created: 2024/11/09 14:42:51 by mreinald          #+#    #+#             */
+/*   Updated: 2024/11/09 19:30:41 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../include/libft.h"
 
-int	pwd(void)
+t_list	*ft_lstnew(void *content)
 {
-	char	directory[PATH_MAX];
+	t_list	*new_lst;
 
-	if (getcwd(directory, sizeof(directory)) != NULL)
-		printf("%s\n", directory);
-	else
-	{
-		perror("pwd error:");
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
+	new_lst = (t_list *)malloc(sizeof(t_list));
+	if (!new_lst)
+		return (NULL);
+	new_lst->content = content;
+	new_lst->next = NULL;
+	return (new_lst);
 }

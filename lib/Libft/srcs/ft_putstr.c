@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 15:23:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/01 16:19:38 by cda-fons         ###   ########.fr       */
+/*   Created: 2024/11/25 16:10:47 by mreinald          #+#    #+#             */
+/*   Updated: 2024/11/25 16:16:39 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/libft.h"
 
-int	pwd(void)
+int	ft_putstr(char	*s)
 {
-	char	directory[PATH_MAX];
-
-	if (getcwd(directory, sizeof(directory)) != NULL)
-		printf("%s\n", directory);
+	if (!s)
+		return (-1);
+	if (write(STDOUT_FILENO, s, ft_strlen(s)) == -1)
+		return (-1);
 	else
-	{
-		perror("pwd error:");
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
+		return (ft_strlen(s));
 }

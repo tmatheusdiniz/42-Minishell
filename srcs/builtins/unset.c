@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../include/minishell.h"
 
 int	size_env(t_mini *mini)
 {

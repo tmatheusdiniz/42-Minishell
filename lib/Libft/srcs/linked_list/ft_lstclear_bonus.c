@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 15:23:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/01 16:19:38 by cda-fons         ###   ########.fr       */
+/*   Created: 2024/11/09 19:34:05 by mreinald          #+#    #+#             */
+/*   Updated: 2024/11/09 19:42:24 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../include/libft.h"
 
-int	pwd(void)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	char	directory[PATH_MAX];
+	t_list	*aux;
 
-	if (getcwd(directory, sizeof(directory)) != NULL)
-		printf("%s\n", directory);
-	else
+	if (!lst || !*lst || !del)
+		return ;
+	while (*lst != NULL)
 	{
-		perror("pwd error:");
-		return (EXIT_FAILURE);
+		aux = *lst;
+		*lst = (*lst)->next;
+		ft_lstdelone(aux, del);
 	}
-	return (EXIT_SUCCESS);
 }

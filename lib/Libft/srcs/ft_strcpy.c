@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 15:23:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/01 16:19:38 by cda-fons         ###   ########.fr       */
+/*   Created: 2025/04/05 18:03:40 by mreinald          #+#    #+#             */
+/*   Updated: 2025/04/05 18:06:10 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/libft.h"
 
-int	pwd(void)
+char	*ft_strcpy(char *dest, const char *src)
 {
-	char	directory[PATH_MAX];
+	int	i;
 
-	if (getcwd(directory, sizeof(directory)) != NULL)
-		printf("%s\n", directory);
-	else
+	if (!dest)
+		return (NULL);
+	if (!src)
+		return (dest);
+	i = 0;
+	while (src[i])
 	{
-		perror("pwd error:");
-		return (EXIT_FAILURE);
+		dest[i] = src[i];
+		i++;
 	}
-	return (EXIT_SUCCESS);
+	dest[i] = '\0';
+	return (dest);
 }

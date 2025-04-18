@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 15:23:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/01 16:19:38 by cda-fons         ###   ########.fr       */
+/*   Created: 2024/10/27 20:59:38 by mreinald          #+#    #+#             */
+/*   Updated: 2024/11/10 00:16:38 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/libft.h"
 
-int	pwd(void)
+char	*ft_strrchr(const char *s, int c)
 {
-	char	directory[PATH_MAX];
+	char	*p;
 
-	if (getcwd(directory, sizeof(directory)) != NULL)
-		printf("%s\n", directory);
-	else
+	p = NULL;
+	while (*s)
 	{
-		perror("pwd error:");
-		return (EXIT_FAILURE);
+		if (*s == (char)c)
+			p = (char *)s;
+		s ++;
 	}
-	return (EXIT_SUCCESS);
+	if (p != NULL)
+		return (p);
+	if ((char)c == '\0')
+		return ((char *)s);
+	return (NULL);
 }

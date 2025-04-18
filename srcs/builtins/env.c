@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../include/minishell.h"
 
 char	**duplicate_env(char **envp)
 {

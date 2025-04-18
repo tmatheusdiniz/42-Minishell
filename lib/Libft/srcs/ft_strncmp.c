@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 15:23:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/01 16:19:38 by cda-fons         ###   ########.fr       */
+/*   Created: 2024/11/01 15:35:28 by mreinald          #+#    #+#             */
+/*   Updated: 2024/11/10 00:00:36 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/libft.h"
 
-int	pwd(void)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char	directory[PATH_MAX];
-
-	if (getcwd(directory, sizeof(directory)) != NULL)
-		printf("%s\n", directory);
-	else
+	while (n > 0 && *s1 == *s2 && *s1 != '\0')
 	{
-		perror("pwd error:");
-		return (EXIT_FAILURE);
+		n --;
+		s1 ++;
+		s2 ++;
 	}
-	return (EXIT_SUCCESS);
+	if (n == 0)
+		return (0);
+	else
+		return ((unsigned char)*s1 - (unsigned char)*s2);
 }
