@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 13:18:17 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/10 15:08:19 by cda-fons         ###   ########.fr       */
+/*   Created: 2025/04/19 16:01:48 by mreinald          #+#    #+#             */
+/*   Updated: 2025/04/19 16:25:18 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	free_mini(t_mini *mini, char *message, int errnbr, char **input_split)
+void	print_all_var(char **envp);
+
+void	export_func(char **envp, char *argument)
 {
-    if (mini)
-    {
-        //ft_free_split(mini->env);
-        free(mini);
-    }
-    if (input_split)
-    {
-        //ft_free_split(input_split);
-    }
-	error_message(message, 2);
-    exit(errnbr);
+	if (!argument)
+		print_all_var(envp);
+}
+
+void	print_all_var(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		ft_printf("%s\n", envp[i]);
+		i ++;
+	}
 }

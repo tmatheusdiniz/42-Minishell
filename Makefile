@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
@@ -22,47 +21,28 @@ MAGENTA	= \033[0;35m
 CYAN	= \033[3;36m
 RESET	= \033[0m
 
-#Program's name
-NAME		= bin/minishell
-=======
+# Program's name
+NAME = bin/minishell
+
+# Compiler and Flags
 CC = cc
-LDFLAGS = -lreadline -lncurses
 CFLAGS = -Wall -Wextra -Werror -g
-LIBFT = Lib/Libft/libft.a
-NAME = Minishell
-SRC_DIR = ./srcs
-SRC_BUILT = $(SRC_DIR)/builtins
-
-SRCS = 	$(SRC_DIR)/core/main.c $(SRC_BUILT)/echo.c $(SRC_BUILT)/pwd.c $(SRC_BUILT)/cd.c $(SRC_BUILT)/env.c \
-		$(SRC_BUILT)/unset.c $(SRC_DIR)/errors/errors_utils.c $(SRC_DIR)/utils/utils.c $(SRC_DIR)/signals/signals.c \
-		$(SRC_DIR)/utils/free.c
-OBJS = $(SRCS:.c=.o)
->>>>>>> 08127014cf98e6532efbcb8d8a966a35efa88dc0
-
-# Commands/flags
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -g
-LDFLAGS		= -lreadline -lncurses
-INCLUDES	= -I ./include -I ./lib/Libft/include
+LDFLAGS = -lreadline -lncurses
+INCLUDES = -I ./include -I ./lib/Libft/include
 
 # Directories
-SRC_DIR		= srcs
-OBJ_DIR		= objs
-BIN_DIR		= bin
-LIBFT_DIR	= ./lib/Libft/
-BONUS_DIR   = bonus
+SRC_DIR = ./srcs
+OBJ_DIR = objs
+BIN_DIR = bin
+LIBFT_DIR = ./lib/Libft
 
-# Find Sources code
-SRCS		= $(wildcard $(SRC_DIR)/*/*.c)
-OBJS		= $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRCS:.c=.o))
-
-# Bonus part
-BONUS_SRCS	= $(wildcard $(BONUS_DIR)/*.c)
-BONUS_OBJS	= $(patsubst $(BONUS_DIR)/%.c,$(OBJ_DIR)/bonus/%.o,$(BONUS_SRCS))
+# Sources and Objects
+SRCS = $(wildcard $(SRC_DIR)/*/*.c)
+OBJS = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRCS:.c=.o))
 
 # Libft
-LIBFT		= $(LIBFT_DIR)/libft.a
-LIBFT_FLAGS	= -L./$(LIBFT_DIR) -lft
+LIBFT = $(LIBFT_DIR)/libft.a
+LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 
 # ASCII Art
 define ART
@@ -103,10 +83,9 @@ clean:
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@clear
 	@make --silent -C $(LIBFT_DIR) fclean
 	@rm -rf $(BIN_DIR)
 
 re: fclean all
 
-.PHONY: all clean fclean bonus re re_bonus
+.PHONY: all clean fclean re

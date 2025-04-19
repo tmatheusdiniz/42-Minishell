@@ -50,7 +50,9 @@ int		main(int argc, char const **argv, char **envp);
 //errors_utils.c
 void	error_message(char *message, int errnbr);
 void	mini_errors(t_mini *mini, char *message, int errnbr);
+
 //			builtins
+
 //cd
 int		cd(t_mini *mini, char **input);
 char	*get_target(char *input, t_mini *mini);
@@ -73,11 +75,16 @@ int		size_env(t_mini *mini);
 char	**new_env(t_mini *mini, int index_to_unset);
 int		unset(t_mini *mini, char *var);
 
+// export
+void	export_func(char **envp, char *argument);
+
+
 // ----------*/----------
 
 // utils.c
 int		get_index_env(t_mini *mini, char *var);
 char	*check_space(char *input);
+int		check_ifis_bt(t_mini *mini, char **input);
 
 // errors
 void	error_message(char *message, int errnbr);
