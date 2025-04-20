@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_free_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 15:23:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/06 15:24:00 by cda-fons         ###   ########.fr       */
+/*   Created: 2025/04/10 14:49:54 by cda-fons          #+#    #+#             */
+/*   Updated: 2025/04/10 14:53:40 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-int	pwd(void)
+void    ft_free_split(char **split)
 {
-	char directory[PATH_MAX];
+    int i;
 
-	if (getcwd(directory, sizeof(directory)) != NULL)
-		printf("%s\n", directory);
-	else
-	{
-		perror("pwd error:");
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
+    i = 0;
+
+    while (split[i])
+        free(split[i++]);
+    free(split);   
 }

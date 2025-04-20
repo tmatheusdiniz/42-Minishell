@@ -1,50 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 15:24:02 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/23 14:26:53 by cda-fons         ###   ########.fr       */
+/*   Created: 2025/04/01 20:19:00 by cda-fons          #+#    #+#             */
+/*   Updated: 2025/04/02 14:58:50 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char **duplicate_env(char **envp)
+void	signal_init(void)
 {
-	char **duplicate;
-	int	i;
-
-	
-	i = 0;
-	while (envp[i])
-		i++;
-	duplicate = (char **)malloc(sizeof(char *) * i + 1);
-	if (!duplicate)
-		return NULL;
-	i = 0;
-	while (envp[i])
-	{
-		duplicate[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	duplicate[i] = NULL;
-	return (duplicate);
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
-int	env(char **args)
+void	signal_handler(int sig)
 {
-	int i;
-
-	i = 0;
-	if (!args)
-		return (EXIT_FAILURE);
-	while (args[i])
+	if (sig == SIGINT)
 	{
-		printf("%s\n", args[i]);
-		i++;
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		printf("\n");
+		rl_redisplay();
 	}
-	return (EXIT_SUCCESS);
 }

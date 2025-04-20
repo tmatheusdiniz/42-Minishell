@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 12:07:10 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/17 16:48:09 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:54:37 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,14 @@ void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_putstr_fd(char *s, int fd);
 char	**ft_split(char	*str, char c);
+void    ft_free_split(char **split);
 char	*ft_strdup(const char *s);
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcat(char *dst, const char *src, size_t lendest);
+char	*ft_strcat(char *dest, const char *src);
 char	*ft_strncpy(char *dst, char *src, int n);
+char	*ft_strcpy(char *dest, const char *src);
 size_t	ft_strlcpy(char *dst, const char *src, size_t lendst);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int		ft_strncmp(const char *s1, const char *s2, unsigned int n);

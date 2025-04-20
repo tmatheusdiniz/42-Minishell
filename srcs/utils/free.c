@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors_utils.c                                     :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 15:23:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/03/23 17:00:26 by cda-fons         ###   ########.fr       */
+/*   Created: 2025/04/10 13:18:17 by cda-fons          #+#    #+#             */
+/*   Updated: 2025/04/10 15:08:19 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/// @brief 
-/// @param mini 
-/// @param message 
-/// @param errnbr 
-void	mini_errors(t_mini *mini, char *message, int errnbr)
+void	free_mini(t_mini *mini, char *message, int errnbr, char **input_split)
 {
-	free(mini);
-	error_message(message, errnbr);
-	
-}
-/// @brief 
-/// @param errnbr 
-/// @param message 
-void	error_message(char *message, int errnbr)
-{
-	errnbr = 2;
-	ft_putendl_fd(message, errnbr);
+    if (mini)
+    {
+        ft_free_split(mini->env);
+        free(mini);
+    }
+    if (input_split)
+    {
+        ft_free_split(input_split);
+    }
+	error_message(message, 2);
+    exit(errnbr);
 }
