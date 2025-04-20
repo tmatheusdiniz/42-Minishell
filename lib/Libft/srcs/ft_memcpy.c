@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 20:19:00 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/02 14:58:50 by cda-fons         ###   ########.fr       */
+/*   Created: 2024/10/27 16:35:15 by mreinald          #+#    #+#             */
+/*   Updated: 2024/11/09 23:58:54 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/libft.h"
 
-void	signal_init(void)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, SIG_IGN);
-}
+	size_t	i;
 
-void	signal_handler(int sig)
-{
-	if (sig == SIGINT)
+	if (!dest && !src)
+		return (NULL);
+	i = 0;
+	while (i < n)
 	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		printf("\n");
-		rl_redisplay();
+		*(unsigned char *)(dest + i) = *(unsigned char *)(src + i);
+		i ++;
 	}
+	return (dest);
 }

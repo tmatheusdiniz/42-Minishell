@@ -1,41 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 15:06:02 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/01 16:24:20 by cda-fons         ###   ########.fr       */
+/*   Created: 2025/03/06 15:24:05 by cda-fons          #+#    #+#             */
+/*   Updated: 2025/04/01 16:14:14 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	get_index_env(t_mini *mini, char *var)
+bool	check_flag(char *str)
 {
 	int	i;
-	int	len;
 
-	i = 0;
-	len = strlen(var);
-	while (mini->env[i])
-	{
-		if (ft_strncmp(mini->env[i], var, len) == 0 && mini->env[i][len] == '=')
-			return (i);
+	i = 1;
+	if (str[0] != '-')
+		return (false);
+	while (str[i] == 'n')
 		i++;
-	}
-	return (-1);
+	if (str[i] == 0)
+		return (true);
+	else
+		return (false);
 }
 
-char	*check_space(char *input)
+int	echo(char **input)
 {
-	int	i;
+	int		i;
+	bool	printline;
 
-	i = 0;
-	if (input[i] == ' ' || input[i] == '\t' || input[i] == '\n')
+	i = 1;
+	printline = true;
+	while (input[i] && check_flag(input[i]))
 	{
+		printline = false;
 		i++;
 	}
-	return (&input[i]);
+	while (input[i])
+	{
+		ft_putstr_fd(input[i], 1);
+		if (input[i + 1])
+			ft_putstr_fd(" ", 1);
+		i++;
+	}
+	if (printline)
+		write(1, "\n", 1);
+	return (EXIT_SUCCESS);
 }
