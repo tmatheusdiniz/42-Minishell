@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:07:19 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/21 19:17:33 by alberto          ###   ########.fr       */
+/*   Updated: 2025/04/21 19:44:37 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,25 @@ int	create_token_list(char **input_split, t_mini *mini)
 	i = 0;
 	while (input_split[i])
 	{
-		
 		t_token	*new;
 
 		new = (t_token *)ft_calloc(1, sizeof(t_token));
-		if (new.)
+		ft_memset(new, 0, sizeof(new));
+		new->token = ft_strdup(input_split[i]);
+		new->index = i;
+		if (i == 0)
+			mini->tokens = new;
+		else if (new->index > 0)
 		{
-			free_token(mini->tokens);
-			ft_putstr_fd("Malloc error\n", 2);
-			return (1);
+			t_token	*cur;
+
+			cur = mini->tokens;
+			while (cur && cur->next)
+				cur = cur->next;
+			cur->next = new;
+			new->prev = cur;
 		}
-		mini->tokens[i]->type = match_type(input_split[i]);
+		new->type = match_type(input_split[i]);
 		i++;
 	}
 	return (0);
