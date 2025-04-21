@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:13 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/16 17:30:37 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/18 22:59:59 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	update_oldpwd(t_mini *mini)
 		if (oldpwd)
 		{
 			free(mini->env[indexoldpwd]);
-			printf("no oldpwd esta assim ->%s\n", mini->env[indexoldpwd]);
 			mini->env[indexoldpwd] = ft_calloc(sizeof(char),
 					(ft_strlen("OLDPWD=") + ft_strlen(oldpwd) + 1));
 			if (!mini->env[indexoldpwd])
@@ -49,7 +48,6 @@ void	update_pwd(t_mini *mini)
 	if (indexpwd != -1)
 	{
 		free(mini->env[indexpwd]);
-		printf("no updatepwd esta assim ->%s\n", mini->env[indexpwd]);
 		mini->env[indexpwd] = ft_calloc(sizeof(char),
 				(ft_strlen("PWD=") + ft_strlen(pwd) + 1));
 		if (!mini->env[indexpwd])

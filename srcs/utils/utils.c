@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:06:02 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/01 16:24:20 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/21 18:52:23 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,19 @@ char	*check_space(char *input)
 		i++;
 	}
 	return (&input[i]);
+}
+int	match_type(char *token)
+{
+	if (!ft_strncmp(token, "|", ft_strlen(token)))
+		return (PIPE);
+	else if (!ft_strncmp(token, "<", ft_strlen(token)))
+		return (INREDIR);
+	else if (!ft_strncmp(token, "<<", ft_strlen(token)))
+		return (HEREDOC);
+	else if (!ft_strncmp(token, ">", ft_strlen(token)))
+		return (OUTREDIR);
+	else if (!ft_strncmp(token, ">>", ft_strlen(token)))
+		return (APPEND);
+	else
+		return (EXEC);
 }

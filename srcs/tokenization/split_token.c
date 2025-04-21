@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:09:56 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/16 20:44:41 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/20 13:55:51 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ size_t	i_tokens(char *str)
 	return (words);
 }
 
-int	token_len(char *token)
+int	len_token(char *token)
 {
 	int		i;
 	char	quotes;
@@ -67,7 +67,7 @@ static void	memfree(char **list, int count)
 	free(list);
 }
 
-char	**fill(char *str, char *start)
+static char	*fill(char *str, int *start)
 {
 	int		token_len;
 	char	*fill;
@@ -85,11 +85,10 @@ char	**fill(char *str, char *start)
 char	**split_token(char *str)
 {
 	char	**token_list;
-	size_t	size_of_list;
+	int		size_of_list;
 	int		i;
 	int		s;
 
-	
 	size_of_list = i_tokens(str);
 	token_list = (char **)ft_calloc(sizeof(char *), (size_of_list + 1));
 	if (!token_list)

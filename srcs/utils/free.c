@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:18:17 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/16 17:43:50 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/20 16:26:55 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,21 @@ void	free_mini(t_mini *mini, char *message, int errnbr, char **input_split)
 		ft_free_split(input_split);
 	error_message(message, 2);
 	exit(errnbr);
+}
+void	free_token(t_token **token)
+{
+	int	i;
+
+	i = 0;
+	while (token[i])
+	{
+		if(token[i]->token)
+			free(token[i]->token);
+		if (token[i])
+			free(token[i]);
+		i++;
+	}
+	if (token)
+		free(token);
+	return ;
 }

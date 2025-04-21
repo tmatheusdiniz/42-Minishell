@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/16 20:53:27 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/21 19:11:15 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,29 @@
 
 # define NAME_SHELL "Minishell: "
 
-typedef struct s_mini
-{
-	char	**env;
-}				t_mini;
+# define EXEC  1
+# define PIPE  2
+# define OUTREDIR 3
+# define INREDIR 4
+# define APPEND 5
+# define HEREDOC 6
+# define EXIT_EOF 10
+# define EXIT_CMD 11
 
 typedef struct s_token
 {
 	char	*token;
-	char	*type;
+	int		type;
+	int		index;
+	t_token	*next;
+	t_token	*prev;
 }				t_token;
+
+typedef struct s_mini
+{
+	char	**env;
+	t_token	*tokens;
+}				t_mini;
 
 //errors_utils.c
 void	error_message(char *message, int errnbr);
@@ -78,16 +91,19 @@ int		unset(t_mini *mini, char *var);
 //utils.c
 int		get_index_env(t_mini *mini, char *var);
 char	*check_space(char *input);
+int	match_type(char *token);
 
 //free.c
 void	free_mini(t_mini *mini, char *message, int errnbr, char **input_split);
+void	free_token(t_token **token);
 
 //tokenizer.c
-char	**tokenizer(char *input);
+//char	**tokenizer(char *input);
+int	create_token_list(char **input_split, t_mini *mini);
 
 //parsing.c
 void	cmds(char **input_split, t_mini *mini);
-char	**parsing(char *input, t_mini *mini);
+char	**parsing(char *input);
 
 //split_token.c
 char	**split_token(char *str);
