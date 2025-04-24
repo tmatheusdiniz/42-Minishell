@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/21 19:34:13 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:41:20 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,42 @@
 
 # define NAME_SHELL "Minishell: "
 
-# define EXEC  1
-# define PIPE  2
-# define OUTREDIR 3
-# define INREDIR 4
-# define APPEND 5
-# define HEREDOC 6
+# define CMD 1
+# define EXEC  2
+# define PIPE  3
+# define OUTREDIR 4
+# define INREDIR 5
+# define APPEND 6
+# define HEREDOC 7
+# define ARG 8
 # define EXIT_EOF 10
 # define EXIT_CMD 11
 
 typedef struct s_token t_token;
+typedef struct s_exec t_exec;
+typedef struct s_redir t_redir;
+typedef struct s_pipe t_pipe;
+
+
+typedef struct s_exec
+{
+    int     type;
+    char    **argv;
+}   t_exec;
+
+typedef struct s_redir
+{
+    int     type;
+    char    *file;
+    void    *next;
+}   t_redir;
+
+typedef struct s_pipe
+{
+    int     type;
+    void    *left;
+    void    *right;
+}   t_pipe;
 
 typedef struct s_token
 {
@@ -101,7 +127,7 @@ void	free_token(t_token **token);
 
 //tokenizer.c
 //char	**tokenizer(char *input);
-int	create_token_list(char **input_split, t_mini *mini);
+int	create_token_list(char **input_split, t_mini *mini, int i);
 
 //parsing.c
 void	cmds(char **input_split, t_mini *mini);

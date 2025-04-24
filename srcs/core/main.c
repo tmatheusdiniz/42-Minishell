@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/21 20:35:18 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/24 13:52:23 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	main(int argc, char const **argv, char **envp)
 			continue;
 		add_history(input);
 		input_split = parsing(input);
-		create_token_list(input_split, mini);
+		create_token_list(input_split, mini, 0);
 		print_token_list(mini->tokens);
 		cmds(input_split, mini);
 	}

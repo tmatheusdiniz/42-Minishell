@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:07:19 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/21 19:44:37 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/24 13:50:28 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@
 	
 } */
 
-int	create_token_list(char **input_split, t_mini *mini)
+int	create_token_list(char **input_split, t_mini *mini, int i)
 {
-	int	i;
 
-	i = 0;
 	while (input_split[i])
 	{
 		t_token	*new;
