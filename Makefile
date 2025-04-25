@@ -27,8 +27,8 @@ NAME = bin/minishell
 # Compiler and Flags
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-LDFLAGS = -lreadline -lncurses
-INCLUDES = -I ./include -I ./lib/Libft/include
+LDFLAGS = -L/lib/x86_64-linux-gnu -lreadline -lncurses
+INCLUDES = -I ./include -I ./lib/Libft/include -I /usr/include/readline
 
 # Directories
 SRC_DIR = ./srcs
@@ -62,7 +62,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	@mkdir -p $(BIN_DIR)
-	@$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) $(LIBFT) $(INCLUDES) $(LIBFT_FLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(INCLUDES) $(LIBFT_FLAGS) $(LDFLAGS) -o $(NAME)
 	@clear
 	@echo "$$ART"
 	@echo "$(CYAN)minishell compiled successfully!$(RESET)"

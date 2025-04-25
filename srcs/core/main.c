@@ -21,7 +21,7 @@ t_mini	*init_mini(char **envp)
 	mini = ft_calloc(sizeof(t_mini), 0);
 	if (!mini)
 		mini_errors(mini, "Calloc: Calloc failed", 0);
-	mini->env = duplicate_env(envp);	
+	mini->env = duplicate_env(envp);
 	return (mini);
 }
 
@@ -34,12 +34,6 @@ int	main(int argc, char const **argv, char **envp)
 	(void)argv;
 	if (argc > 1)
 		return (ft_printf("you may use only one argument ... ./bin/minishell")); // temp handle
-	int i = 0;
-	while (envp[i])
-	{
-		ft_printf("%s\n", envp[i]);
-		i ++;
-	}
 	mini = init_mini(envp);
 	input = NULL;
 	while (1)
