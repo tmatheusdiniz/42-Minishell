@@ -37,10 +37,19 @@
 
 # define NAME_SHELL "Minishell: "
 
+typedef struct s_env_v
+{
+	char		*KEY;
+	char		*VALUE;
+	struct s_env_v	*next;
+}		t_env_v;
+
 typedef struct s_mini
 {
 	char	**env;
-}				t_mini;
+	t_env_v	*env_v;
+}		t_mini;
+
 
 // core
 int		main(int argc, char const **argv, char **envp);
@@ -76,7 +85,7 @@ char	**new_env(t_mini *mini, int index_to_unset);
 int		unset(t_mini *mini, char *var);
 
 // export
-void	export_func(char **envp, char *argument);
+void	export_func(t_mini *mini, char *argument);
 
 
 // ----------*/----------

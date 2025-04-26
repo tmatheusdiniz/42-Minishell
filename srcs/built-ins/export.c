@@ -13,23 +13,18 @@
 #include "../../include/minishell.h"
 
 static void	print_all_var(char **envp);
-static void	only_one_var(char **envp, char *argument);
+static void	only_one_var(t_mini *mini, char *argument);
 static void	set_value(char **arguments);
 
-extern char **environ;
-
-static void	parse_of_arguments(char **envp, char *argument)
+static void	parse_of_arguments(t_mini *mini, char *argument)
 {
 	char	**split_re;
 
-	// Modify the parse
-	split_re = ft_split(argument, ' ');
-	if (!split_re)
-		return ; // Handle error
-	if (!(split_re[1]))
-		only_one_var(envp, split_re[0]);
+	if (!(ft_strchr(argument, '=')))
+		only_one_var(mini, argument);
 	else
 	 	set_value(split_re);
+	
 }
 
 // First i'm going to see if there is "=" in the second argument (key = value),
@@ -37,17 +32,15 @@ static void	parse_of_arguments(char **envp, char *argument)
 // if so, i'm going to put the value into the key and set it in the Env vars.
 // if not, i'm just set the key in the Env vars, and value is setted as empty.
 
-static void	only_one_var(char **envp, char *argument)
+
+// This one is where i'm making the second way
+
+static void	only_one_var(t_mini *mini, char *argument)
 {
 	int	i;
 
 	i = 0;
-	char	*save;
-	// This one is where i'm making the second way
-	while (envp[i])
-		i++;
-	save = ft_strjoin(argument, "=");
-	envp[i] = ft_strdup(argument);
+	
 }
 
 static void	set_value(char **arguments)
@@ -67,10 +60,11 @@ static void	print_all_var(char **envp)
 	}
 }
 
-void	export_func(char **envp, char *argument)
+void	export_func(t_mini *mini, char *argument)
 {
+	
 	if (!argument)
-		print_all_var(envp);
+		//print_all_var(mini);
 	else
-		parse_of_arguments(envp, argument);
+		//parse_of_arguments(mini->env_v, argument);
 }

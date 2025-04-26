@@ -33,7 +33,7 @@ int	check_ifis_bt(t_mini *mini, char **input)
 	else if (!ft_strncmp(input[0], "unset", ft_strlen(input[0])))
 		unset(mini, input[1]);
 	else if (!(ft_strncmp(input[0], "export", ft_strlen(input[0]))))
-		export_func(mini->env, input[1]);
+		export_func(mini, input[1]);
 	else
 		printf("Command '%s' not found\n", input[0]);
 	return (0);

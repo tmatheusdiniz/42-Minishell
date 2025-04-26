@@ -22,12 +22,14 @@ t_mini	*init_mini(char **envp)
 	if (!mini)
 		mini_errors(mini, "Calloc: Calloc failed", 0);
 	mini->env = duplicate_env(envp);
+	mini->env_v = NULL;
 	return (mini);
 }
 
 int	main(int argc, char const **argv, char **envp)
 {
 	t_mini	*mini;
+	t_env_v	*env_v;
 	char	*input;
 	char	**input_split;
 
