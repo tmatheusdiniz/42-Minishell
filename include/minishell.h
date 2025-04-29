@@ -91,9 +91,18 @@ void	export_func(t_mini *mini, char *argument);
 // ----------*/----------
 
 // utils.c
+
+// ----------export----------
+void	*envp_to_l_l(char **envp);
+void	*create_node(char *key_name, char *content);
+void	set_only_key(char *key, t_env_v *env_v);
+
+// ----------General----------
 int		get_index_env(t_mini *mini, char *var);
 char	*check_space(char *input);
 int		check_ifis_bt(t_mini *mini, char **input);
+int		ft_strcmp(char *s1, char *s2);
+
 
 // errors
 void	error_message(char *message, int errnbr);

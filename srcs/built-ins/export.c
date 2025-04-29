@@ -12,19 +12,18 @@
 
 #include "../../include/minishell.h"
 
-static void	print_all_var(char **envp);
-static void	only_one_var(t_mini *mini, char *argument);
-static void	set_value(char **arguments);
+static void	print_all_var(t_env_v *env_v);
+static void	only_one_var(t_env_v *env_v, char *argument);
+//static void	set_value(char **arguments);
 
-static void	parse_of_arguments(t_mini *mini, char *argument)
+static void	parse_of_arguments(t_env_v *env_v, char *argument)
 {
-	char	**split_re;
-
+	//char	**split_re;
+//
 	if (!(ft_strchr(argument, '=')))
-		only_one_var(mini, argument);
-	else
-	 	set_value(split_re);
-	
+		only_one_var(env_v, argument);
+	//else
+	// 	set_value(split_re);
 }
 
 // First i'm going to see if there is "=" in the second argument (key = value),
@@ -35,36 +34,36 @@ static void	parse_of_arguments(t_mini *mini, char *argument)
 
 // This one is where i'm making the second way
 
-static void	only_one_var(t_mini *mini, char *argument)
+static void	only_one_var(t_env_v *env_v, char *argument)
 {
-	int	i;
-
-	i = 0;
-	
+	set_only_key(argument, env_v);
 }
 
+/*
 static void	set_value(char **arguments)
 {
-	// Here on the first way
+	// Here doing the first way
 }
+*/
 
-static void	print_all_var(char **envp)
+static void	print_all_var(t_env_v *env_v)
 {
-	int	i;
-
-	i = 0;
-	while (envp[i])
+	while (env_v)
 	{
-		ft_printf("%s\n", envp[i]);
-		i ++;
+		if (env_v->VALUE)
+			ft_printf("declare -x %s=\"%s\"\n", env_v->KEY, env_v->VALUE);
+		else
+			ft_printf("declare -x %s\n", env_v->KEY);
+		env_v = env_v->next;
 	}
 }
 
 void	export_func(t_mini *mini, char *argument)
 {
-	
+	if (!mini->env_v)
+		mini->env_v = envp_to_l_l(mini->env);
 	if (!argument)
-		//print_all_var(mini);
+		print_all_var(mini->env_v);
 	else
-		//parse_of_arguments(mini->env_v, argument);
+		parse_of_arguments(mini->env_v, argument);
 }

@@ -29,7 +29,6 @@ t_mini	*init_mini(char **envp)
 int	main(int argc, char const **argv, char **envp)
 {
 	t_mini	*mini;
-	t_env_v	*env_v;
 	char	*input;
 	char	**input_split;
 
