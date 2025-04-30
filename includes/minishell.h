@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/24 15:41:20 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/27 00:09:59 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,21 @@ typedef struct s_exec
 {
     int     type;
     char    **argv;
-}   t_exec;
+}				t_exec;
 
 typedef struct s_redir
 {
     int     type;
     char    *file;
     void    *next;
-}   t_redir;
+}				t_redir;
 
 typedef struct s_pipe
 {
     int     type;
     void    *left;
     void    *right;
-}   t_pipe;
+}				t_pipe;
 
 typedef struct s_token
 {
@@ -86,6 +86,7 @@ typedef struct s_token
 typedef struct s_mini
 {
 	char	**env;
+	void	*root;
 	t_token	*tokens;
 }				t_mini;
 
@@ -132,6 +133,17 @@ int	create_token_list(char **input_split, t_mini *mini, int i);
 //parsing.c
 void	cmds(char **input_split, t_mini *mini);
 char	**parsing(char *input);
+
+//tree.c
+t_token	*search_redir(t_token *token);
+t_token	*search_pipe(t_token *token);
+void	*build_tree(t_token *tokens);
+
+//tree_utils.c
+t_exec	*create_exec_node(t_token *exec_token);
+void	*create_redir_node(t_token *redir_token, t_token *left_tokens,
+	t_token *right_tokens);
+void	*create_pipe_node(t_token *left_tokens, t_token *right_tokens);
 
 //split_token.c
 char	**split_token(char *str);

@@ -3,43 +3,87 @@
 /*                                                        :::      ::::::::   */
 /*   tree.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:43:21 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/24 18:59:51 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/30 11:53:01 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	create_pipe_node(t_token *pipe_token)
+void	cut_tokens(t_token *tokens, t_token *base, t_token **left_tokens, t_token **right_tokens)
 {
-	t_pipe	*pipe;
-	
-	if (!pipe_token)
-		return (NULL);
-	pipe = (t_pipe *)ft_calloc(sizeof(t_pipe), 1);
-	pipe->type = pipe->type;
-	pipe->left = NULL;
-	pipe->right = NULL;
-	return (pipe);	
+	*right_tokens = base->next;
+	if (*right_tokens)
+		(*right_tokens)->prev = NULL;
+	if (base->prev)
+		base->prev->next = NULL;
+	if (base == tokens)
+		*left_tokens = NULL;
+	else
+		*left_tokens = tokens;+
+		
 }
 
-bool	*search_pipe(t_token *token)
+t_token	*search_pipe(t_token *token)
 {
 	t_token *cur;
+	t_pipe	*pipe;
 	
-	if (!token)
-		return (false);
+	pipe = NULL;
 	cur = token;
-	while(cur->type != PIPE)
+	while (cur)
+	{
+		if (cur->type == PIPE)
+			pipe = cur;
 		cur = cur->next;
-	if (cur->type == PIPE)
-		create_pipe(cur);
+	}
+	return (pipe);
 }
 
-t_mini	*build_tree(t_mini *mini, char *start)
+t_token	*search_redir(t_token *token)
 {
-	if (search_pipe(mini->tokens))
-		return ;
+	t_token *cur;
+	t_pipe	*redir;
+	
+	redir = NULL;
+	cur = token;
+	while (cur)
+	{
+		if (cur->type == OUTREDIR
+			|| cur->type == INREDIR
+			|| cur->type == APPEND)
+			redir = cur;
+		cur = cur->next;
+	}
+	return (redir);
+}
+
+void	*build_tree(t_token *tokens)
+{
+	t_token *pipe;
+	t_token *left_tokens;
+	t_token *right_tokens;
+	t_token	*redir;
+
+	if (!tokens)
+		return (NULL);
+	pipe = search_pipe(tokens);
+	if (pipe)
+	{
+		right_tokens = NULL;
+		left_tokens = tokens;
+		cut_tokens(tokens, pipe, &left_tokens, &right_tokens);
+		return (create_pipe_node(left_tokens, right_tokens));
+	}
+	else
+	{
+		redir = search_redir(tokens);
+		right_tokens = NULL;
+		left_tokens = tokens;
+		cut_tokens(tokens, redir, &left_tokens, &right_tokens);
+		return (create_redir_node(redir, left_tokens, right_tokens));
+	}
+	return (create_exec_node(tokens));
 }
