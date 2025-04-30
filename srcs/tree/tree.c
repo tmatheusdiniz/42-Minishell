@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   tree.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:43:21 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/30 11:53:01 by alberto          ###   ########.fr       */
+/*   Updated: 2025/04/30 18:12:06 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	cut_tokens(t_token *tokens, t_token *base, t_token **left_tokens, t_token **right_tokens)
+void	cut_tokens(t_token *tokens, t_token *base, t_token **left_tokens,
+		t_token **right_tokens)
 {
 	*right_tokens = base->next;
 	if (*right_tokens)
@@ -22,14 +23,13 @@ void	cut_tokens(t_token *tokens, t_token *base, t_token **left_tokens, t_token *
 	if (base == tokens)
 		*left_tokens = NULL;
 	else
-		*left_tokens = tokens;+
-		
+		*left_tokens = tokens;
 }
 
 t_token	*search_pipe(t_token *token)
 {
 	t_token *cur;
-	t_pipe	*pipe;
+	t_token	*pipe;
 	
 	pipe = NULL;
 	cur = token;
@@ -45,7 +45,7 @@ t_token	*search_pipe(t_token *token)
 t_token	*search_redir(t_token *token)
 {
 	t_token *cur;
-	t_pipe	*redir;
+	t_token	*redir;
 	
 	redir = NULL;
 	cur = token;
@@ -77,13 +77,13 @@ void	*build_tree(t_token *tokens)
 		cut_tokens(tokens, pipe, &left_tokens, &right_tokens);
 		return (create_pipe_node(left_tokens, right_tokens));
 	}
-	else
+	redir = search_redir(tokens);
+	if (redir)
 	{
-		redir = search_redir(tokens);
 		right_tokens = NULL;
 		left_tokens = tokens;
 		cut_tokens(tokens, redir, &left_tokens, &right_tokens);
-		return (create_redir_node(redir, left_tokens, right_tokens));
+		return (create_redir_node(redir, left_tokens));
 	}
-	return (create_exec_node(tokens));
+	return (create_exec_node(tokens, 0));
 }

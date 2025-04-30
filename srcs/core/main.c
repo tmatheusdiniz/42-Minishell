@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/24 13:52:23 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/04/30 18:26:12 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,93 @@ t_mini	*init_mini(char **envp)
 		mini_errors(mini, "Calloc: Calloc failed", 0);
 	mini->env = duplicate_env(envp);
 	return (mini);
+}
+
+const char *redir_type_to_str(int type)
+{
+    if (type == INREDIR)
+        return "<";
+    else if (type == OUTREDIR)
+        return ">";
+    else if (type == APPEND)
+        return ">>";
+    return "?";
+}
+
+// Imprime uma quantidade específica de espaços para indentação
+void print_indent(int level)
+{
+    for (int i = 0; i < level; i++)
+        printf("  ");
+}
+
+// Imprime a AST recursivamente
+void print_ast_tree(void *node, int level)
+{
+    if (!node)
+    {
+        print_indent(level);
+        printf("(NULL)\n");
+        return;
+    }
+    
+    // Verifica o tipo do nó
+    int type = *((int *)node);
+    
+    if (type == EXEC)
+    {
+        t_exec *cmd = (t_exec *)node;
+        print_indent(level);
+        printf("COMMAND: ");
+        
+        if (!cmd->argv || !cmd->argv[0])
+            printf("(empty)");
+        else
+        {
+            int i = 0;
+            while (cmd->argv[i])
+            {
+                printf("%s", cmd->argv[i]);
+                if (cmd->argv[i + 1])
+                    printf(" ");
+                i++;
+            }
+        }
+        printf("\n");
+    }
+    else if (type == PIPE)
+    {
+        t_pipe *pipe = (t_pipe *)node;
+        print_indent(level);
+        printf("PIPE\n");
+        
+        print_indent(level);
+        printf("LEFT:\n");
+        print_ast_tree(pipe->left, level + 1);
+        
+        print_indent(level);
+        printf("RIGHT:\n");
+        print_ast_tree(pipe->right, level + 1);
+    }
+    else if (type == OUTREDIR
+		|| type == INREDIR
+		|| type == APPEND)
+    {
+        t_redir *redir = (t_redir *)node;
+        print_indent(level);
+        printf("REDIR %s %s\n", 
+               redir_type_to_str(redir->type), 
+               redir->file ? redir->file : "(null)");
+        
+        print_indent(level);
+        printf("NEXT:\n");
+        print_ast_tree(redir->next, level + 1);
+    }
+    else
+    {
+        print_indent(level);
+        printf("UNKNOWN NODE TYPE: %d\n", type);
+    }
 }
 
 void print_token_list(t_token *tokens)
@@ -60,6 +147,7 @@ int	main(int argc, char const **argv, char **envp)
 	t_mini	*mini;
 	char	*input;
 	char	**input_split;
+	void	*root;
 
 	(void)argv;
 	(void)argc;
@@ -80,6 +168,8 @@ int	main(int argc, char const **argv, char **envp)
 		input_split = parsing(input);
 		create_token_list(input_split, mini, 0);
 		print_token_list(mini->tokens);
+		root = build_tree(mini->tokens);
+		print_ast_tree(root, 0);
 		cmds(input_split, mini);
 	}
 }

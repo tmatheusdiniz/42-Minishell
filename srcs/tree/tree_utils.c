@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:54:14 by alberto           #+#    #+#             */
-/*   Updated: 2025/04/30 11:34:15 by alberto          ###   ########.fr       */
+/*   Updated: 2025/04/30 13:37:02 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,11 @@ void	*create_pipe_node(t_token *left_tokens, t_token *right_tokens)
 		return NULL;
 	pipe->type = PIPE;
 	pipe->left = build_tree(left_tokens);
-	pipe->right = NULL;
+	pipe->right = build_tree(right_tokens);
 	return (pipe);	
 }
 
-void	*create_redir_node(t_token *redir_token, t_token *left_tokens,
-			t_token *right_tokens)
+void	*create_redir_node(t_token *redir_token, t_token *right_tokens)
 {
 	t_redir	*redir;
 	t_token	*remaining;
@@ -65,12 +64,11 @@ void	*create_redir_node(t_token *redir_token, t_token *left_tokens,
 	return (redir);	
 }
 
-void	*create_exec_node(t_token *exec_token)
+void	*create_exec_node(t_token *exec_token, int i)
 {
 	t_exec	*exec;
 	t_token	*cur;
 	int	args_count;
-	int	i;
 	
 	exec = (t_exec *)ft_calloc(sizeof(t_exec), 1);
 	if (!exec)

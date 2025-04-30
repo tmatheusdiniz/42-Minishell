@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/27 00:09:59 by alberto          ###   ########.fr       */
+/*   Updated: 2025/04/30 13:36:20 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,11 +138,12 @@ char	**parsing(char *input);
 t_token	*search_redir(t_token *token);
 t_token	*search_pipe(t_token *token);
 void	*build_tree(t_token *tokens);
+void	cut_tokens(t_token *tokens, t_token *base, t_token **left_tokens,
+		t_token **right_tokens);
 
 //tree_utils.c
-t_exec	*create_exec_node(t_token *exec_token);
-void	*create_redir_node(t_token *redir_token, t_token *left_tokens,
-	t_token *right_tokens);
+void	*create_exec_node(t_token *exec_token, int i);
+void	*create_redir_node(t_token *redir_token, t_token *right_tokens);
 void	*create_pipe_node(t_token *left_tokens, t_token *right_tokens);
 
 //split_token.c
