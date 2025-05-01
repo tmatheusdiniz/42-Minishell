@@ -13,6 +13,19 @@
 #include "../../include/minishell.h"
 #include <stdlib.h>
 
+int	count_linked(t_env_v *list)
+{
+	int	i;
+
+	i = 1;
+	while (list->next)
+	{
+		i ++;
+		list = list->next;
+	}
+	return (i);
+}
+
 void	clean_matrix(char **matrix)
 {
 	int	i;
@@ -23,32 +36,35 @@ void	clean_matrix(char **matrix)
 	free (matrix);
 }
 
-/*
-void	ft_sort_params(char **arg, int argc)
+void	ft_sort_linked(t_env_v *env_v, int linked_size)
 {
 	int		i;
 	int		j;
-	char	*save;
+	int		flag;
+	t_env_v	*save;
 
 	i = 1;
 	j = 1;
-	while (j < argc)
+	flag = 0;
+	while (i < linked_size)
 	{
-		i = 1;
-		while (i < argc)
+		j = 1;
+		while (j < linked_size)
 		{
-			if (arg[i + 1] && ft_strcmp(arg[i], arg[i + 1]) > 0)
+			if (env_v->next && ft_strcmp(env_v->KEY, env_v->next->KEY) > 0)
 			{
-				save = arg[i];
-				arg[i] = arg[i + 1];
-				arg[i + 1] = save;
+				flag = 1;
+				save = env_v;
+				env_v = env_v->next;
+				env_v->next = save;
 			}
-			i ++;
+			j ++;
 		}
-		j ++;
+		if (!flag)
+			break;
+		i ++;
 	}
 }
-*/
 
 void	*create_node(char *key_name, char *content)
 {

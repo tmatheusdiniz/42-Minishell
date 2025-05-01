@@ -96,6 +96,8 @@ void	export_func(t_mini *mini, char *argument);
 void	*envp_to_l_l(char **envp);
 void	*create_node(char *key_name, char *content);
 void	set_only_key(char *key, t_env_v *env_v);
+void	ft_sort_linked(t_env_v *env_v, int linked_size);
+int		count_linked(t_env_v *list);
 
 // ----------General----------
 int		get_index_env(t_mini *mini, char *var);
