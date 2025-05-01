@@ -63,7 +63,7 @@ void	export_func(t_mini *mini, char *argument)
 	if (!mini->env_v)
 	{
 		mini->env_v = envp_to_l_l(mini->env);
-		ft_sort_linked(mini->env_v, count_linked(mini->env_v));
+		ft_sort_linked(mini->env_v, 0);
 	}
 	if (!argument)
 		print_all_var(mini->env_v);

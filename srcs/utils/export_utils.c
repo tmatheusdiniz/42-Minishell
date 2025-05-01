@@ -11,9 +11,10 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include <stdlib.h>
 
-int	count_linked(t_env_v *list)
+static void	aux_sorted_l(t_env_v *env_v, int *j, int *flag, int linked_size);
+
+int	count_linked_list(t_env_v *list)
 {
 	int	i;
 
@@ -26,14 +27,28 @@ int	count_linked(t_env_v *list)
 	return (i);
 }
 
-void	clean_matrix(char **matrix)
+static void	aux_sorted_l(t_env_v *env_v, int *j, int *flag, int linked_size)
 {
-	int	i;
+	t_env_v	*current;
+	char	*save_key;
+	char	*save_value;
 
-	i = 0;
-	while (matrix[i])
-		free(matrix[i++]);
-	free (matrix);
+	current = env_v;
+	while (*j < linked_size && current && current->next)
+	{
+		if (ft_strcmp(current->KEY, current->next->KEY) > 0)
+		{
+			*flag = 1;
+			save_key = current->KEY;
+			save_value = current->VALUE;
+			current->KEY = current->next->KEY;
+			current->VALUE = current->next->VALUE;
+			current->next->KEY = save_key;
+			current->next->VALUE = save_value;
+		}
+		current = current->next;
+		(*j)++;
+	}
 }
 
 void	ft_sort_linked(t_env_v *env_v, int linked_size)
@@ -41,27 +56,18 @@ void	ft_sort_linked(t_env_v *env_v, int linked_size)
 	int		i;
 	int		j;
 	int		flag;
-	t_env_v	*save;
 
 	i = 1;
 	j = 1;
 	flag = 0;
+	linked_size = count_linked_list(env_v);
 	while (i < linked_size)
 	{
 		j = 1;
-		while (j < linked_size)
-		{
-			if (env_v->next && ft_strcmp(env_v->KEY, env_v->next->KEY) > 0)
-			{
-				flag = 1;
-				save = env_v;
-				env_v = env_v->next;
-				env_v->next = save;
-			}
-			j ++;
-		}
+		aux_sorted_l(env_v, &j, &flag, linked_size);
 		if (!flag)
-			break;
+			break ;
+		flag = 0;
 		i ++;
 	}
 }
@@ -99,7 +105,7 @@ void	*envp_to_l_l(char **envp)
 	current = NULL;
 	while (envp[i])
 	{
-		save = ft_split(envp[i++], '=');
+		save = aux_set(envp[i++]);
 		if (!save)
 			return (NULL);
 		new_node = create_node(save[0], save[1]);

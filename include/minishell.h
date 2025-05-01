@@ -93,11 +93,12 @@ void	export_func(t_mini *mini, char *argument);
 // utils.c
 
 // ----------export----------
+char	**aux_set(char *envp);
 void	*envp_to_l_l(char **envp);
 void	*create_node(char *key_name, char *content);
 void	set_only_key(char *key, t_env_v *env_v);
 void	ft_sort_linked(t_env_v *env_v, int linked_size);
-int		count_linked(t_env_v *list);
+int		count_linked_list(t_env_v *list);
 
 // ----------General----------
 int		get_index_env(t_mini *mini, char *var);
@@ -112,6 +113,7 @@ void	mini_errors(t_mini *mini, char *message, int errnbr);
 
 //free.c
 void	free_mini(t_mini *mini, char *message, int errnbr, char **input_split);
+void	clean_matrix(char **matrix);
 
 //signals
 void	signal_init(void);
