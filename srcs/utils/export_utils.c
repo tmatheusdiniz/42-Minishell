@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-static void	aux_sorted_l(t_env_v *env_v, int *j, int *flag, int linked_size);
+static void	aux_sorte_linked_l(t_env_v *env_v, int *j, int *flag, int linked_size);
 
 int	count_linked_list(t_env_v *list)
 {
@@ -27,7 +27,7 @@ int	count_linked_list(t_env_v *list)
 	return (i);
 }
 
-static void	aux_sorted_l(t_env_v *env_v, int *j, int *flag, int linked_size)
+static void	aux_sort_linked_l(t_env_v *env_v, int *j, int *flag, int linked_size)
 {
 	t_env_v	*current;
 	char	*save_key;
@@ -64,7 +64,7 @@ void	ft_sort_linked(t_env_v *env_v, int linked_size)
 	while (i < linked_size)
 	{
 		j = 1;
-		aux_sorted_l(env_v, &j, &flag, linked_size);
+		aux_sort_linked_l(env_v, &j, &flag, linked_size);
 		if (!flag)
 			break ;
 		flag = 0;
@@ -92,7 +92,7 @@ void	*create_node(char *key_name, char *content)
 	return (env_v);
 }
 
-void	*envp_to_l_l(char **envp)
+void	*envp_to_linked_l(char **envp)
 {
 	int		i;
 	t_env_v	*head;

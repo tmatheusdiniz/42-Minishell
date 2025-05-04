@@ -21,7 +21,7 @@ t_mini	*init_mini(char **envp)
 	mini = ft_calloc(sizeof(t_mini), 0);
 	if (!mini)
 		mini_errors(mini, "Calloc: Calloc failed", 0);
-	mini->env = duplicate_env(envp);
+	mini->envp = duplicate_env(envp);
 	mini->env_v = NULL;
 	return (mini);
 }
@@ -51,7 +51,7 @@ int	main(int argc, char const **argv, char **envp)
 		add_history(input);
 		input_split = ft_split(input, ' ');
 		input_split[0] = check_space(input_split[0]);
-		if (check_ifis_bt(mini, input_split) == -1)
+		if (check_command(mini, input_split) == -1)
 			break; // temporary, after add other handle for it
 	}
 }

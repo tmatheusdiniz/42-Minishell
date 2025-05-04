@@ -17,7 +17,7 @@ int	size_env(t_mini *mini)
 	int	i;
 
 	i = 0;
-	while (mini->env[i])
+	while (mini->envp[i])
 		i++;
 	return (i);
 }
@@ -35,16 +35,16 @@ char	**new_env(t_mini *mini, int index_to_unset)
 		return (NULL);
 	h = 0;
 	i = 0;
-	while (mini->env[i])
+	while (mini->envp[i])
 	{
 		if (i == index_to_unset)
 			i++;
-		changed_env[h] = (char *)ft_calloc(sizeof(char), ft_strlen(mini->env[i]));
+		changed_env[h] = (char *)ft_calloc(sizeof(char), ft_strlen(mini->envp[i]));
 		if (!changed_env[h])
 			return (NULL);
-		changed_env[h++] = ft_strdup(mini->env[i++]);
+		changed_env[h++] = ft_strdup(mini->envp[i++]);
 	}
-	free(mini->env);
+	free(mini->envp);
 	changed_env[h] = NULL;
 	return (changed_env);
 }
@@ -60,12 +60,12 @@ int	unset(t_mini *mini, char *var)
 	if (index_to_unset == -1)
 		return (0);
 	i = 0;
-	while (mini->env[i])
+	while (mini->envp[i])
 	{
 		if (i == index_to_unset)
-			free(mini->env[index_to_unset]);
+			free(mini->envp[index_to_unset]);
 		i++;
 	}
-	mini->env = new_env(mini, index_to_unset);
+	mini->envp = new_env(mini, index_to_unset);
 	return (0);
 }

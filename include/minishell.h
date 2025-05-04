@@ -39,14 +39,14 @@
 
 typedef struct s_env_v
 {
-	char		*KEY;
-	char		*VALUE;
+	char			*KEY;
+	char			*VALUE;
 	struct s_env_v	*next;
 }		t_env_v;
 
 typedef struct s_mini
 {
-	char	**env;
+	char	**envp;
 	t_env_v	*env_v;
 }		t_mini;
 
@@ -94,16 +94,16 @@ void	export_func(t_mini *mini, char *argument);
 
 // ----------export----------
 char	**aux_set(char *envp);
-void	*envp_to_l_l(char **envp);
+void	*envp_to_linked_l(char **envp);
 void	*create_node(char *key_name, char *content);
-void	set_only_key(char *key, t_env_v *env_v);
+t_env_v	*set_only_key(t_env_v *env_v, char *key);
 void	ft_sort_linked(t_env_v *env_v, int linked_size);
 int		count_linked_list(t_env_v *list);
 
 // ----------General----------
 int		get_index_env(t_mini *mini, char *var);
 char	*check_space(char *input);
-int		check_ifis_bt(t_mini *mini, char **input);
+int		check_command(t_mini *mini, char **input);
 int		ft_strcmp(char *s1, char *s2);
 
 

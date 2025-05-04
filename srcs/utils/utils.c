@@ -19,9 +19,9 @@ int	get_index_env(t_mini *mini, char *var)
 
 	i = 0;
 	len = strlen(var);
-	while (mini->env[i])
+	while (mini->envp[i])
 	{
-		if (ft_strncmp(mini->env[i], var, len) == 0 && mini->env[i][len] == '=')
+		if (ft_strncmp(mini->envp[i], var, len) == 0 && mini->envp[i][len] == '=')
 			return (i);
 		i++;
 	}
@@ -38,16 +38,6 @@ char	*check_space(char *input)
 		i++;
 	}
 	return (&input[i]);
-}
-
-void	clean_matrix(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	while (matrix[i])
-		free(matrix[i++]);
-	free (matrix);
 }
 
 int	ft_strcmp(char *s1, char *s2)

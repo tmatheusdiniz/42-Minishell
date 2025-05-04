@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-int	check_ifis_bt(t_mini *mini, char **input)
+int	check_command(t_mini *mini, char **input)
 {
 	if (!ft_strncmp(input[0], "cd", ft_strlen(input[0])))
 		cd(mini, input);
@@ -28,7 +28,7 @@ int	check_ifis_bt(t_mini *mini, char **input)
 			return (-1);
 		}
 		else
-			env(mini->env);
+			env(mini->envp);
 	}
 	else if (!ft_strncmp(input[0], "unset", ft_strlen(input[0])))
 		unset(mini, input[1]);

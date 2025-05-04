@@ -12,17 +12,17 @@
 
 #include "../../include/minishell.h"
 
-static int	find_position(t_env_v *env_v, int linked_size)
+static int	find_position(t_env_v *env_v, char *new_key, int linked_size)
 {
 	int		i;
 	int		count;
 
 	i = 1;
-	count = 1;
+	count = 0;
 	linked_size = count_linked_list(env_v);
 	while (i < linked_size && env_v)
 	{
-		if (ft_strcmp(env_v->KEY, env_v->next->KEY) > 0)
+		if (ft_strcmp(env_v->KEY, new_key) < 0)
 			count++;
 		else
 			return (count);
@@ -31,33 +31,43 @@ static int	find_position(t_env_v *env_v, int linked_size)
 	return (count);
 }
 
- void	set_only_key(char *key, t_env_v *env_v)
+static int	check_duplicated(t_env_v *current, char *key)
+{
+	while (current->next)
+	{
+		if (current->KEY && ft_strcmp(current->KEY, key) == 0)
+			return (1);
+		current = current->next;
+	}
+	return (0);
+}
+
+ t_env_v	*set_only_key(t_env_v *env_v, char *key)
 {
 	t_env_v	*new_node;
-	t_env_v	*current;
+	t_env_v	*head;
 	t_env_v	*save;
 	int		position;
 	int		i;
 
 	if (!key || !env_v)
-		return ;
-	current = env_v;
-	while (current->next)
-	{
-		if (current->KEY && ft_strcmp(current->KEY, key) == 0)
-			return ;
-		current = current->next;
-	}
+		return (NULL);
+	if (check_duplicated(env_v, key))
+		return (NULL);
 	new_node = create_node(key, NULL);
 	if (!new_node)
-		return ;
-	position = find_position(env_v, count_linked_list(env_v));
+		return (NULL);
+	position = find_position(env_v, key, count_linked_list(env_v));
+	if (position == 0)
+		return (new_node->next = env_v, new_node);
 	i = 1;
-	while (i++ < position && current)
+	head = env_v;
+	while (i++ < position && env_v)
 		env_v = env_v->next;
 	save = env_v->next;
 	env_v->next = new_node;
 	new_node->next = save;
+	return (head);
 }
 
 // I had to create this function for case which the var has a value with "=" inside.

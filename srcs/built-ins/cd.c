@@ -20,17 +20,17 @@ void	update_oldpwd(t_mini *mini)
 	indexoldpwd = get_index_env(mini, "OLDPWD");
 	if (indexoldpwd != -1)
 	{
-		oldpwd = mini->env[get_index_env(mini, "PWD")] + 4;
+		oldpwd = mini->envp[get_index_env(mini, "PWD")] + 4;
 		if (oldpwd)
 		{
-			free(mini->env[indexoldpwd]);
-			printf("no oldpwd esta assim ->%s\n", mini->env[indexoldpwd]);
-			mini->env[indexoldpwd] = ft_calloc(sizeof(char),
+			free(mini->envp[indexoldpwd]);
+			printf("no oldpwd esta assim ->%s\n", mini->envp[indexoldpwd]);
+			mini->envp[indexoldpwd] = ft_calloc(sizeof(char),
 					(ft_strlen("OLDPWD=") + ft_strlen(oldpwd) + 1));
-			if (!mini->env[indexoldpwd])
+			if (!mini->envp[indexoldpwd])
 				mini_errors(mini, "Malloc Error: update oldpwd", 1);
-			ft_strcpy(mini->env[indexoldpwd], "OLDPWD=");
-			ft_strcat(mini->env[indexoldpwd], oldpwd);
+			ft_strcpy(mini->envp[indexoldpwd], "OLDPWD=");
+			ft_strcat(mini->envp[indexoldpwd], oldpwd);
 		}
 	}
 }
@@ -48,14 +48,13 @@ void	update_pwd(t_mini *mini)
 	indexpwd = get_index_env(mini, "PWD");
 	if (indexpwd != -1)
 	{
-		free(mini->env[indexpwd]);
-		printf("no updatepwd esta assim ->%s\n", mini->env[indexpwd]);
-		mini->env[indexpwd] = ft_calloc(sizeof(char),
+		free(mini->envp[indexpwd]);
+		mini->envp[indexpwd] = ft_calloc(sizeof(char),
 				(ft_strlen("PWD=") + ft_strlen(pwd) + 1));
-		if (!mini->env[indexpwd])
+		if (!mini->envp[indexpwd])
 			free_mini(mini, "Malloc Error: update pwd", 1, NULL);
-		ft_strcpy(mini->env[indexpwd], "PWD=");
-		ft_strcat(mini->env[indexpwd], pwd);
+		ft_strcpy(mini->envp[indexpwd], "PWD=");
+		ft_strcat(mini->envp[indexpwd], pwd);
 	}
 }
 
@@ -74,7 +73,7 @@ int	change_dir(t_mini *mini, char *target)
 char	*get_target(char *input, t_mini *mini)
 {
 	if (ft_strncmp(input, "-", ft_strlen(input)) == 0)
-		return (mini->env[get_index_env(mini, "OLDPWD")] + 7);
+		return (mini->envp[get_index_env(mini, "OLDPWD")] + 7);
 	return (input);
 }
 
@@ -94,7 +93,7 @@ int	cd(t_mini *mini, char **input)
 				return (0);	
 			}
 			else
-				target =  mini->env[get_index_env(mini, "HOME")] + 5;
+				target =  mini->envp[get_index_env(mini, "HOME")] + 5;
 		}
 		else
 			target = get_target(input[1], mini);
