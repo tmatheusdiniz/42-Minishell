@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/01 23:19:10 by alberto          ###   ########.fr       */
+/*   Updated: 2025/05/04 13:21:00 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ int	main(int argc, char const **argv, char **envp)
 		if (!*input)
 			continue;
 		add_history(input);
-		input_split = parsing(input);
+		input_split = parsing(input, mini);
 		create_token_list(input_split, mini, 0);
 		print_token_list(mini->tokens);
 		root = build_tree(mini->tokens);

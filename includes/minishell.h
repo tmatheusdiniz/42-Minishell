@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/01 23:22:08 by alberto          ###   ########.fr       */
+/*   Updated: 2025/05/04 16:26:10 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int		unset(t_mini *mini, char *var);
 //utils.c
 int		get_index_env(t_mini *mini, char *var);
 char	*check_space(char *input);
-int	match_type(char *token);
+int		match_type(char *token);
 
 //free.c
 void	free_mini(t_mini *mini, char *message, int errnbr, char **input_split);
@@ -129,11 +129,15 @@ void	free_token(t_token **token);
 
 //tokenizer.c
 //char	**tokenizer(char *input);
-int	create_token_list(char **input_split, t_mini *mini, int i);
+int		create_token_list(char **input_split, t_mini *mini, int i);
 
 //parsing.c
 void	cmds(char **input_split, t_mini *mini);
-char	**parsing(char *input);
+char	**parsing(char *input, t_mini *mini);
+bool	check_quotes(char *input_split, char quotes);
+
+//expand.c
+char	*expand(char *input, t_mini *mini);
 
 //tree.c
 t_token	*search_redir(t_token *token);

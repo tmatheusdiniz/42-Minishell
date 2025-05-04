@@ -3,15 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/04 11:29:20 by alberto          ###   ########.fr       */
+/*   Updated: 2025/05/04 16:14:25 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+bool	check_dollar(char *input)
+{
+	int	i;
+	int	flag;
+	int pid;
+	
+	flag = 0;
+	i = 0;
+	while(input[i])
+	{
+		if (input[i] && (input[i] == '$' && flag == 1))
+		{
+			pid = getpid();
+			ft_putnbr_fd(pid, 1);
+			flag = 0;
+		}
+		if (input[i] && input[i] == '$')
+			flag = 1;
+		i++;
+	}
+	if (flag == 1)
+		return (true);
+	return (false);
+}
 
 bool	check_quotes(char *input_split, char quotes)
 {
@@ -36,12 +60,14 @@ bool	check_quotes(char *input_split, char quotes)
 	return (true);
 }
 
-char	**parsing(char *input)
+char	**parsing(char *input, t_mini *mini)
 {
 	char	**input_split;
+	char	*expanded;
 	int		i;
 
 	i = 0;
+	expanded = NULL;
 	input_split = split_token(input);
 	while (input_split[i])
 	{
@@ -50,8 +76,13 @@ char	**parsing(char *input)
 			print_error(NAME_SHELL, "syntax error - the quote is open", NULL, NULL);
 			return (NULL);
 		}
-		if (check_dollar(input_split))
-			expand(input_split[i]);
+		if (check_dollar(input_split[i]))
+		{
+			expanded = expand(input_split[i], mini);
+			free(input_split[i]);
+			input_split[i] = expanded;
+			free(expanded);
+		}
 		i++;
 	}
 	return (input_split);
