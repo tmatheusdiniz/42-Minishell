@@ -12,21 +12,16 @@
 
 #include "../../include/minishell.h"
 
-//  Memory management will be done here.
-
-void	free_mini(t_mini *mini, char *message, int errnbr, char **input_split)
+void	free_structs(t_mini *mini)
 {
-    if (mini)
-    {
-        //ft_free_split(mini->env);
-        free(mini);
-    }
-    if (input_split)
-    {
-        //ft_free_split(input_split);
-    }
-	error_message(message, 2);
-    exit(errnbr);
+	if (mini)
+	{
+		if (mini->input)
+			free (mini->input);
+		if (mini->env_v)
+			// call function to clean env_v
+		free(mini);
+	}
 }
 
 void	clean_matrix(char **matrix)

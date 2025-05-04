@@ -20,38 +20,44 @@ t_mini	*init_mini(char **envp)
 
 	mini = ft_calloc(sizeof(t_mini), 0);
 	if (!mini)
-		mini_errors(mini, "Calloc: Calloc failed", 0);
-	mini->envp = duplicate_env(envp);
+		return (NULL);
+	mini->envp = duplicate_env_v(envp);
 	mini->env_v = NULL;
+	mini->input = NULL;
 	return (mini);
+}
+
+t_env_v	*init_env_v(t_env_v *env_v, char **envp)
+{
+	env_v = envp_to_linked_l(envp);
+	if (!env_v)
+		return (NULL);
+	ft_sort_linked(env_v);
+	return (env_v);
 }
 
 int	main(int argc, char const **argv, char **envp)
 {
 	t_mini	*mini;
-	char	*input;
 	char	**input_split;
 
-	(void)argv;
 	if (argc > 1)
-		return (ft_printf("you may use only one argument ... ./bin/minishell")); // temp handle
+		return (ft_printf("Minishell: %s: No such file or directory", argv[1]));
 	mini = init_mini(envp);
-	input = NULL;
+	mini->env_v = init_env_v(mini->env_v, mini->envp);
+	input_split = NULL;
 	while (1)
 	{
 		signal_init();
-		input = readline("Minishell: ");
-		if (!input)
-		{
-			free_mini(mini, "exit", SIGQUIT, input_split);
-			break ;
-		}
-		if (!*input)
+		mini->input = readline("Minishell: ");
+		if (!mini->input)
+			handle_errors(mini, "exit", SIGQUIT, input_split);
+		if (!*mini->input)
 			continue;
-		add_history(input);
-		input_split = ft_split(input, ' ');
+		add_history(mini->input);
+		input_split = ft_split(mini->input, ' ');
 		input_split[0] = check_space(input_split[0]);
 		if (check_command(mini, input_split) == -1)
-			break; // temporary, after add other handle for it
+			handle_errors(mini, "exit", SIGQUIT, input_split);
 	}
 }

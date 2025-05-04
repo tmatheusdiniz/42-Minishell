@@ -12,60 +12,51 @@
 
 #include "../../include/minishell.h"
 
-int	size_env(t_mini *mini)
-{
-	int	i;
+static void	remove_head(t_env_v *head);
 
-	i = 0;
-	while (mini->envp[i])
-		i++;
-	return (i);
+static int	remove_env_var(t_env_v *head, char *key)
+{
+	t_env_v *current;
+	t_env_v *prev;
+
+	if (!head || !key)
+		return (-1);
+	if (ft_strcmp(head->key, key) == 0)
+		return (remove_head(head), 0);
+	prev = head;
+	current = head->next;
+	while (current)
+	{
+		if (ft_strcmp(current->key, key) == 0)
+		{
+			prev->next = current->next;
+			free(current->key);
+			free(current->value);
+			free(current);
+			return (0);
+		}
+		prev = current;
+		current = current->next;
+	}
+	return (-1);
 }
 
-char	**new_env(t_mini *mini, int index_to_unset)
+static void	remove_head(t_env_v *head)
 {
-	int		i;
-	int		h;
-	int		size_of_env;
-	char	**changed_env;
-
-	size_of_env = size_env(mini);
-	changed_env = (char **)ft_calloc(sizeof(char *), size_of_env);
-	if (!changed_env)
-		return (NULL);
-	h = 0;
-	i = 0;
-	while (mini->envp[i])
-	{
-		if (i == index_to_unset)
-			i++;
-		changed_env[h] = (char *)ft_calloc(sizeof(char), ft_strlen(mini->envp[i]));
-		if (!changed_env[h])
-			return (NULL);
-		changed_env[h++] = ft_strdup(mini->envp[i++]);
-	}
-	free(mini->envp);
-	changed_env[h] = NULL;
-	return (changed_env);
+	t_env_v	*temp;
+	
+	temp = head;
+	head = head->next;
+	free(temp->key);
+	free(temp->value);
+	free(temp);
 }
 
-int	unset(t_mini *mini, char *var)
+int	unset(t_mini *mini, char *env_var)
 {
-	int	index_to_unset;
-	int	i;
-
-	if (!var)
-		return (0);
-	index_to_unset = get_index_env(mini, var);
-	if (index_to_unset == -1)
-		return (0);
-	i = 0;
-	while (mini->envp[i])
-	{
-		if (i == index_to_unset)
-			free(mini->envp[index_to_unset]);
-		i++;
-	}
-	mini->envp = new_env(mini, index_to_unset);
+	if (!mini->env_v)
+		return (-1);
+	if (remove_env_var(mini->env_v, env_var))
+		return (-1);
 	return (0);
 }

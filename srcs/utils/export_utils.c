@@ -12,21 +12,6 @@
 
 #include "../../include/minishell.h"
 
-static void	aux_sorte_linked_l(t_env_v *env_v, int *j, int *flag, int linked_size);
-
-int	count_linked_list(t_env_v *list)
-{
-	int	i;
-
-	i = 1;
-	while (list->next)
-	{
-		i ++;
-		list = list->next;
-	}
-	return (i);
-}
-
 static void	aux_sort_linked_l(t_env_v *env_v, int *j, int *flag, int linked_size)
 {
 	t_env_v	*current;
@@ -36,26 +21,27 @@ static void	aux_sort_linked_l(t_env_v *env_v, int *j, int *flag, int linked_size
 	current = env_v;
 	while (*j < linked_size && current && current->next)
 	{
-		if (ft_strcmp(current->KEY, current->next->KEY) > 0)
+		if (ft_strcmp(current->key, current->next->key) > 0)
 		{
 			*flag = 1;
-			save_key = current->KEY;
-			save_value = current->VALUE;
-			current->KEY = current->next->KEY;
-			current->VALUE = current->next->VALUE;
-			current->next->KEY = save_key;
-			current->next->VALUE = save_value;
+			save_key = current->key;
+			save_value = current->value;
+			current->key = current->next->key;
+			current->value = current->next->value;
+			current->next->key = save_key;
+			current->next->value = save_value;
 		}
 		current = current->next;
 		(*j)++;
 	}
 }
 
-void	ft_sort_linked(t_env_v *env_v, int linked_size)
+void	ft_sort_linked(t_env_v *env_v)
 {
 	int		i;
 	int		j;
 	int		flag;
+	int		linked_size;
 
 	i = 1;
 	j = 1;
@@ -81,13 +67,13 @@ void	*create_node(char *key_name, char *content)
 	env_v = (t_env_v *)malloc(sizeof(t_env_v));
 	if (!env_v)
 		return (NULL);
-	env_v->KEY = ft_strdup(key_name);
-	if (!env_v->KEY)
+	env_v->key = ft_strdup(key_name);
+	if (!env_v->key)
 		return (free(env_v), NULL);
 	if (!content)
-		env_v->VALUE = NULL;
+		env_v->value = NULL;
 	else
-		env_v->VALUE = ft_strdup(content);
+		env_v->value = ft_strdup(content);
 	env_v->next = NULL;
 	return (env_v);
 }

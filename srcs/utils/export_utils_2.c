@@ -22,7 +22,7 @@ static int	find_position(t_env_v *env_v, char *new_key, int linked_size)
 	linked_size = count_linked_list(env_v);
 	while (i < linked_size && env_v)
 	{
-		if (ft_strcmp(env_v->KEY, new_key) < 0)
+		if (ft_strcmp(env_v->key, new_key) < 0)
 			count++;
 		else
 			return (count);
@@ -35,7 +35,7 @@ static int	check_duplicated(t_env_v *current, char *key)
 {
 	while (current->next)
 	{
-		if (current->KEY && ft_strcmp(current->KEY, key) == 0)
+		if (current->key && ft_strcmp(current->key, key) == 0)
 			return (1);
 		current = current->next;
 	}

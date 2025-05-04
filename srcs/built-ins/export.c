@@ -19,7 +19,6 @@ static void	only_one_var(t_env_v *env_v, char *argument);
 static void	parse_of_arguments(t_env_v *env_v, char *argument)
 {
 	//char	**split_re;
-//
 	if (!(ft_strchr(argument, '=')))
 		only_one_var(env_v, argument);
 	//else
@@ -36,7 +35,7 @@ static void	parse_of_arguments(t_env_v *env_v, char *argument)
 
 static void	only_one_var(t_env_v *env_v, char *argument)
 {
-	set_only_key(argument, env_v);
+	set_only_key(env_v, argument);
 }
 
 /*
@@ -50,21 +49,16 @@ static void	print_all_var(t_env_v *env_v)
 {
 	while (env_v)
 	{
-		if (env_v->VALUE)
-			ft_printf("declare -x %s=\"%s\"\n", env_v->KEY, env_v->VALUE);
+		if (env_v->value)
+			ft_printf("declare -x %s=\"%s\"\n", env_v->key, env_v->value);
 		else
-			ft_printf("declare -x %s\n", env_v->KEY);
+			ft_printf("declare -x %s\n", env_v->key);
 		env_v = env_v->next;
 	}
 }
 
 void	export_func(t_mini *mini, char *argument)
 {
-	if (!mini->env_v)
-	{
-		mini->env_v = envp_to_l_l(mini->env);
-		ft_sort_linked(mini->env_v, 0);
-	}
 	if (!argument)
 		print_all_var(mini->env_v);
 	else

@@ -12,94 +12,92 @@
 
 #include "../../include/minishell.h"
 
-void	update_oldpwd(t_mini *mini)
+void	update_oldpwd(t_env_v *env_v)
 {
-	char	*oldpwd;
-	int		indexoldpwd;
+	t_env_v	*oldpwd;
+	t_env_v	*current_pwd;
 
-	indexoldpwd = get_index_env(mini, "OLDPWD");
-	if (indexoldpwd != -1)
+	current_pwd = get_node_envp(env_v, "PWD");
+	oldpwd = get_node_envp(env_v, "OLDPWD");
+	if (current_pwd)
 	{
-		oldpwd = mini->envp[get_index_env(mini, "PWD")] + 4;
 		if (oldpwd)
 		{
-			free(mini->envp[indexoldpwd]);
-			printf("no oldpwd esta assim ->%s\n", mini->envp[indexoldpwd]);
-			mini->envp[indexoldpwd] = ft_calloc(sizeof(char),
-					(ft_strlen("OLDPWD=") + ft_strlen(oldpwd) + 1));
-			if (!mini->envp[indexoldpwd])
-				mini_errors(mini, "Malloc Error: update oldpwd", 1);
-			ft_strcpy(mini->envp[indexoldpwd], "OLDPWD=");
-			ft_strcat(mini->envp[indexoldpwd], oldpwd);
+			free(oldpwd->value);
+			oldpwd->value = ft_strdup(current_pwd->value);
+			if (!oldpwd->value)
+				return ; //Handle this error after
 		}
 	}
 }
 
-void	update_pwd(t_mini *mini)
+void	update_pwd(t_env_v *env_v)
 {
-	char	pwd[PATH_MAX];
-	int		indexpwd;
+	t_env_v *pwd_node;
+	char 	pwd[PATH_MAX];
 
 	if (getcwd(pwd, sizeof(pwd)) == NULL)
 	{
 		perror("pwd error:");
 		return ;
 	}
-	indexpwd = get_index_env(mini, "PWD");
-	if (indexpwd != -1)
+	pwd_node = get_node_envp(env_v, "PWD");
+	if (pwd_node)
 	{
-		free(mini->envp[indexpwd]);
-		mini->envp[indexpwd] = ft_calloc(sizeof(char),
-				(ft_strlen("PWD=") + ft_strlen(pwd) + 1));
-		if (!mini->envp[indexpwd])
-			free_mini(mini, "Malloc Error: update pwd", 1, NULL);
-		ft_strcpy(mini->envp[indexpwd], "PWD=");
-		ft_strcat(mini->envp[indexpwd], pwd);
+		free(pwd_node->value);
+		pwd_node->value = ft_strdup(pwd);
+		if (!pwd_node->value)
+			return ;
 	}
 }
 
-int	change_dir(t_mini *mini, char *target)
+int	change_dir(t_env_v *env_v, char *target)
 {
 	if (chdir(target) != 0)
-		printf("Minishell: cd: %s: No such file or directory\n", target);
+		ft_printf("Minishell: cd: %s: No such file or directory\n", target);
 	else
 	{
-		update_oldpwd(mini);
-		update_pwd(mini);
+		update_oldpwd(env_v);
+		update_pwd(env_v);
 	}
 	return (0);
 }
 
-char	*get_target(char *input, t_mini *mini)
+char	*get_target(t_env_v *env_v, char *input)
 {
+	t_env_v	*oldpwd;
+
 	if (ft_strncmp(input, "-", ft_strlen(input)) == 0)
-		return (mini->envp[get_index_env(mini, "OLDPWD")] + 7);
+	{
+		oldpwd = get_node_envp(env_v, "OLDPWD");
+		if (oldpwd)
+			return (oldpwd->value);
+	}
 	return (input);
 }
 
 int	cd(t_mini *mini, char **input)
 {
 	char	*target;
+	t_env_v	*home;
 
+	home = get_node_envp(mini->env_v, "HOME");
 	if (input[2])
 		printf("Minishell: cd: too many arguments\n");
 	else
 	{
 		if (!input[1])
 		{
-			if (get_index_env(mini, "HOME") == -1)
-			{
-				error_message("Minishell: cd: HOME not set", 2);
-				return (0);	
-			}
+			if (!(home->value))
+				return (error_message("Minishell: cd: HOME not set", 2), 0);
 			else
-				target =  mini->envp[get_index_env(mini, "HOME")] + 5;
+				target =  home->value;
 		}
 		else
-			target = get_target(input[1], mini);
+			target = get_target(mini->env_v, input[1]);
 		if (input[1] && ft_strncmp(input[1], "-", 2) == 0)
-			printf("%s\n", target);
-		change_dir(mini, target);
+			ft_printf("%s\n", target);
+		change_dir(mini->env_v, target);
 	}
 	return (0);
 }

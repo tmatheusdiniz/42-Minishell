@@ -12,38 +12,20 @@
 
 #include "../../include/minishell.h"
 
-char	**duplicate_env(char **envp)
-{
-	char	**duplicate;
-	int		i;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	duplicate = (char **)ft_calloc(sizeof(char *), i + 1);
-	if (!duplicate)
-		return (NULL);
-	i = 0;
-	while (envp[i])
-	{
-		duplicate[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	duplicate[i] = NULL;
-	return (duplicate);
-}
-
-int	env(char **args)
+int	env(t_env_v *env_v)
 {
 	int	i;
 
 	i = 0;
-	if (!args)
-		return (EXIT_FAILURE);
-	while (args[i])
+	if (env_v)
+		return (EXIT_FAILURE);	
+	while (env_v)
 	{
-		printf("%s\n", args[i]);
-		i++;
+		if (env_v->value)
+			ft_printf("declare -x %s=\"%s\"\n", env_v->key, env_v->value);
+		else
+			ft_printf("declare -x %s\n", env_v->key);
+		env_v = env_v->next;
 	}
 	return (EXIT_SUCCESS);
 }

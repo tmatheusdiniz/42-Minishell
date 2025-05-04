@@ -12,19 +12,17 @@
 
 #include "../../include/minishell.h"
 
-/// @brief 
-/// @param mini 
-/// @param message 
-/// @param errnbr 
-void	mini_errors(t_mini *mini, char *message, int errnbr)
+// temporary, after add other many more things for handle errors
+
+void	handle_errors(t_mini *mini, char *message, int errnbr, char **inp_split)
 {
-	free(mini);
+	if (inp_split)
+		free (inp_split);
+	free_structs(mini);
 	error_message(message, errnbr);
+	exit(errnbr);
 }
 
-/// @brief 
-/// @param errnbr 
-/// @param message
 void	error_message(char *message, int errnbr)
 {
 	errnbr = 2;

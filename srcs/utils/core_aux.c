@@ -24,17 +24,17 @@ int	check_command(t_mini *mini, char **input)
 	{
 		if (input[1])
 		{
-			printf("env: '%s': No such file or directory\n", input[1]);
+			ft_printf("env: '%s': No such file or directory\n", input[1]);
 			return (-1);
 		}
 		else
-			env(mini->envp);
+			env(mini->env_v);
 	}
 	else if (!ft_strncmp(input[0], "unset", ft_strlen(input[0])))
 		unset(mini, input[1]);
 	else if (!(ft_strncmp(input[0], "export", ft_strlen(input[0]))))
 		export_func(mini, input[1]);
 	else
-		printf("Command '%s' not found\n", input[0]);
+		ft_printf("%s: command not found\n", input[0]);
 	return (0);
 }
