@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/30 13:36:20 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/01 23:22:08 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int	match_type(char *token);
 
 //free.c
 void	free_mini(t_mini *mini, char *message, int errnbr, char **input_split);
+int		print_error(char *str1, char *str2, char *str3, char *message);
 void	free_token(t_token **token);
 
 //tokenizer.c

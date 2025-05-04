@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/30 18:26:12 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/01 23:19:10 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ const char *redir_type_to_str(int type)
         return ">>";
     return "?";
 }
-
+// ## PRINT ARVORE ##
 // Imprime uma quantidade específica de espaços para indentação
+
 void print_indent(int level)
 {
     for (int i = 0; i < level; i++)
@@ -111,6 +112,8 @@ void print_ast_tree(void *node, int level)
         printf("UNKNOWN NODE TYPE: %d\n", type);
     }
 }
+// ## PRINT LISTA TOKENS
+
 
 void print_token_list(t_token *tokens)
 {
