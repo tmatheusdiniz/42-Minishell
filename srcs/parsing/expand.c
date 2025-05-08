@@ -3,42 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 23:07:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/04 16:43:24 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:56:50 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../../includes/minishell.h"
 
-
-
-char	*change_input(char *input, int index_env, t_mini *mini)
+bool	in_quotes(char cur, int *i, bool flag)
 {
-	char string[999];
-	int in_quote;
-	char *env;
-	int	i;
-	int j;
+	if (cur == '\'' && flag == true)
+		flag = false;
+	if (cur == '\'')
+		flag = true;
+	if (flag)
+		(*i)++;
+	return (flag);
+}
 
-	env = NULL;
+char	*change_input(char *input, char	*env)
+{
+	char	string[999];
+	bool	flag;
+	int		i;
+	int 	j;
+
+	flag = false;
+	j = 0;
 	while (input[i])
 	{
-		if (input[i] == '\'')
-			in_quote = 1;
-		if (input[i] == '$' && !in_quote)
+		flag = in_quotes(input[i], &i, flag);
+		if (input[i] == '$' && flag)
 		{
 			i++;
-			j = 0;
-			while (str[i] != 32)
-			{
-				env[j++] = str[i++];
-			}
+			while (input[i] != 32)
+				string[j++] = input[i++];
 		}
-		string[i] = str[i];
-		i++;
+		else if (input[i] == '$' && !flag)
+		{
+			i++;
+			while (input[i] != 32)
+				string[j++] = env[i++];
+		}
 	}
 	string[j] = '\0';
 	return (ft_strdup(string));
@@ -52,9 +61,9 @@ char	*expand(char *input, t_mini *mini)
 	if (!input || !mini)
 		return (NULL);
 	new_input = NULL;
-	index_env = get_index_env(mini, input);
+	index_env = get_index_env(mini, &input[1]);
 	if (index_env != -1)
-		new_input = change_input(input, index_env, mini);
+		new_input = change_input(input, mini->env[index_env] + ft_strlen(input) + 1);
 	free(input);
 	return(new_input);
 }
