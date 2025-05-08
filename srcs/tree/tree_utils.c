@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:54:14 by alberto           #+#    #+#             */
-/*   Updated: 2025/04/30 13:37:02 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/08 18:46:56 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 int	count_tokens(t_token *tokens)
 {
-	int	count;
-	t_token	*cur = tokens;
+	t_token	*cur;
+	int		count;
 
+	cur = tokens;
 	count = 0;
 	while (cur)
 	{
@@ -31,22 +32,22 @@ void	*create_pipe_node(t_token *left_tokens, t_token *right_tokens)
 	t_pipe	*pipe;
 
 	pipe = (t_pipe *)ft_calloc(sizeof(t_pipe), 1);
-	if(!pipe)
-		return NULL;
+	if (!pipe)
+		return (NULL);
 	pipe->type = PIPE;
 	pipe->left = build_tree(left_tokens);
 	pipe->right = build_tree(right_tokens);
-	return (pipe);	
+	return (pipe);
 }
 
 void	*create_redir_node(t_token *redir_token, t_token *right_tokens)
 {
 	t_redir	*redir;
 	t_token	*remaining;
-		
+
 	redir = (t_redir *)ft_calloc(sizeof(t_redir), 1);
 	if (!redir)
-		return NULL;
+		return (NULL);
 	redir->type = redir_token->type;
 	redir->file = NULL;
 	if (right_tokens)
@@ -61,15 +62,15 @@ void	*create_redir_node(t_token *redir_token, t_token *right_tokens)
 	}
 	else
 		redir->next = NULL;
-	return (redir);	
+	return (redir);
 }
 
 void	*create_exec_node(t_token *exec_token, int i)
 {
 	t_exec	*exec;
 	t_token	*cur;
-	int	args_count;
-	
+	int		args_count;
+
 	exec = (t_exec *)ft_calloc(sizeof(t_exec), 1);
 	if (!exec)
 		return (NULL);
@@ -91,4 +92,3 @@ void	*create_exec_node(t_token *exec_token, int i)
 	exec->argv[i] = NULL;
 	return (exec);
 }
-

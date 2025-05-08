@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:43:21 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/30 18:12:06 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/08 18:43:47 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	cut_tokens(t_token *tokens, t_token *base, t_token **left_tokens,
 
 t_token	*search_pipe(t_token *token)
 {
-	t_token *cur;
+	t_token	*cur;
 	t_token	*pipe;
-	
+
 	pipe = NULL;
 	cur = token;
 	while (cur)
@@ -44,9 +44,9 @@ t_token	*search_pipe(t_token *token)
 
 t_token	*search_redir(t_token *token)
 {
-	t_token *cur;
+	t_token	*cur;
 	t_token	*redir;
-	
+
 	redir = NULL;
 	cur = token;
 	while (cur)
@@ -62,9 +62,9 @@ t_token	*search_redir(t_token *token)
 
 void	*build_tree(t_token *tokens)
 {
-	t_token *pipe;
-	t_token *left_tokens;
-	t_token *right_tokens;
+	t_token	*pipe;
+	t_token	*left_tokens;
+	t_token	*right_tokens;
 	t_token	*redir;
 
 	if (!tokens)

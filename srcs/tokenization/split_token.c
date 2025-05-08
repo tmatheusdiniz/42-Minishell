@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:09:56 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/24 12:43:43 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/08 18:53:49 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	len_token(char *token)
 {
 	int		i;
 	char	quotes;
+
 	i = 0;
 	while (token[i] && token[i] != ' ')
 	{
@@ -54,7 +55,7 @@ int	len_token(char *token)
 		if (token[i])
 			i++;
 	}
-	return (i);	
+	return (i);
 }
 
 static void	memfree(char **list, int count)
@@ -71,7 +72,7 @@ static char	*fill(char *str, int *start)
 {
 	int		token_len;
 	char	*fill;
-	
+
 	if (str[*start] == ' ')
 		(*start)++;
 	token_len = len_token(&str[*start]);

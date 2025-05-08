@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/04 16:14:25 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/08 20:14:58 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ bool	check_dollar(char *input)
 {
 	int	i;
 	int	flag;
-	int pid;
-	
+	int	pid;
+
 	flag = 0;
 	i = 0;
-	while(input[i])
+	while (input[i])
 	{
 		if (input[i] && (input[i] == '$' && flag == 1))
 		{
@@ -40,7 +40,7 @@ bool	check_dollar(char *input)
 bool	check_quotes(char *input_split, char quotes)
 {
 	int	i;
-	int flag_quotes;
+	int	flag_quotes;
 
 	flag_quotes = 0;
 	i = 0;
@@ -56,35 +56,31 @@ bool	check_quotes(char *input_split, char quotes)
 		i++;
 	}
 	if (flag_quotes == 1)
-		return (false);	
+		return (false);
 	return (true);
 }
 
 char	**parsing(char *input, t_mini *mini)
 {
 	char	**input_split;
-	char	*expanded;
 	int		i;
 
 	i = 0;
-	expanded = NULL;
 	input_split = split_token(input);
 	while (input_split[i])
 	{
-		if (!check_quotes(input_split[i], '"') || !check_quotes(input_split[i], '\''))
+		if (!check_quotes(input_split[i], '"')
+			|| !check_quotes(input_split[i], '\''))
 		{
-			print_error(NAME_SHELL, "syntax error - the quote is open", NULL, NULL);
+			print_error(NAME_SHELL,
+				"syntax error - the quote is open", NULL, NULL);
 			return (NULL);
 		}
 		if (check_dollar(input_split[i]))
-		{
-			expanded = expand(input_split[i], mini);
-			free(input_split[i]);
-			input_split[i] = expanded;
-			free(expanded);
-		}
+			input_split[i] = expand(input_split[i], mini);
 		i++;
 	}
+	free(input);
 	return (input_split);
 }
 

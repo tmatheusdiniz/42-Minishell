@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:23:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/03 22:41:13 by alberto          ###   ########.fr       */
+/*   Updated: 2025/05/08 19:05:46 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	print_error(char *str1, char *str2, char *str3, char *message)
 	{
 		if (str1 || str2 || str3)
 			ft_putstr_fd(": ", 2);
-		ft_putstr_fd(message , 2);
+		ft_putstr_fd(message, 2);
 	}
 	ft_putstr_fd("\n", 2);
 	return (-1);

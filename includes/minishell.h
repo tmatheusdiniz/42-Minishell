@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/04 16:26:10 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/08 19:50:40 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,30 +48,29 @@
 # define EXIT_EOF 10
 # define EXIT_CMD 11
 
-typedef struct s_token t_token;
-typedef struct s_exec t_exec;
-typedef struct s_redir t_redir;
-typedef struct s_pipe t_pipe;
-
+typedef struct s_token	t_token;
+typedef struct s_exec	t_exec;
+typedef struct s_redir	t_redir;
+typedef struct s_pipe	t_pipe;
 
 typedef struct s_exec
 {
-    int     type;
-    char    **argv;
+	int		type;
+	char	**argv;
 }				t_exec;
 
 typedef struct s_redir
 {
-    int     type;
-    char    *file;
-    void    *next;
+	int		type;
+	char	*file;
+	void	*next;
 }				t_redir;
 
 typedef struct s_pipe
 {
-    int     type;
-    void    *left;
-    void    *right;
+	int		type;
+	void	*left;
+	void	*right;
 }				t_pipe;
 
 typedef struct s_token
@@ -129,7 +128,7 @@ void	free_token(t_token **token);
 
 //tokenizer.c
 //char	**tokenizer(char *input);
-int		create_token_list(char **input_split, t_mini *mini, int i);
+void	create_token_list(char **input_split, t_mini *mini, int i);
 
 //parsing.c
 void	cmds(char **input_split, t_mini *mini);
@@ -144,7 +143,7 @@ t_token	*search_redir(t_token *token);
 t_token	*search_pipe(t_token *token);
 void	*build_tree(t_token *tokens);
 void	cut_tokens(t_token *tokens, t_token *base, t_token **left_tokens,
-		t_token **right_tokens);
+			t_token **right_tokens);
 
 //tree_utils.c
 void	*create_exec_node(t_token *exec_token, int i);

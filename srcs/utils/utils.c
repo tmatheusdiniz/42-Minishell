@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:06:02 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/30 14:18:28 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/08 19:04:52 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ char	*check_space(char *input)
 
 bool	check_exec(char *token)
 {
-	char **splitted_path;
-	char *path;
-	char *the_return_of_spplited_path;
-	
+	char	**splitted_path;
+	char	*path;
+	char	*the_return_of_spplited_path;
+
 	splitted_path = ft_split(getenv("PATH"), ':');
 	path = ft_strjoin(splitted_path[6], "/");
 	free(splitted_path);
@@ -95,7 +95,7 @@ int	match_type(char *token)
 		return (APPEND);
 	else if (check_builtin(token))
 		return (CMD);
- 	else  if (!check_exec(token))
+	else if (!check_exec(token))
 		return (EXEC);
 	else
 		return (ARG);
