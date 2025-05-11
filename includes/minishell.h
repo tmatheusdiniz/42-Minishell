@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/08 19:50:40 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/10 22:07:03 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,9 @@ int		unset(t_mini *mini, char *var);
 int		get_index_env(t_mini *mini, char *var);
 char	*check_space(char *input);
 int		match_type(char *token);
+
+//utils2.c
+char	*clean_quotes(char *var);
 
 //free.c
 void	free_mini(t_mini *mini, char *message, int errnbr, char **input_split);
