@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:06:02 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/10 23:23:30 by alberto          ###   ########.fr       */
+/*   Updated: 2025/05/11 16:37:15 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	get_index_env(t_mini *mini, char *var)
 	int		i;
 
 	i = 0;
-	clean_var = clean_quotes(var);
+	clean_var = clean_other_chars(var);
 	len = ft_strlen(clean_var);
 	while (mini->env[i])
 	{

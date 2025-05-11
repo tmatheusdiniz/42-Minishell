@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 23:07:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/10 23:46:26 by alberto          ###   ########.fr       */
+/*   Updated: 2025/05/11 19:02:38 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-bool	in_quotes(char cur, int *i, bool flag)
+bool	in_quotes(char cur, int *i, bool flag, int quotes)
 {
-	if (cur == '\'' && flag == true)
+	if (cur == quotes && flag == true)
 	{
 		flag = false;
 		(*i)++;
 	}
-	if (cur == '\'')
+	if (cur == quotes)
 	{
 		flag = true;
 		(*i)++;	
@@ -27,29 +27,19 @@ bool	in_quotes(char cur, int *i, bool flag)
 	return (flag);
 }
 
-char	*change_input(char *input, int *i, char *env, bool flag)
+char	*change_input(char *env)
 {
 	char	string[999];
 	int		j;
 
-	j = -1;
-	while (input[*i])
+	j = 0;
+	if (env)
 	{
-		flag = in_quotes(input[*i], &(*i), flag);
-		if (input[*i] == '$' && flag)
+		while (env[j])
 		{
-			(*i)++;
-			while (input[*i] && input[*i] != 32 && input[*i] != '\'')
-				string[j++] = input[(*i)++];
-			break ;
-		}
-		else if (input[*i] == '$' && !flag)
-		{
-			(*i)++;
-			while (env[j++])
-				string[j] = env[j];
-			break ;
-		}
+			string[j] = env[j];
+			j++;
+		}	
 	}
 	string[j] = '\0';
 	return (ft_strdup(string));
@@ -60,18 +50,22 @@ char	*expand(char *input, t_mini *mini)
 	char	*new_input;
 	int		index_env;
 	int		i;
-	bool	flag;
+	bool	s_flag;
 
-	flag = false;
+	s_flag = false;
 	i = 0;
 	if (!input || !mini)
 		return (NULL);
 	new_input = NULL;
-	flag = in_quotes(input[i], &i, flag);
-	index_env = get_index_env(mini, input);
-	if (index_env != -1)
-		new_input = change_input(input, &i,
-				mini->env[index_env] + ft_strlen(input) + 1, flag);
-	free(input);
-	return (new_input);
+	s_flag = in_quotes(input[i], &i, s_flag, '\'');
+	if (s_flag)
+		new_input = clean_quotes(input);
+	else
+	{
+		index_env = get_index_env(mini, input);
+		input = clean_other_chars(input);
+		if (index_env != -1)
+			new_input = change_input(mini->env[index_env] + ft_strlen(input) + 1);	
+	}
+	return (ft_strdup(new_input));
 }
