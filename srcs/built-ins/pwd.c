@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-int	pwd(void)
+int	ft_pwd(void)
 {
 	char	directory[PATH_MAX];
 

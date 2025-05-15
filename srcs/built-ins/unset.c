@@ -11,13 +11,15 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include "../../include/structs.h"
+#include "../../include/utils.h"
 
 static void	remove_head(t_env_v *head);
 
 static int	remove_env_var(t_env_v *head, char *key)
 {
-	t_env_v *current;
-	t_env_v *prev;
+	t_env_v	*current;
+	t_env_v	*prev;
 
 	if (!head || !key)
 		return (-1);
@@ -44,7 +46,7 @@ static int	remove_env_var(t_env_v *head, char *key)
 static void	remove_head(t_env_v *head)
 {
 	t_env_v	*temp;
-	
+
 	temp = head;
 	head = head->next;
 	free(temp->key);
@@ -52,11 +54,11 @@ static void	remove_head(t_env_v *head)
 	free(temp);
 }
 
-int	unset(t_mini *mini, char *env_var)
+int	ft_unset(t_env_v *env_v, char *env_var)
 {
-	if (!mini->env_v)
+	if (!env_v)
 		return (-1);
-	if (remove_env_var(mini->env_v, env_var))
+	if (remove_env_var(env_v, env_var))
 		return (-1);
 	return (0);
 }

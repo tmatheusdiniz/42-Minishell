@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 16:10:47 by mreinald          #+#    #+#             */
-/*   Updated: 2024/11/25 16:16:39 by mreinald         ###   ########.fr       */
+/*   Created: 2025/05/08 13:55:32 by mreinald          #+#    #+#             */
+/*   Updated: 2025/05/08 13:56:17 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#ifndef ERRORS_H
 
-int	ft_putstr(char	*s)
-{
-	if (!s)
-		return (-1);
-	if (write(STDOUT_FILENO, s, ft_strlen(s)) == -1)
-		return (-1);
-	else
-		return (ft_strlen(s));
-}
+# define ERRORS_H
+
+# include "./structs.h"
+
+// errors
+void	handle_errors(t_shell *shell, char *message,
+			int errnbr, char **inp_split);
+void	error_message(char *message, int errnbr);
+
+#endif

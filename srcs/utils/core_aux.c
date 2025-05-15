@@ -11,15 +11,17 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include "../../include/utils.h"
+#include "../../include/builtins.h"
 
-int	check_command(t_mini *mini, char **input)
+int	check_command(t_shell *shell, char **input)
 {
 	if (!ft_strncmp(input[0], "cd", ft_strlen(input[0])))
-		cd(mini, input);
+		ft_cd(shell->env_v, input);
 	else if (!ft_strncmp(input[0], "pwd", ft_strlen(input[0])))
-		pwd();
+		ft_pwd();
 	else if (!ft_strncmp(input[0], "echo", ft_strlen(input[0])))
-		echo(input);
+		ft_echo(input);
 	else if (!ft_strncmp(input[0], "env", ft_strlen(input[0])))
 	{
 		if (input[1])
@@ -28,12 +30,12 @@ int	check_command(t_mini *mini, char **input)
 			return (-1);
 		}
 		else
-			env(mini->env_v);
+			ft_env(shell->envp);
 	}
 	else if (!ft_strncmp(input[0], "unset", ft_strlen(input[0])))
-		unset(mini, input[1]);
+		ft_unset(shell->env_v, input[1]);
 	else if (!(ft_strncmp(input[0], "export", ft_strlen(input[0]))))
-		export_func(mini, input[1]);
+		ft_export(shell->env_v, input[1]);
 	else
 		ft_printf("%s: command not found\n", input[0]);
 	return (0);

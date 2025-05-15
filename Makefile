@@ -22,27 +22,30 @@ CYAN	= \033[3;36m
 RESET	= \033[0m
 
 # Program's name
-NAME = bin/minishell
+NAME	= bin/minishell
 
 # Compiler and Flags
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
-LDFLAGS = -L/lib/x86_64-linux-gnu -lreadline -lncurses
-INCLUDES = -I ./include -I ./lib/Libft/include -I /usr/include/readline
+CC			= cc
+CFLAGS		= -Wall -Wextra -Werror -g
+LDFLAGS		= -L/lib/x86_64-linux-gnu -lreadline -lncurses
+INCLUDES	= -I ./include -I ./lib/Libft/include -I /usr/include/readline
 
 # Directories
-SRC_DIR = ./srcs
-OBJ_DIR = objs
-BIN_DIR = bin
-LIBFT_DIR = ./lib/Libft
+SRC_DIR		= ./srcs
+OBJ_DIR		= objs
+BIN_DIR		= bin
+LIBFT_DIR	=./lib/Libft
 
 # Sources and Objects
-SRCS = $(wildcard $(SRC_DIR)/*/*.c)
-OBJS = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRCS:.c=.o))
+SRCS	= $(wildcard $(SRC_DIR)/*/*.c)
+OBJS	= $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRCS:.c=.o))
 
 # Libft
-LIBFT = $(LIBFT_DIR)/libft.a
-LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
+LIBFT		= $(LIBFT_DIR)/libft.a
+LIBFT_FLAGS	= -L$(LIBFT_DIR) -lft
+
+# Valgrind Suppression
+VALGRIND_SUPP	= valgrind_suppression.supp
 
 # ASCII Art
 define ART
@@ -77,10 +80,42 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 $(LIBFT):
 	@make --silent -C $(LIBFT_DIR)
 
+$(VALGRIND_SUPP):
+	@echo "{" > $(VALGRIND_SUPP)
+	@echo "   readline_memory_leak_suppression" >> $(VALGRIND_SUPP)
+	@echo "   Memcheck:Leak" >> $(VALGRIND_SUPP)
+	@echo "   ..." >> $(VALGRIND_SUPP)
+	@echo "   fun:readline" >> $(VALGRIND_SUPP)
+	@echo "}" >> $(VALGRIND_SUPP)
+	@echo "{" >> $(VALGRIND_SUPP)
+	@echo "   readline_memory_leak_suppression" >> $(VALGRIND_SUPP)
+	@echo "   Memcheck:Leak" >> $(VALGRIND_SUPP)
+	@echo "   ..." >> $(VALGRIND_SUPP)
+	@echo "   fun:add_history" >> $(VALGRIND_SUPP)
+	@echo "}" >> $(VALGRIND_SUPP)
+	@echo "{" >> $(VALGRIND_SUPP)
+	@echo "   readline_memory_leak_suppression" >> $(VALGRIND_SUPP)
+	@echo "   Memcheck:Leak" >> $(VALGRIND_SUPP)
+	@echo "   ..." >> $(VALGRIND_SUPP)
+	@echo "   fun:_rl_*" >> $(VALGRIND_SUPP)
+	@echo "}" >> $(VALGRIND_SUPP)
+	@echo "{" >> $(VALGRIND_SUPP)
+	@echo "   suppress_execve_bin_error" >> $(VALGRIND_SUPP)
+	@echo "   Memcheck:Leak" >> $(VALGRIND_SUPP)
+	@echo "   ..." >> $(VALGRIND_SUPP)
+	@echo "   obj:/usr/bin/*" >> $(VALGRIND_SUPP)
+	@echo "}" >> $(VALGRIND_SUPP)
+	@echo "$(GREEN)Valgrind suppression file created!$(RESET)"
+
+valgrind: $(NAME) $(VALGRIND_SUPP)
+	@echo "$(YELLOW)Running valgrind with suppression file...$(RESET)"
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=./$(VALGRIND_SUPP) $(NAME)
+
 clean:
 	@clear
 	@make --silent -C $(LIBFT_DIR) clean
 	@rm -rf $(OBJ_DIR)
+	@rm -f $(VALGRIND_SUPP)
 
 fclean: clean
 	@make --silent -C $(LIBFT_DIR) fclean

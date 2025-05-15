@@ -11,10 +11,11 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include "../../include/signal.h"
 
 void	signal_init(void)
 {
-	signal(SIGINT, signal_handler);
+	//signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
 

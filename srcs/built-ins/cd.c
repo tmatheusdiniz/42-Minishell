@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include "../../include/builtins.h"
+#include "../../include/errors.h"
+#include "../../include/utils.h"
 
 void	update_oldpwd(t_env_v *env_v)
 {
@@ -33,8 +36,8 @@ void	update_oldpwd(t_env_v *env_v)
 
 void	update_pwd(t_env_v *env_v)
 {
-	t_env_v *pwd_node;
-	char 	pwd[PATH_MAX];
+	char	pwd[PATH_MAX];
+	t_env_v	*pwd_node;
 
 	if (getcwd(pwd, sizeof(pwd)) == NULL)
 	{
@@ -76,12 +79,12 @@ char	*get_target(t_env_v *env_v, char *input)
 	return (input);
 }
 
-int	cd(t_mini *mini, char **input)
+void	ft_cd(t_env_v *env_v, char **input)
 {
 	char	*target;
 	t_env_v	*home;
 
-	home = get_node_envp(mini->env_v, "HOME");
+	home = get_node_envp(env_v, "HOME");
 	if (input[2])
 		printf("Minishell: cd: too many arguments\n");
 	else
@@ -89,15 +92,18 @@ int	cd(t_mini *mini, char **input)
 		if (!input[1])
 		{
 			if (!(home->value))
-				return (error_message("Minishell: cd: HOME not set", 2), 0);
+			{
+				error_message("Minishell: cd: HOME not set", 2);
+				return ;
+			}
 			else
-				target =  home->value;
+				target = home->value;
 		}
 		else
-			target = get_target(mini->env_v, input[1]);
+			target = get_target(env_v, input[1]);
 		if (input[1] && ft_strncmp(input[1], "-", 2) == 0)
 			ft_printf("%s\n", target);
-		change_dir(mini->env_v, target);
+		change_dir(env_v, target);
 	}
-	return (0);
+	return ;
 }

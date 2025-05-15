@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include "../../include/structs.h"
+#include "../../include/utils.h"
 
 t_env_v	*get_node_envp(t_env_v *env_v, char *KEY)
 {

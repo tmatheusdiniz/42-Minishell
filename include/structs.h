@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/27 20:41:04 by mreinald          #+#    #+#             */
-/*   Updated: 2024/11/09 23:59:53 by mreinald         ###   ########.fr       */
+/*   Created: 2025/05/07 14:19:07 by mreinald          #+#    #+#             */
+/*   Updated: 2025/05/07 14:24:01 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
-char	*ft_strchr(const char *s, int c)
+typedef struct s_env_v
 {
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s ++;
-	}
-	if ((char)c == '\0')
-		return ((char *)s);
-	return (NULL);
-}
+	char			*key;
+	char			*value;
+	struct s_env_v	*next;
+}	t_env_v;
+
+typedef struct s_shell
+{
+	char	*input;
+	char	**envp;
+	t_env_v	*env_v;
+}		t_shell;
+
+#endif

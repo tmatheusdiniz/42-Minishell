@@ -11,16 +11,17 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include "../../include/structs.h"
 
-void	free_structs(t_mini *mini)
+void	free_structs(t_shell *shell)
 {
-	if (mini)
+	if (shell)
 	{
-		if (mini->input)
-			free (mini->input);
-		if (mini->env_v)
+		if (shell->input)
+			free (shell->input);
+		if (shell->env_v)
 			// call function to clean env_v
-		free(mini);
+		free(shell);
 	}
 }
 

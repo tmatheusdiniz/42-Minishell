@@ -11,21 +11,22 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include "../../include/utils.h"
 
 // temporary, after add other many more things for handle errors
-
-void	handle_errors(t_mini *mini, char *message, int errnbr, char **inp_split)
-{
-	if (inp_split)
-		free (inp_split);
-	free_structs(mini);
-	error_message(message, errnbr);
-	exit(errnbr);
-}
 
 void	error_message(char *message, int errnbr)
 {
 	errnbr = 2;
 	ft_putendl_fd(message, errnbr);
+}
+
+void	handle_errors(t_shell *shell, char *message, int errnbr, char **inp_split)
+{
+	if (inp_split)
+		free (inp_split);
+	free_structs(shell);
+	error_message(message, errnbr);
+	exit(errnbr);
 }
 

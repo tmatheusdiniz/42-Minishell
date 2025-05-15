@@ -27,7 +27,7 @@ bool	check_flag(char *str)
 		return (false);
 }
 
-int	echo(char **input)
+int	ft_echo(char **input)
 {
 	int		i;
 	bool	printline;

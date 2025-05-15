@@ -11,21 +11,30 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include "../../include/structs.h"
 
-int	env(t_env_v *env_v)
+int	add_env_var(char **envp, char *new_var)
 {
 	int	i;
 
 	i = 0;
-	if (env_v)
-		return (EXIT_FAILURE);	
-	while (env_v)
+	while (envp[i])
+		i ++;
+	envp[i] = (char *)malloc(sizeof(char *)*ft_strlen(new_var));
+	if (!envp[i])
+		return (1);
+	return (0);
+}
+
+int	ft_env(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
 	{
-		if (env_v->value)
-			ft_printf("declare -x %s=\"%s\"\n", env_v->key, env_v->value);
-		else
-			ft_printf("declare -x %s\n", env_v->key);
-		env_v = env_v->next;
+		ft_printf("%s\n", envp[i]);
+		i++;
 	}
 	return (EXIT_SUCCESS);
 }

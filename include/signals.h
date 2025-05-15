@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_striteri.c                                      :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 14:26:39 by mreinald          #+#    #+#             */
-/*   Updated: 2024/11/10 00:00:08 by mreinald         ###   ########.fr       */
+/*   Created: 2025/05/08 13:58:43 by mreinald          #+#    #+#             */
+/*   Updated: 2025/05/08 13:58:59 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-void	ft_striteri(char *s, void (*f)(unsigned int, char *))
-{
-	unsigned int	i;
+# include "./structs.h"
+# include <signal.h>
 
-	i = 0;
-	if (!s || !f)
-		return ;
-	while (s[i])
-	{
-		f(i, &s[i]);
-		i ++;
-	}
-}
+// signals
+void	signal_init(void);
+void	signal_handler(int sig);
+
+#endif

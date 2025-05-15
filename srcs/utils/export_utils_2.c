@@ -11,8 +11,11 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include "../../include/structs.h"
+#include "../../include/builtins.h"
+#include "../../include/utils.h"
 
-static int	find_position(t_env_v *env_v, char *new_key, int linked_size)
+int	find_position(t_env_v *env_v, char *new_key, int linked_size)
 {
 	int		i;
 	int		count;
