@@ -34,7 +34,7 @@ INCLUDES	= -I ./include -I ./lib/Libft/include -I /usr/include/readline
 SRC_DIR		= ./srcs
 OBJ_DIR		= objs
 BIN_DIR		= bin
-LIBFT_DIR	=./lib/Libft
+LIBFT_DIR	=./lib
 
 # Sources and Objects
 SRCS	= $(wildcard $(SRC_DIR)/*/*.c)

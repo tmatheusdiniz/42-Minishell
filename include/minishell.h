@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 // Libft
-# include "../lib/Libft/include/libft.h"
+# include "../lib/include/libft.h"
 
 // Standard Libraries
 # include <stdio.h>
