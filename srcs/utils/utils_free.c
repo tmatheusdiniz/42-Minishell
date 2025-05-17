@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 20:19:00 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/02 14:58:50 by cda-fons         ###   ########.fr       */
+/*   Created: 2025/04/10 13:18:17 by cda-fons          #+#    #+#             */
+/*   Updated: 2025/04/10 15:08:19 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	signal_init(void)
+void	free_structs(t_shell *shell)
 {
-	//signal(SIGINT, signal_handler);
-	signal(SIGQUIT, SIG_IGN);
+	if (shell)
+	{
+		if (shell->input)
+			free (shell->input);
+		if (shell->env_v)
+			// call function to clean env_v;
+		free(shell);
+	}
 }
 
-void	signal_handler(int sig)
+void	clean_matrix(char **matrix)
 {
-	if (sig == SIGINT)
-	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		printf("\n");
-		rl_redisplay();
-	}
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+		free(matrix[i++]);
+	free (matrix);
 }

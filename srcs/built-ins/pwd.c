@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 20:19:00 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/02 14:58:50 by cda-fons         ###   ########.fr       */
+/*   Created: 2025/03/06 15:23:59 by cda-fons          #+#    #+#             */
+/*   Updated: 2025/04/01 16:19:38 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	signal_init(void)
+int	ft_pwd(void)
 {
-	//signal(SIGINT, signal_handler);
-	signal(SIGQUIT, SIG_IGN);
-}
+	char	directory[PATH_MAX];
 
-void	signal_handler(int sig)
-{
-	if (sig == SIGINT)
+	if (getcwd(directory, sizeof(directory)) != NULL)
+		printf("%s\n", directory);
+	else
 	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		printf("\n");
-		rl_redisplay();
+		perror("pwd error:");
+		return (EXIT_FAILURE);
 	}
+	return (EXIT_SUCCESS);
 }

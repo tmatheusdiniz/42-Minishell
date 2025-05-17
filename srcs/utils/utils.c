@@ -10,22 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../include/minishell.h"
 
-int	get_index_env(t_mini *mini, char *var)
+char	**duplicate_env_v(char **envp)
 {
-	int	i;
-	int	len;
+	char	**duplicate;
+	int		i;
 
 	i = 0;
-	len = strlen(var);
-	while (mini->env[i])
+	while (envp[i])
+		i++;
+	duplicate = (char **)ft_calloc(sizeof(char *), i + 1);
+	if (!duplicate)
+		return (NULL);
+	i = 0;
+	while (envp[i])
 	{
-		if (ft_strncmp(mini->env[i], var, len) == 0 && mini->env[i][len] == '=')
-			return (i);
+		duplicate[i] = ft_strdup(envp[i]);
 		i++;
 	}
-	return (-1);
+	duplicate[i] = NULL;
+	return (duplicate);
 }
 
 char	*check_space(char *input)
@@ -33,9 +38,17 @@ char	*check_space(char *input)
 	int	i;
 
 	i = 0;
-	if (input[i] == ' ' || input[i] == '\t' || input[i] == '\n')
-	{
+	while (input[i] == ' ' || input[i] == '\t' || input[i] == '\n')
 		i++;
-	}
 	return (&input[i]);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
+		i ++;
+	return (s1[i] - s2[i]);
 }

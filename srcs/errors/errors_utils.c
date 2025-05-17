@@ -10,24 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../include/minishell.h"
 
-/// @brief 
-/// @param mini 
-/// @param message 
-/// @param errnbr 
-void	mini_errors(t_mini *mini, char *message, int errnbr)
-{
-	free(mini);
-	error_message(message, errnbr);
-}
+// temporary, after add other many more things for handle errors
 
-/// @brief 
-/// @param errnbr 
-/// @param message
 void	error_message(char *message, int errnbr)
 {
 	errnbr = 2;
 	ft_putendl_fd(message, errnbr);
 }
 
+void	handle_errors(t_shell *shell, char *message,
+		int errnbr, char **inp_split)
+{
+	if (inp_split)
+		free (inp_split);
+	free_structs(shell);
+	error_message(message, errnbr);
+	exit(errnbr);
+}

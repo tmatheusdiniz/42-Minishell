@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 20:19:00 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/02 14:58:50 by cda-fons         ###   ########.fr       */
+/*   Created: 2025/05/13 14:02:49 by mreinald          #+#    #+#             */
+/*   Updated: 2025/05/13 14:20:26 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	signal_init(void)
+void	ft_exit(long long code)
 {
-	//signal(SIGINT, signal_handler);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void	signal_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		printf("\n");
-		rl_redisplay();
-	}
+	ft_atoll("123");
 }

@@ -10,61 +10,52 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "../../include/minishell.h"
 
-t_mini	*init_mini(char **envp)
+t_shell	*init_shell(char **envp)
 {
-	t_mini	*mini;
+	t_shell	*shell;
 
-	mini = ft_calloc(sizeof(t_mini), 1);
-	if (!mini)
-		mini_errors(mini, "Calloc: Calloc failed", 0);
-	mini->env = duplicate_env(envp);
-	return (mini);
+	shell = ft_calloc(sizeof(t_shell), 0);
+	if (!shell)
+		return (NULL);
+	shell->envp = duplicate_env_v(envp);
+	shell->env_v = NULL;
+	shell->input = NULL;
+	return (shell);
+}
+
+t_env_v	*init_env_v(t_env_v *env_v, char **envp)
+{
+	env_v = envp_to_linked_l(envp);
+	if (!env_v)
+		return (NULL);
+	ft_sort_linked(env_v);
+	return (env_v);
 }
 
 int	main(int argc, char const **argv, char **envp)
 {
-	t_mini	*mini;
-	char	*input;
+	t_shell	*shell;
 	char	**input_split;
 
-	(void)argv;
-	(void)argc;
-	mini = init_mini(envp);
-	input = NULL;
+	if (argc > 1)
+		return (ft_printf("Minishell: %s: No such file or directory", argv[1]));
+	shell = init_shell(envp);
+	shell->env_v = init_env_v(shell->env_v, shell->envp);
+	input_split = NULL;
 	while (1)
 	{
 		signal_init();
-		input = readline("Minishell: ");
-		if (!input)
-		{
-			free_mini(mini, "exit", SIGQUIT, input_split);
-			break ;
-		}
-		if (!*input)
-			continue;
-		add_history(input);
-		input_split = ft_split(input, ' ');
+		shell->input = readline("Minishell: ");
+		if (!shell->input)
+			handle_errors(shell, "exit", SIGQUIT, input_split);
+		if (!*shell->input)
+			continue ;
+		add_history(shell->input);
+		input_split = ft_split(shell->input, ' ');
 		input_split[0] = check_space(input_split[0]);
-		if (!ft_strncmp(input_split[0], "cd", ft_strlen(input_split[0])))
-			cd(mini, input_split);
-		else if (!ft_strncmp(input_split[0], "pwd", ft_strlen(input_split[0])))
-			pwd();
-		else if (!ft_strncmp(input_split[0], "echo", ft_strlen(input_split[0])))
-			echo(input_split);
-		else if (!ft_strncmp(input_split[0], "env", ft_strlen(input_split[0])))
-		{
-			if (input_split[1])
-				printf("env: '%s': No such file or directory\n", input_split[1]);
-			else
-				env(mini->env);
-		}
-		else if (!ft_strncmp(input_split[0], "unset", ft_strlen(input_split[0])))
-			unset(mini, input_split[1]);
-		else
-			printf("Command '%s' not found\n", input_split[0]);
+		if (check_command(shell, input_split) == -1)
+			handle_errors(shell, "exit", SIGQUIT, input_split);
 	}
 }
