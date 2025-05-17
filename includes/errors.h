@@ -14,7 +14,7 @@
 
 # define ERRORS_H
 
-# include "./structs.h"
+# include <structs.h>
 
 // errors
 void	handle_errors(t_shell *shell, char *message,

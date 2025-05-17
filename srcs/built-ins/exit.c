@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include <minishell.h>
 
 void	ft_exit(long long code)
 {
-	ft_atoll("123");
+	(void)code;
+	//ft_atoll("123");
 }

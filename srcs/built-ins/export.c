@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 static void		print_all_var(t_env_v *env_v);
 static t_env_v	*key_and_value(t_env_v *env_v, char *arg);

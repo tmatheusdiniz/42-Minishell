@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include <minishell.h>
 
 int	find_position(t_env_v *env_v, char *new_key, int linked_size)
 {

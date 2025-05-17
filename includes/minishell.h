@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 // Libft
-# include "../lib/include/libft.h"
+# include <libft.h>
 
 // Standard Libraries
 # include <stdio.h>
@@ -43,12 +43,12 @@
 # include <termio.h>
 
 // System
-# include "builtins.h"
-# include "structs.h"
-# include "errors.h"
-# include "colors.h"
-# include "signals.h"
-# include "utils.h"
+# include <builtins.h>
+# include <structs.h>
+# include <errors.h>
+# include <colors.h>
+# include <signals.h>
+# include <utils.h>
 
 # define NAME_SHELL "Minishell: "
 

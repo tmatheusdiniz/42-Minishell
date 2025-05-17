@@ -13,7 +13,7 @@
 #ifndef SIGNALS_H
 # define SIGNALS_H
 
-# include "./structs.h"
+# include <structs.h>
 # include <signal.h>
 
 // signals

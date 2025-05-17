@@ -13,7 +13,7 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include "./structs.h"
+# include <structs.h>
 
 // ----------cd----------
 void	ft_cd(t_env_v *env_v, char **input);

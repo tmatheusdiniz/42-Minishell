@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include <minishell.h>
 
 int	check_args(int argc, char **envp)
 {
@@ -21,6 +21,7 @@ int	check_args(int argc, char **envp)
 	}
 	if (!envp || !*envp)
 		ft_putendl_fd(RED""DEFAULT, 2);
+	return (0);
 }
 
 int	check_command(t_shell *shell, char **input)

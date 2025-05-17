@@ -22,13 +22,7 @@ CYAN	= \033[3;36m
 RESET	= \033[0m
 
 # Program's name
-NAME	= bin/minishell
-
-# Compiler and Flags
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -g -Iincludes
-LDFLAGS		= -L/lib/x86_64-linux-gnu -lreadline -lncurses
-INCLUDES	= -I./include -I./lib/Libft/include -I /usr/include/readline
+NAME		= bin/minishell
 
 # Directories
 SRC_DIR		= ./srcs
@@ -36,13 +30,30 @@ OBJ_DIR		= objs
 BIN_DIR		= bin
 LIBFT_DIR	=./lib
 
+# Compiler and Flags
+CC			= cc
+CFLAGS		= -Wall -Wextra -Werror -g -Iincludes
+IFLAGS		= -Iincludes/ -I${LIBFT_DIR}/src
+INCLUDES	= -Iincludes -I$(LIBFT_DIR) -I$(LIBFT_DIR)/include -I/usr/include/readline
+LDFLAGS		= -L/lib/x86_64-linux-gnu -lreadline -lncurses
+
 # Sources and Objects
-SRCS	= $(wildcard $(SRC_DIR)/*/*.c)
-OBJS	= $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRCS:.c=.o))
+SRCS		= $(wildcard $(SRC_DIR)/*/*.c)
+OBJS		= $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRCS:.c=.o))
 
 # Libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 LIBFT_FLAGS	= -L$(LIBFT_DIR) -lft
+
+# Handle different OS configurations for readline
+UNAME := $(shell uname)
+ifeq ($(UNAME), Linux)
+    INCLUDE += -lhistory
+    READLINE =
+else ifeq ($(UNAME), Darwin)
+    INCLUDE = -L${LIBFT_DIR}/src -lft -L/opt/homebrew/opt/readline/lib -lreadline
+    READLINE = -I/opt/homebrew/opt/readline/include
+endif
 
 # Valgrind Suppression
 VALGRIND_SUPP	= valgrind_suppression.supp
@@ -61,7 +72,10 @@ endef
 export ART
 
 # Rules
-all: $(NAME)
+all: submodule $(NAME)
+
+submodule:
+	@git submodule update --init --recursive
 
 $(NAME): $(LIBFT) $(OBJS)
 	@mkdir -p $(BIN_DIR)
@@ -72,7 +86,7 @@ $(NAME): $(LIBFT) $(OBJS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) $(IFLAGS) -c $< -o $@
 	@sleep 0.02
 	@clear
 	@echo "$(RED)Compiling minishell sources $<$(RESET)"
@@ -123,4 +137,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re submodule

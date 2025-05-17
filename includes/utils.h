@@ -14,7 +14,7 @@
 
 # define UTILS_H
 
-# include "./structs.h"
+# include <structs.h>
 
 // ----------General----------
 int		check_command(t_shell *shell, char **input);
