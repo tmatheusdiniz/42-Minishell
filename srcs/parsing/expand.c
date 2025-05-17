@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 23:07:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/11 19:02:38 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/11 22:49:25 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	in_quotes(char cur, int *i, bool flag, int quotes)
 	return (flag);
 }
 
-char	*change_input(char *env)
+char	*change_input(char *input, int *i, char *env)
 {
 	char	string[999];
 	int		j;
@@ -39,7 +39,7 @@ char	*change_input(char *env)
 		{
 			string[j] = env[j];
 			j++;
-		}	
+		}
 	}
 	string[j] = '\0';
 	return (ft_strdup(string));
@@ -65,7 +65,7 @@ char	*expand(char *input, t_mini *mini)
 		index_env = get_index_env(mini, input);
 		input = clean_other_chars(input);
 		if (index_env != -1)
-			new_input = change_input(mini->env[index_env] + ft_strlen(input) + 1);	
+			new_input = change_input(input[i], &i, mini->env[index_env] + ft_strlen(input) + 1);
 	}
 	return (ft_strdup(new_input));
 }

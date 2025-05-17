@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/11 19:13:36 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/11 22:03:26 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ int	main(int argc, char const **argv, char **envp)
 		create_token_list(input_split, mini, 0);
 		print_token_list(mini->tokens);
 		root = build_tree(mini->tokens);
-		//print_ast_tree(root, 0);
+		print_ast_tree(root, 0);
 		cmds(input_split, mini);
 	}
 }

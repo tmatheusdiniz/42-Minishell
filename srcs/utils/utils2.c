@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 21:57:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/11 18:37:36 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/11 22:02:22 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,7 @@ char	*clean_other_chars(char *var)
 	while (var[i])
 	{
 		if (ft_isalpha(var[i]))
-		{
-			new_var[j] = var[i];
-			i++;
-			j++;
-		}
+			new_var[j++] = var[i++];
 		else
 			i++;
 	}
@@ -46,15 +42,10 @@ char	*clean_quotes(char *var)
 	while (var[i])
 	{
 		if (var[i] != 39 && var[i] != 34)
-		{
-			new_var[j] = var[i];
-			i++;
-			j++;
-		}
+			new_var[j++] = var[i++];
 		else
 			i++;
 	}
 	new_var[j] = '\0';
-	free(var);
 	return(ft_strdup(new_var));
 }
