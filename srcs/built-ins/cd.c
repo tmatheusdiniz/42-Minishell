@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include "../../include/builtins.h"
-#include "../../include/errors.h"
-#include "../../include/utils.h"
 
 void	update_oldpwd(t_env_v *env_v)
 {

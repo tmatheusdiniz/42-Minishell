@@ -11,13 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include "../../include/builtins.h"
-#include "../../include/structs.h"
-#include "../../include/utils.h"
-#include "../../include/errors.h"
-#include "../../include/signals.h"
-#include <readline/readline.h>
-#include <readline/history.h>
 
 t_shell	*init_shell(char **envp)
 {
@@ -58,7 +51,7 @@ int	main(int argc, char const **argv, char **envp)
 		if (!shell->input)
 			handle_errors(shell, "exit", SIGQUIT, input_split);
 		if (!*shell->input)
-			continue;
+			continue ;
 		add_history(shell->input);
 		input_split = ft_split(shell->input, ' ');
 		input_split[0] = check_space(input_split[0]);

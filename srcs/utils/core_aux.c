@@ -11,8 +11,17 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include "../../include/utils.h"
-#include "../../include/builtins.h"
+
+int	check_args(int argc, char **envp)
+{
+	if (argc > 1)
+	{
+		ft_putendl_fd(RED"Invalid input"DEFAULT, 2);
+		exit(1);
+	}
+	if (!envp || !*envp)
+		ft_putendl_fd(RED""DEFAULT, 2);
+}
 
 int	check_command(t_shell *shell, char **input)
 {

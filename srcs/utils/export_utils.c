@@ -11,10 +11,9 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include "../../include/builtins.h"
-#include "../../include/utils.h"
 
-static void	aux_sort_linked_l(t_env_v *env_v, int *j, int *flag, int linked_size)
+static void	aux_sort_linked_l(t_env_v *env_v,
+		int *j, int *flag, int linked_size)
 {
 	t_env_v	*current;
 	char	*save_key;

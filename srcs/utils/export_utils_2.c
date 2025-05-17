@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include "../../include/structs.h"
-#include "../../include/builtins.h"
-#include "../../include/utils.h"
 
 int	find_position(t_env_v *env_v, char *new_key, int linked_size)
 {
@@ -45,7 +42,7 @@ static int	check_duplicated(t_env_v *current, char *key)
 	return (0);
 }
 
- t_env_v	*set_only_key(t_env_v *env_v, char *key)
+t_env_v	*set_only_key(t_env_v *env_v, char *key)
 {
 	t_env_v	*new_node;
 	t_env_v	*head;
@@ -73,7 +70,8 @@ static int	check_duplicated(t_env_v *current, char *key)
 	return (head);
 }
 
-// I had to create this function for case which the var has a value with "=" inside.
+// I had to create this function for
+// case which the var has a value with "=" inside.
 // e.g.: TEST="xx=1 , yy=1"
 
 char	**aux_set(char *envp)

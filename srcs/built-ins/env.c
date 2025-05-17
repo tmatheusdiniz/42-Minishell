@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include "../../include/structs.h"
 
 int	add_env_var(char **envp, char *new_var)
 {
@@ -20,7 +19,7 @@ int	add_env_var(char **envp, char *new_var)
 	i = 0;
 	while (envp[i])
 		i ++;
-	envp[i] = (char *)malloc(sizeof(char *)*ft_strlen(new_var));
+	envp[i] = (char *)malloc(sizeof(char *) * ft_strlen(new_var));
 	if (!envp[i])
 		return (1);
 	return (0);

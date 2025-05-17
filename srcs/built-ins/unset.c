@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include "../../include/structs.h"
-#include "../../include/utils.h"
 
 static void	remove_head(t_env_v *head);
 

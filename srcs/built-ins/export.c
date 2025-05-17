@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include "../../include/builtins.h"
-#include "../../include/utils.h"
-#include "../../include/structs.h"
 
 static void		print_all_var(t_env_v *env_v);
 static t_env_v	*key_and_value(t_env_v *env_v, char *arg);

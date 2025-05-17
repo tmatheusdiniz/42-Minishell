@@ -26,9 +26,9 @@ NAME	= bin/minishell
 
 # Compiler and Flags
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -g
+CFLAGS		= -Wall -Wextra -Werror -g -Iincludes
 LDFLAGS		= -L/lib/x86_64-linux-gnu -lreadline -lncurses
-INCLUDES	= -I ./include -I ./lib/Libft/include -I /usr/include/readline
+INCLUDES	= -I./include -I./lib/Libft/include -I /usr/include/readline
 
 # Directories
 SRC_DIR		= ./srcs

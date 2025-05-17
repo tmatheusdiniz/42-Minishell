@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-#include "../../include/structs.h"
 
 void	free_structs(t_shell *shell)
 {
@@ -20,7 +19,7 @@ void	free_structs(t_shell *shell)
 		if (shell->input)
 			free (shell->input);
 		if (shell->env_v)
-			// call function to clean env_v
+			// call function to clean env_v;
 		free(shell);
 	}
 }

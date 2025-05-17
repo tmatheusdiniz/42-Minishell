@@ -36,11 +36,19 @@
 # include <sys/ioctl.h>
 
 // Limits and Directory
-#include <limits.h>
-#include <dirent.h>
+# include <limits.h>
+# include <dirent.h>
 
 // Terminal Control
-#include <termio.h>
+# include <termio.h>
+
+// System
+# include "builtins.h"
+# include "structs.h"
+# include "errors.h"
+# include "colors.h"
+# include "signals.h"
+# include "utils.h"
 
 # define NAME_SHELL "Minishell: "
 
