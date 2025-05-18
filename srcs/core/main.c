@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/11 22:03:26 by alberto          ###   ########.fr       */
+/*   Updated: 2025/05/18 19:07:58 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int	main(int argc, char const **argv, char **envp)
 {
 	t_shell	*shell;
 	char	**input_split;
-	void	*root;
+	//void	*root;
 
 	if (argc > 1)
 		return (ft_printf("Minishell: %s: No such file or directory", argv[1]));
@@ -168,7 +168,6 @@ int	main(int argc, char const **argv, char **envp)
 	while (1)
 	{
 		signal_init();
-<<<<<<< HEAD
 		shell->input = readline("Minishell: ");
 		if (!shell->input)
 			handle_errors(shell, "exit", SIGQUIT, input_split);
@@ -179,24 +178,5 @@ int	main(int argc, char const **argv, char **envp)
 		input_split[0] = check_space(input_split[0]);
 		if (check_command(shell, input_split) == -1)
 			handle_errors(shell, "exit", SIGQUIT, input_split);
-=======
-		input = readline("Minishell: ");
-		if (!input)
-		{
-			free_mini(mini, "exit", SIGQUIT, NULL);
-			break ;
-		}
-		if (!*input)
-			continue ;
-		add_history(input);
-		input_split = parsing(input, mini);
-		if (!input_split)
-			continue ;
-		create_token_list(input_split, mini, 0);
-		print_token_list(mini->tokens);
-		root = build_tree(mini->tokens);
-		print_ast_tree(root, 0);
-		cmds(input_split, mini);
->>>>>>> Parsing
 	}
 }

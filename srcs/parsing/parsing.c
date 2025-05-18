@@ -6,11 +6,11 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/08 20:14:58 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/18 19:11:54 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../include/minishell.h"
 
 bool	check_dollar(char *input)
 {

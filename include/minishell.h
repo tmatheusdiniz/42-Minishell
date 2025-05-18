@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/11 16:36:22 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/18 19:05:06 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,6 @@
 
 # define NAME_SHELL "Minishell: "
 
-<<<<<<< HEAD:include/minishell.h
-// core
-int		main(int argc, char const **argv, char **envp);
-
-#endif
-=======
 # define CMD 1
 # define EXEC  2
 # define PIPE  3
@@ -112,47 +106,18 @@ typedef struct s_mini
 
 //errors_utils.c
 void	error_message(char *message, int errnbr);
-void	mini_errors(t_mini *mini, char *message, int errnbr);
-
-//			builtins
-//cd.c
-int		cd(t_mini *mini, char **input);
-char	*get_target(char *input, t_mini *mini);
-int		change_dir(t_mini *mini, char *target);
-void	update_oldpwd(t_mini *mini);
-void	update_pwd(t_mini *mini);
-
-//env.c
-char	**duplicate_env(char **envp);
-int		env(char **args);
-
-//pwd.c
-int		pwd(void);
-
-//echo.c
-int		echo(char **input);
-
-//unset.c
-int		size_env(t_mini *mini);
-char	**new_env(t_mini *mini, int index_to_unset);
-int		unset(t_mini *mini, char *var);
 
 //utils.c
-int		get_index_env(t_mini *mini, char *var);
+int		get_index_env_parsing(t_mini *mini, char *var);
 char	*check_space(char *input);
 int		match_type(char *token);
 
 //utils2.c
 char	*clean_other_chars(char *var);
 char	*clean_quotes(char *var);
-
-//free.c
-void	free_mini(t_mini *mini, char *message, int errnbr, char **input_split);
 int		print_error(char *str1, char *str2, char *str3, char *message);
-void	free_token(t_token **token);
 
 //tokenizer.c
-//char	**tokenizer(char *input);
 void	create_token_list(char **input_split, t_mini *mini, int i);
 
 //parsing.c
@@ -178,9 +143,4 @@ void	*create_pipe_node(t_token *left_tokens, t_token *right_tokens);
 //split_token.c
 char	**split_token(char *str);
 
-//signals.c
-void	signal_init(void);
-void	signal_handler(int sig);
-
 #endif
->>>>>>> Parsing:includes/minishell.h

@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:13 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/10 15:30:04 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:50:53 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	update_oldpwd(t_env_v *env_v)
 			free(oldpwd->value);
 			oldpwd->value = ft_strdup(current_pwd->value);
 			if (!oldpwd->value)
-				return ; //Handle this error after
+				return ;
 		}
 	}
 }
@@ -54,7 +54,7 @@ void	update_pwd(t_env_v *env_v)
 int	change_dir(t_env_v *env_v, char *target)
 {
 	if (chdir(target) != 0)
-		ft_printf("Minishell: cd: %s: No such file or directory\n", target);
+		printf("Minishell: cd: %s: No such file or directory\n", target);
 	else
 	{
 		update_oldpwd(env_v);
@@ -99,7 +99,7 @@ void	ft_cd(t_env_v *env_v, char **input)
 		else
 			target = get_target(env_v, input[1]);
 		if (input[1] && ft_strncmp(input[1], "-", 2) == 0)
-			ft_printf("%s\n", target);
+			printf("%s\n", target);
 		change_dir(env_v, target);
 	}
 	return ;

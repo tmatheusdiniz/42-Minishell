@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 23:07:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/11 22:49:25 by alberto          ###   ########.fr       */
+/*   Updated: 2025/05/18 19:18:57 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../include/minishell.h"
 
 bool	in_quotes(char cur, int *i, bool flag, int quotes)
 {
@@ -22,7 +22,7 @@ bool	in_quotes(char cur, int *i, bool flag, int quotes)
 	if (cur == quotes)
 	{
 		flag = true;
-		(*i)++;	
+		(*i)++;
 	}
 	return (flag);
 }
@@ -33,12 +33,15 @@ char	*change_input(char *input, int *i, char *env)
 	int		j;
 
 	j = 0;
-	if (env)
+	while (input[*i])
 	{
-		while (env[j])
+		if (env)
 		{
+			while (env[j])
+			{
 			string[j] = env[j];
 			j++;
+			}
 		}
 	}
 	string[j] = '\0';
@@ -62,10 +65,11 @@ char	*expand(char *input, t_mini *mini)
 		new_input = clean_quotes(input);
 	else
 	{
-		index_env = get_index_env(mini, input);
+		index_env = get_index_env_parsing(mini, input);
 		input = clean_other_chars(input);
 		if (index_env != -1)
-			new_input = change_input(input[i], &i, mini->env[index_env] + ft_strlen(input) + 1);
+			new_input = change_input(input, &i,
+					mini->env[index_env] + ft_strlen(input) + 1);
 	}
 	return (ft_strdup(new_input));
 }
