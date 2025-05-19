@@ -134,6 +134,7 @@ clean:
 fclean: clean
 	@make --silent -C $(LIBFT_DIR) fclean
 	@rm -rf $(BIN_DIR)
+	@rm -rf $(LIBFT_DIR)
 
 re: fclean all
 

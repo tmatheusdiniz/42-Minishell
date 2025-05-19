@@ -1,0 +1,9 @@
+-Wall
+-Wextra
+-Werror
+-g
+-Iincludes
+-I./lib
+-I./lib/include
+-I/usr/include/readline
+
