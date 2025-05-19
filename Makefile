@@ -28,7 +28,7 @@ NAME		= bin/minishell
 SRC_DIR		= ./srcs
 OBJ_DIR		= objs
 BIN_DIR		= bin
-LIBFT_DIR	=./lib
+LIBFT_DIR	=./42-libft
 
 # Compiler and Flags
 CC			= cc
