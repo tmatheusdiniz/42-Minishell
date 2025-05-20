@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core_aux.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 14:08:30 by mreinald          #+#    #+#             */
-/*   Updated: 2025/04/19 15:50:38 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:45:13 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,15 @@ int	check_args(int argc, char **envp)
 {
 	if (argc > 1)
 	{
-		ft_putendl_fd(RED"Invalid input"DEFAULT, 2);
+		ft_putendl_fd("Invalid input", 2);
 		exit(1);
 	}
 	if (!envp || !*envp)
-		ft_putendl_fd(RED""DEFAULT, 2);
+	{
+		ft_putendl_fd("Whithout enviroment variables", 2);
+		exit(1);
+	}
+	return (0);
 }
 
 int	check_command(t_shell *shell, char **input)

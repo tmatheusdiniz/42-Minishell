@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:06:02 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/18 18:53:31 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:49:08 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,24 @@ int	ft_strcmp(char *s1, char *s2)
 	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
 		i ++;
 	return (s1[i] - s2[i]);
+}
+
+int	match_type(char *token)
+{
+	if (!ft_strncmp(token, "|", ft_strlen(token)))
+		return (PIPE);
+	else if (!ft_strncmp(token, "<", ft_strlen(token)))
+		return (INREDIR);
+	else if (!ft_strncmp(token, "<<", ft_strlen(token)))
+		return (HEREDOC);
+	else if (!ft_strncmp(token, ">", ft_strlen(token)))
+		return (OUTREDIR);
+	else if (!ft_strncmp(token, ">>", ft_strlen(token)))
+		return (APPEND);
+	else if (check_builtin(token))
+		return (CMD);
+	else if (!check_exec(token))
+		return (EXEC);
+	else
+		return (ARG);
 }

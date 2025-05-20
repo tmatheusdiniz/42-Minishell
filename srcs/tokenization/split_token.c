@@ -6,11 +6,11 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:09:56 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/08 18:53:49 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:27:10 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../include/minishell.h"
 
 size_t	i_tokens(char *str)
 {

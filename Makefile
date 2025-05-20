@@ -6,7 +6,7 @@
 #    By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/05 17:26:18 by mreinald          #+#    #+#              #
-#    Updated: 2025/05/18 18:12:05 by cda-fons         ###   ########.fr        #
+#    Updated: 2025/05/20 15:59:39 by cda-fons         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ NAME		= bin/minishell
 SRC_DIR		= ./srcs
 OBJ_DIR		= objs
 BIN_DIR		= bin
-LIBFT_DIR	=./lib
+LIBFT_DIR	= ./lib
 
 # Compiler and Flags
 CC			= cc
@@ -67,7 +67,7 @@ $(MAGENTA) ${D_BLUE}
 	██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║
 	██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗
 	╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝
-  $(CYAN)━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[$(RESET)Made by $(BLUE)@tmatheusdiniz and @carlos$(CYAN)]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$(RESET)
+  $(CYAN)━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[$(RESET)Made by $(BLUE)@mreinald and @cda-fons$(CYAN)]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$(RESET)
 endef
 export ART
 

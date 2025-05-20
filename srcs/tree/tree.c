@@ -6,11 +6,11 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:43:21 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/08 18:43:47 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:27:54 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../include/minishell.h"
 
 void	cut_tokens(t_token *tokens, t_token *base, t_token **left_tokens,
 		t_token **right_tokens)

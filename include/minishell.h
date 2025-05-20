@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/18 19:05:06 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:31:13 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,13 +115,12 @@ int		match_type(char *token);
 //utils2.c
 char	*clean_other_chars(char *var);
 char	*clean_quotes(char *var);
-int		print_error(char *str1, char *str2, char *str3, char *message);
 
 //tokenizer.c
 void	create_token_list(char **input_split, t_mini *mini, int i);
 
 //parsing.c
-void	cmds(char **input_split, t_mini *mini);
+//void	cmds(char **input_split, t_mini *mini);
 char	**parsing(char *input, t_mini *mini);
 bool	check_quotes(char *input_split, char quotes);
 

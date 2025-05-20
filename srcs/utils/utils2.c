@@ -6,11 +6,11 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 21:57:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/18 16:45:30 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:57:52 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 char	*clean_other_chars(char *var)
 {
@@ -48,4 +48,43 @@ char	*clean_quotes(char *var)
 	}
 	new_var[j] = '\0';
 	return (ft_strdup(new_var));
+}
+bool	check_exec(char *token)
+{
+	char	**splitted_path;
+	char	*path;
+	char	*the_return_of_spplited_path;
+
+	splitted_path = ft_split(getenv("PATH"), ':');
+	path = ft_strjoin(splitted_path[6], "/");
+	free(splitted_path);
+	the_return_of_spplited_path = ft_strjoin(path, token);
+	if (access(the_return_of_spplited_path, X_OK))
+	{
+		free(the_return_of_spplited_path);
+		free(path);
+		return (true);
+	}
+	free(the_return_of_spplited_path);
+	free(path);
+	return (false);
+}
+bool	check_builtin(char *token)
+{
+	if (!ft_strncmp(token, "cd", ft_strlen(token)))
+		return (true);
+	else if (!ft_strncmp(token, "pwd", ft_strlen(token)))
+		return (true);
+	else if (!ft_strncmp(token, "echo", ft_strlen(token)))
+		return (true);
+	else if (!ft_strncmp(token, "env", ft_strlen(token)))
+		return (true);
+	else if (!ft_strncmp(token, "unset", ft_strlen(token)))
+		return (true);
+	else if (!ft_strncmp(token, "export", ft_strlen(token)))
+		return (true);
+	else if (!ft_strncmp(token, "exit", ft_strlen(token)))
+		return (true);
+	else
+		return (false);
 }

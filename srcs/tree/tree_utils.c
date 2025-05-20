@@ -6,11 +6,11 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:54:14 by alberto           #+#    #+#             */
-/*   Updated: 2025/05/08 18:46:56 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:27:48 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../include/minishell.h"
 
 int	count_tokens(t_token *tokens)
 {

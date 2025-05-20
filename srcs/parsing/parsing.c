@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/18 19:11:54 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:26:54 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	**parsing(char *input, t_mini *mini)
 	free(input);
 	return (input_split);
 }
-
+/* 
 void	cmds(char **input_split, t_mini *mini)
 {
 	if (!ft_strncmp(input_split[0], "cd", ft_strlen(input_split[0])))
@@ -103,4 +103,4 @@ void	cmds(char **input_split, t_mini *mini)
 		unset(mini, input_split[1]);
 	else
 		printf("Command '%s' not found\n", input_split[0]);
-}
+} */
