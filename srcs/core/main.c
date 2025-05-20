@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/18 19:07:58 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:54:17 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ int	main(int argc, char const **argv, char **envp)
 		if (!*shell->input)
 			continue ;
 		add_history(shell->input);
-		input_split = ft_split(shell->input, ' ');
+		input_split = expand(shell->input, shell);
 		input_split[0] = check_space(input_split[0]);
 		if (check_command(shell, input_split) == -1)
 			handle_errors(shell, "exit", SIGQUIT, input_split);

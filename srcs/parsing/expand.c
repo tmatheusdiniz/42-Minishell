@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 23:07:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/18 19:18:57 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:58:09 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*expand(char *input, t_mini *mini)
 		new_input = clean_quotes(input);
 	else
 	{
-		index_env = get_index_env_parsing(mini, input);
+		index_env = get_index_env_parsing(shell, input);
 		input = clean_other_chars(input);
 		if (index_env != -1)
 			new_input = change_input(input, &i,

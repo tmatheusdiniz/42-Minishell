@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/20 15:26:54 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:54:27 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ bool	check_quotes(char *input_split, char quotes)
 	return (true);
 }
 
-char	**parsing(char *input, t_mini *mini)
+char	**parsing(char *input, t_shell *mini)
 {
 	char	**input_split;
 	int		i;

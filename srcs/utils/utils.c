@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:06:02 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/20 15:49:08 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/20 19:06:07 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*check_space(char *input)
 	return (&input[i]);
 }
 
-int	get_index_env_parsing(t_mini *mini, char *var)
+int	get_index_env_parsing(t_shell *mini, char *var)
 {
 	char	*clean_var;
 	int		len;
@@ -52,9 +52,9 @@ int	get_index_env_parsing(t_mini *mini, char *var)
 	i = 0;
 	clean_var = clean_other_chars(var);
 	len = ft_strlen(clean_var);
-	while (mini->env[i])
+	while (mini->envp[i])
 	{
-		if (ft_strncmp(mini->env[i], clean_var, len) == 0 && mini->env[i][len] == '=')
+		if (ft_strncmp(mini->envp[i], clean_var, len) == 0 && mini->envp[i][len] == '=')
 			return (i);
 		i++;
 	}

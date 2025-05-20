@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:19:07 by mreinald          #+#    #+#             */
-/*   Updated: 2025/05/07 14:24:01 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:57:31 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ typedef struct s_shell
 {
 	char	*input;
 	char	**envp;
+	void	*root;
+	t_token	*tokens;
 	t_env_v	*env_v;
 }		t_shell;
 
