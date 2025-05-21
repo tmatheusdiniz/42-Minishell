@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:56:50 by mreinald          #+#    #+#             */
-/*   Updated: 2025/05/20 15:58:05 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/21 17:49:09 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	**duplicate_env_v(char **envp);
 int		match_type(char *token);
 bool	check_exec(char *token);
 bool	check_builtin(char *token);
+char	*check_env_var(char *input, int *i);
 
 // ----------Linked List----------
 int		get_index_env(t_env_v *env_v, char *var);

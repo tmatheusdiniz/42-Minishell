@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:07:19 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/20 15:27:31 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/21 14:45:33 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	
 } */
 
-void	create_token_list(char **input_split, t_mini *mini, int i)
+void	create_token_list(char **input_split, t_shell *mini, int i)
 {
 	t_token	*new;
 	t_token	*cur;

@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 20:19:00 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/18 16:46:06 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:48:51 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	signal_init(void)
 {
+	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
 

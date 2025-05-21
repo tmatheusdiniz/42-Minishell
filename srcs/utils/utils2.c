@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 21:57:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/20 15:57:52 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/21 17:03:53 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,17 @@ bool	check_builtin(char *token)
 		return (true);
 	else
 		return (false);
+}
+
+char	*check_env_var(char *input, int *i)
+{
+	char	env_var[999];
+	int		j;
+
+	j = 0;
+	(*i)++;
+	while(input[*i] != ' ')
+		env_var[j++] = input[(*i)++];
+	env_var[j] = '\0';
+	return (ft_strdup(env_var));
 }

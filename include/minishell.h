@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/20 19:07:39 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/21 14:44:03 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,39 +63,6 @@
 # define EXIT_EOF 10
 # define EXIT_CMD 11
 
-typedef struct s_token	t_token;
-typedef struct s_exec	t_exec;
-typedef struct s_redir	t_redir;
-typedef struct s_pipe	t_pipe;
-
-typedef struct s_exec
-{
-	int		type;
-	char	**argv;
-}				t_exec;
-
-typedef struct s_redir
-{
-	int		type;
-	char	*file;
-	void	*next;
-}				t_redir;
-
-typedef struct s_pipe
-{
-	int		type;
-	void	*left;
-	void	*right;
-}				t_pipe;
-
-typedef struct s_token
-{
-	char	*token;
-	int		type;
-	int		index;
-	t_token	*next;
-	t_token	*prev;
-}				t_token;
 
 //errors_utils.c
 void	error_message(char *message, int errnbr);

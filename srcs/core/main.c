@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/20 18:54:17 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:53:21 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_shell	*init_shell(char **envp)
 {
 	t_shell	*shell;
 
-	shell = ft_calloc(sizeof(t_shell), 0);
+	shell = ft_calloc(sizeof(t_shell), 1);
 	if (!shell)
 		return (NULL);
 	shell->envp = duplicate_env_v(envp);
@@ -174,7 +174,9 @@ int	main(int argc, char const **argv, char **envp)
 		if (!*shell->input)
 			continue ;
 		add_history(shell->input);
-		input_split = expand(shell->input, shell);
+		input_split = parsing(shell->input, shell);
+		if (!input_split)
+			continue ;
 		input_split[0] = check_space(input_split[0]);
 		if (check_command(shell, input_split) == -1)
 			handle_errors(shell, "exit", SIGQUIT, input_split);

@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/20 18:54:27 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/21 18:40:57 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ char	**parsing(char *input, t_shell *mini)
 				"syntax error - the quote is open", NULL, NULL);
 			return (NULL);
 		}
+		if (check_quotes(input_split[0], '"')
+			|| check_quotes(input_split[0], '\''))
+			input_split[0] = clean_quotes(input_split[0]);
 		if (check_dollar(input_split[i]))
 			input_split[i] = expand(input_split[i], mini);
 		i++;
