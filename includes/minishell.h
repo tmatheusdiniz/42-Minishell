@@ -48,6 +48,7 @@
 # include <errors.h>
 # include <colors.h>
 # include <signals.h>
+# include <control.h>
 # include <utils.h>
 
 # define NAME_SHELL "Minishell: "

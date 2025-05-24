@@ -3,7 +3,7 @@
 -Werror
 -g
 -Iincludes
--I./lib
--I./lib/include
+-I./42-libft
+-I./42-libft/include
 -I/usr/include/readline
 

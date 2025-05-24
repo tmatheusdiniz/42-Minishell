@@ -16,21 +16,26 @@
 
 # include <structs.h>
 
-// ----------General----------
+// ----------Main----------
+int		check_args(int argc, char const **argv, char **envp);
 int		check_command(t_shell *shell, char **input);
-int		ft_strcmp(char *s1, char *s2);
-char	*check_space(char *input);
-char	**duplicate_env_v(char **envp);
+void	handle_env_vars(t_shell *shell, char **envp);
+t_shell	*init_shell(void);
 
 // ----------Linked List----------
 int		get_index_env(t_env_v *env_v, char *var);
 int		find_position(t_env_v *env_v, char *new_key, int linked_size);
 int		count_linked_list(t_env_v *list);
-void	*envp_to_linked_l(char **envp);
+t_env_v	*envp_to_linked_l(char **envp);
 t_env_v	*get_node_envp(t_env_v *env_v, char *KEY);
 
 // free
 void	free_structs(t_shell *shell);
 void	clean_matrix(char **matrix);
+
+// ----------General----------
+int		ft_strcmp(char *s1, char *s2);
+char	*check_space(char *input);
+char	**duplicate_env_v(char **envp);
 
 #endif

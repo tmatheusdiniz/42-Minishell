@@ -17,7 +17,7 @@
 # include <signal.h>
 
 // signals
-void	signal_init(void);
-void	signal_handler(int sig);
+void	signal_handler(void);
+void	signal_ctrl(int signal);
 
 #endif

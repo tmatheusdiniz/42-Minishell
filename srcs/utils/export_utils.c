@@ -79,7 +79,7 @@ void	*create_node(char *key_name, char *content)
 	return (env_v);
 }
 
-void	*envp_to_linked_l(char **envp)
+t_env_v	*envp_to_linked_l(char **envp)
 {
 	int		i;
 	t_env_v	*head;
@@ -105,5 +105,5 @@ void	*envp_to_linked_l(char **envp)
 			current->next = new_node;
 		current = new_node;
 	}
-	return ((t_env_v *)head);
+	return (head);
 }

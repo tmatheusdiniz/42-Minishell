@@ -121,7 +121,7 @@ $(VALGRIND_SUPP):
 	@echo "}" >> $(VALGRIND_SUPP)
 	@echo "$(GREEN)Valgrind suppression file created!$(RESET)"
 
-valgrind: $(NAME) $(VALGRIND_SUPP)
+valgrind: submodule $(LIBFT) $(NAME) $(VALGRIND_SUPP)
 	@echo "$(YELLOW)Running valgrind with suppression file...$(RESET)"
 	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=./$(VALGRIND_SUPP) $(NAME)
 

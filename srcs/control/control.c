@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   control.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 14:19:07 by mreinald          #+#    #+#             */
-/*   Updated: 2025/05/07 14:24:01 by mreinald         ###   ########.fr       */
+/*   Created: 2025/05/21 14:37:06 by mreinald          #+#    #+#             */
+/*   Updated: 2025/05/21 14:45:06 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-# define STRUCTS_H
+#include "signals.h"
+#include <minishell.h>
 
-typedef struct s_env_v
+void	control(t_shell *shell, char **envp)
 {
-	char			*key;
-	char			*value;
-	struct s_env_v	*next;
-}	t_env_v;
+	(void)envp;
+	shell->input = readline("Minishell: ");
+	if (!shell->input)
+		return ; // Temporary handle
+	signal_handler();
+	control(shell, envp);
+}
 
-typedef struct s_shell
-{
-	char	*input;
-	char	**input_split;
-	char	**envp;
-	t_env_v	*env_v;
-}		t_shell;
-
-#endif

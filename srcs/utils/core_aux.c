@@ -12,8 +12,9 @@
 
 #include <minishell.h>
 
-int	check_args(int argc, char **envp)
+int	check_args(int argc, char const **argv, char **envp)
 {
+	(void)argv;
 	if (argc > 1)
 	{
 		ft_putendl_fd(RED"Invalid input"DEFAULT, 2);
@@ -49,4 +50,24 @@ int	check_command(t_shell *shell, char **input)
 	else
 		ft_printf("%s: command not found\n", input[0]);
 	return (0);
+}
+
+t_shell	*init_shell(void)
+{
+	t_shell	*shell;
+	shell = ft_calloc(1, sizeof(t_shell));
+	if (!shell)
+		return (NULL);
+	shell->input = NULL;
+	shell->input_split = NULL;
+	shell->envp = NULL;
+	shell->env_v = NULL;
+	return (shell);
+}
+
+void	handle_env_vars(t_shell *shell, char **envp)
+{
+	shell->env_v = envp_to_linked_l(envp);
+	if (!shell->env_v)
+		exit(0);
 }

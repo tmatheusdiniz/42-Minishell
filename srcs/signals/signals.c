@@ -12,19 +12,18 @@
 
 #include <minishell.h>
 
-void	signal_init(void)
+void	signal_ctrl(int signal)
 {
-	//signal(SIGINT, signal_handler);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void	signal_handler(int sig)
-{
-	if (sig == SIGINT)
+	if (signal == SIGINT)
 	{
+		printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		printf("\n");
 		rl_redisplay();
 	}
+}
+
+void	signal_handler(void)
+{
+	signal(SIGINT, signal_ctrl);
 }
