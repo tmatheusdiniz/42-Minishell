@@ -24,13 +24,15 @@ t_shell	*init_shell(void);
 
 // ----------Linked List----------
 int		get_index_env(t_env_v *env_v, char *var);
-int		find_position(t_env_v *env_v, char *new_key, int linked_size);
 int		count_linked_list(t_env_v *list);
 t_env_v	*envp_to_linked_l(char **envp);
 t_env_v	*get_node_envp(t_env_v *env_v, char *KEY);
 
+// ----------Print----------
+void	print_exit(void);
+
 // free
-void	free_structs(t_shell *shell);
+void	free_shell(t_shell *shell);
 void	clean_matrix(char **matrix);
 
 // ----------General----------

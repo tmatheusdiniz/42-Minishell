@@ -12,20 +12,11 @@
 
 #include <minishell.h>
 
-// temporary, after add other many more things for handle errors
-
-void	error_message(char *message, int errnbr)
+void	print_exit(void)
 {
-	errnbr = 2;
-	ft_putendl_fd(message, errnbr);
-}
+	static int	value = 0;
 
-void	handle_errors(t_shell *shell, char *message,
-		int errnbr, char **inp_split)
-{
-	if (inp_split)
-		free (inp_split);
-	free_structs(shell);
-	error_message(message, errnbr);
-	exit(errnbr);
+	if (value == 0)
+		ft_putstr_fd("exit\n", 1);
+	value++;
 }

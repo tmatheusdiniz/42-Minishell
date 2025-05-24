@@ -50,8 +50,14 @@
 # include <signals.h>
 # include <control.h>
 # include <utils.h>
+# include <input.h>
 
-# define NAME_SHELL "Minishell: "
+# define ESC_START	"\001\033[1;31m\002"
+# define ESC_CODE	"\001\033[1;34m\002"
+# define ESC_PROMPT	"\001\033[1;32m\002"
+# define ESC_RESET	"\001\033[0m\002"
+# define SHELL_NAME "[Minishell]"
+# define SYMBOL		"➜"
 
 // core
 int		main(int argc, char const **argv, char **envp);

@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.h                                           :+:      :+:    :+:   */
+/*   exit_options.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 13:55:32 by mreinald          #+#    #+#             */
-/*   Updated: 2025/05/08 13:56:17 by mreinald         ###   ########.fr       */
+/*   Created: 2025/05/24 20:08:41 by mreinald          #+#    #+#             */
+/*   Updated: 2025/05/24 21:00:58 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERRORS_H
+#include <minishell.h>
 
-# define ERRORS_H
-
-# include <structs.h>
-
-// ----------errors----------
-void	handle_errors(t_shell *shell, char *message,
-			int errnbr, char **inp_split);
-void	error_message(char *message, int errnbr);
-
-// ----------exit_code----------
-int		exit_code(int value);
-void	malloc_failure(t_shell *shell, char *function);
-
-
-#endif
+void	malloc_failure(t_shell *shell, char *function)
+{
+	if (shell)
+		free_shell(shell);
+	ft_putstr_fd(RED"MALLOC ERROR"DEFAULT, 2);
+	ft_putendl_fd(function, 2);
+	exit (1);
+}

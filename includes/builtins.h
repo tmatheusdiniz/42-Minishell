@@ -26,6 +26,8 @@ char	*get_target(t_env_v *env_v, char *input);
 void	ft_export(t_env_v *env_v, char *argument);
 void	ft_sort_linked(t_env_v *env_v);
 void	*create_node(char *key_name, char *content);
+int		find_position(t_env_v *env_v, char *new_key, int linked_size);
+int		check_duplicated(t_env_v *current, char *key);
 char	**aux_set(char *envp);
 t_env_v	*set_only_key(t_env_v *env_v, char *key);
 

@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.h                                           :+:      :+:    :+:   */
+/*   input.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 13:55:32 by mreinald          #+#    #+#             */
-/*   Updated: 2025/05/08 13:56:17 by mreinald         ###   ########.fr       */
+/*   Created: 2025/05/24 21:34:25 by mreinald          #+#    #+#             */
+/*   Updated: 2025/05/24 21:43:48 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERRORS_H
+#include <structs.h>
+#include <stdbool.h>
 
-# define ERRORS_H
-
-# include <structs.h>
-
-// ----------errors----------
-void	handle_errors(t_shell *shell, char *message,
-			int errnbr, char **inp_split);
-void	error_message(char *message, int errnbr);
-
-// ----------exit_code----------
-int		exit_code(int value);
-void	malloc_failure(t_shell *shell, char *function);
-
-
-#endif
+bool	input_validation(t_shell *shell)
+{
+	if (shell->input)
+		return (true);
+	return (false);
+}

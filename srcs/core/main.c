@@ -12,8 +12,6 @@
 
 #include <minishell.h>
 
-void	update_zhlvl();
-
 int	main(int argc, char const **argv, char **envp)
 {
 	t_shell	*shell;

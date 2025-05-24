@@ -16,14 +16,17 @@ void	signal_ctrl(int signal)
 {
 	if (signal == SIGINT)
 	{
-		printf("\n");
+		write(2, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		exit_code(130);
 	}
 }
 
 void	signal_handler(void)
 {
 	signal(SIGINT, signal_ctrl);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 }

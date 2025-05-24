@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.h                                           :+:      :+:    :+:   */
+/*   exit_code.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 13:55:32 by mreinald          #+#    #+#             */
-/*   Updated: 2025/05/08 13:56:17 by mreinald         ###   ########.fr       */
+/*   Created: 2025/05/24 18:54:04 by mreinald          #+#    #+#             */
+/*   Updated: 2025/05/24 18:55:21 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERRORS_H
+#include <minishell.h>
 
-# define ERRORS_H
+int	exit_code(int value)
+{
+	static int	code = 0;
 
-# include <structs.h>
-
-// ----------errors----------
-void	handle_errors(t_shell *shell, char *message,
-			int errnbr, char **inp_split);
-void	error_message(char *message, int errnbr);
-
-// ----------exit_code----------
-int		exit_code(int value);
-void	malloc_failure(t_shell *shell, char *function);
-
-
-#endif
+	if (value == -1)
+		return (code);
+	code = value;
+	return (code);
+}

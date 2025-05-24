@@ -23,6 +23,7 @@ typedef struct s_env_v
 typedef struct s_shell
 {
 	char	*input;
+	char	*cwd;
 	char	**input_split;
 	char	**envp;
 	t_env_v	*env_v;

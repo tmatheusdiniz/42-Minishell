@@ -10,16 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "utils.h"
 #include <minishell.h>
 
-void	free_structs(t_shell *shell)
+static void	free_env_v(t_env_v *env_v)
+{
+	t_env_v	*current;
+	t_env_v	*next;
+
+	current = env_v;
+	while (current)
+	{
+		next = current->next;
+		if (current->key)
+			free (current->key);
+		if (current->value)
+			free (current->value);
+		free(current);
+		current = next;
+	}
+}
+
+void	free_shell(t_shell *shell)
 {
 	if (shell)
 	{
 		if (shell->input)
 			free (shell->input);
+		if (shell->input_split)
+			clean_matrix(shell->input_split);
+		if (shell->cwd)
+			free (shell->cwd);
+		if (shell->envp)
+			clean_matrix(shell->envp);
 		if (shell->env_v)
-			// call function to clean env_v;
+			free_env_v(shell->env_v);
 		free(shell);
 	}
 }

@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errors.h"
 #include <minishell.h>
 
 int	check_args(int argc, char const **argv, char **envp)
@@ -55,9 +56,10 @@ int	check_command(t_shell *shell, char **input)
 t_shell	*init_shell(void)
 {
 	t_shell	*shell;
+
 	shell = ft_calloc(1, sizeof(t_shell));
 	if (!shell)
-		return (NULL);
+		malloc_failure(shell, "init_shell");
 	shell->input = NULL;
 	shell->input_split = NULL;
 	shell->envp = NULL;
@@ -69,5 +71,5 @@ void	handle_env_vars(t_shell *shell, char **envp)
 {
 	shell->env_v = envp_to_linked_l(envp);
 	if (!shell->env_v)
-		exit(0);
+		malloc_failure(shell, "handle_env_vars");
 }
