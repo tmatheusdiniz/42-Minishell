@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:06:02 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/20 19:06:07 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:45:38 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char	*check_space(char *input)
 {
 	int	i;
 
+	if (!input)
+		return (NULL);
 	i = 0;
 	while (input[i] == ' ' || input[i] == '\t' || input[i] == '\n')
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/21 18:40:57 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/23 11:23:04 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,50 +14,48 @@
 
 bool	check_dollar(char *input)
 {
-	int	i;
-	int	flag;
-	int	pid;
+	int		i;
+	bool	flag;
+	int		pid;
 
-	flag = 0;
+	flag = false;
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] && (input[i] == '$' && flag == 1))
+		if (input[i] == '$')
 		{
-			pid = getpid();
-			ft_putnbr_fd(pid, 1);
-			flag = 0;
+			flag = true;
+			if (input[i + 1] == '$' && flag)
+			{
+				pid = getpid();
+				ft_putnbr_fd(pid, 1);
+				flag = false;
+			}
 		}
-		if (input[i] && input[i] == '$')
-			flag = 1;
 		i++;
 	}
-	if (flag == 1)
-		return (true);
-	return (false);
+	return (flag);
 }
 
 bool	check_quotes(char *input_split, char quotes)
 {
-	int	i;
-	int	flag_quotes;
+	int		i;
+	bool	flag_quotes;
 
-	flag_quotes = 0;
 	i = 0;
+	flag_quotes = false;
 	while (input_split[i])
 	{
-		if (input_split[i] && (input_split[i] == quotes && flag_quotes == 1))
+		if (input_split[i] == quotes)
 		{
-			flag_quotes = 0;
-			i++;
+			if (flag_quotes)
+				flag_quotes = false;
+			else
+				flag_quotes = true;
 		}
-		if (input_split[i] && input_split[i] == quotes)
-			flag_quotes = 1;
 		i++;
 	}
-	if (flag_quotes == 1)
-		return (false);
-	return (true);
+	return (flag_quotes);
 }
 
 char	**parsing(char *input, t_shell *mini)
@@ -67,10 +65,11 @@ char	**parsing(char *input, t_shell *mini)
 
 	i = 0;
 	input_split = split_token(input);
+	input_split[0] = check_space(input_split[0]);
 	while (input_split[i])
 	{
-		if (!check_quotes(input_split[i], '"')
-			|| !check_quotes(input_split[i], '\''))
+		if (check_quotes(input_split[i], '"')
+			|| check_quotes(input_split[i], '\''))
 		{
 			print_error(NAME_SHELL,
 				"syntax error - the quote is open", NULL, NULL);

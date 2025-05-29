@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:18:17 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/20 15:44:06 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:10:59 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,9 @@ void	clean_matrix(char **matrix)
 void	clean_env_v(t_env_v *env)
 {
 	t_env_v	*cur;
-	int	i;
 
 	if (!env)
 		return ;
-	i = 0;
 	cur = env;
 	while (cur)
 	{

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+         #
+#    By: alberto <alberto@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/05 17:26:18 by mreinald          #+#    #+#              #
-#    Updated: 2025/05/20 15:59:39 by cda-fons         ###   ########.fr        #
+#    Updated: 2025/05/22 11:34:29 by alberto          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,7 +92,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo "$(RED)Compiling minishell sources $<$(RESET)"
 
 $(LIBFT):
-	@make --silent -C $(LIBFT_DIR)
+	@make --silent -C $(LIBFT_DIR) libft.a
 
 $(VALGRIND_SUPP):
 	@echo "{" > $(VALGRIND_SUPP)

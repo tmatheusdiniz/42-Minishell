@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 21:57:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/21 17:03:53 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/22 10:38:19 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,16 @@ char	*check_env_var(char *input, int *i)
 	char	env_var[999];
 	int		j;
 
+	if (!input)
+		return (NULL);
 	j = 0;
 	(*i)++;
-	while(input[*i] != ' ')
-		env_var[j++] = input[(*i)++];
+	while(input[*i] && input[*i] != ' ')
+	{
+		env_var[j] = input[*i];
+		(*i)++;
+		j++;
+	}
 	env_var[j] = '\0';
 	return (ft_strdup(env_var));
 }

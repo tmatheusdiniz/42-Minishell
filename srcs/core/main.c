@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:01:20 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/21 15:53:21 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:44:35 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,6 @@ int	main(int argc, char const **argv, char **envp)
 		input_split = parsing(shell->input, shell);
 		if (!input_split)
 			continue ;
-		input_split[0] = check_space(input_split[0]);
 		if (check_command(shell, input_split) == -1)
 			handle_errors(shell, "exit", SIGQUIT, input_split);
 	}
