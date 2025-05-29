@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/23 11:23:04 by alberto          ###   ########.fr       */
+/*   Updated: 2025/05/29 19:45:18 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,14 @@ char	**parsing(char *input, t_shell *mini)
 		}
 		if (check_quotes(input_split[0], '"')
 			|| check_quotes(input_split[0], '\''))
-			input_split[0] = clean_quotes(input_split[0]);
+			input_split[0] = clean_quotes(input_split[0], 0 , 0);
 		if (check_dollar(input_split[i]))
 			input_split[i] = expand(input_split[i], mini);
+		else
+			clean_quotes(input_split[i], 0 , -1);
 		i++;
 	}
-	free(input);
-	return (input_split);
+	return (free(input), input_split);
 }
 /* 
 void	cmds(char **input_split, t_mini *mini)

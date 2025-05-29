@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 21:57:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/22 10:38:19 by alberto          ###   ########.fr       */
+/*   Updated: 2025/05/29 20:11:50 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,33 @@ char	*clean_other_chars(char *var)
 	return (ft_strdup(new_var));
 }
 
-char	*clean_quotes(char *var)
+char	*clean_quotes(char *var, int i, int j)
 {
-	int		i;
 	char	new_var[999];
-	int		j;
+	bool	d_flag;
+	bool	s_flag;
 
-	i = 0;
-	j = 0;
+	d_flag = false;
+	s_flag = false;
 	while (var[i])
 	{
-		if (var[i] != 39 && var[i] != 34)
-			new_var[j++] = var[i++];
-		else
+		if (var[i] == '"' && !s_flag)
+		{
+			d_flag = !d_flag;
 			i++;
+		}
+		else if (var[i] == '\'' && !d_flag)
+		{
+			s_flag = !s_flag;
+			i++;
+		}
+		else
+			new_var[j++] = var[i++];
 	}
 	new_var[j] = '\0';
 	return (ft_strdup(new_var));
 }
+
 bool	check_exec(char *token)
 {
 	char	**splitted_path;
@@ -98,7 +107,8 @@ char	*check_env_var(char *input, int *i)
 		return (NULL);
 	j = 0;
 	(*i)++;
-	while(input[*i] && input[*i] != ' ')
+	while(input[*i] && input[*i] != ' ' && (input[*i] != '"'
+			&& input[*i] != '\''))
 	{
 		env_var[j] = input[*i];
 		(*i)++;
