@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:06:02 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/22 11:45:38 by alberto          ###   ########.fr       */
+/*   Updated: 2025/06/01 00:01:53 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,33 @@ int	match_type(char *token)
 		return (EXEC);
 	else
 		return (ARG);
+}
+
+int	check_command(t_shell *shell, char **input)
+{
+	if (!ft_strncmp(input[0], "cd", ft_strlen(input[0])))
+		ft_cd(shell->env_v, input);
+	else if (!ft_strncmp(input[0], "pwd", ft_strlen(input[0])))
+		ft_pwd();
+	else if (!ft_strncmp(input[0], "echo", ft_strlen(input[0])))
+		ft_echo(input);
+	else if (!ft_strncmp(input[0], "env", ft_strlen(input[0])))
+	{
+		if (input[1])
+		{
+			ft_printf("env: '%s': No such file or directory\n", input[1]);
+			return (-1);
+		}
+		else
+			ft_env(shell->envp);
+	}
+	else if (!ft_strncmp(input[0], "unset", ft_strlen(input[0])))
+		ft_unset(shell->env_v, input[1]);
+	else if (!(ft_strncmp(input[0], "export", ft_strlen(input[0]))))
+		ft_export(shell->env_v, input[1]);
+	else if (!check_exec(input[0]))
+		printf("Exec\n");
+	else
+		ft_printf("%s: command not found\n", input[0]);
+	return (0);
 }
