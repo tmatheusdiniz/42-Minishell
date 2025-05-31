@@ -52,12 +52,20 @@
 # include <utils.h>
 # include <input.h>
 
+/*
 # define ESC_START	"\001\033[1;31m\002"
 # define ESC_CODE	"\001\033[1;34m\002"
 # define ESC_PROMPT	"\001\033[1;32m\002"
-# define ESC_RESET	"\001\033[0m\002"
 # define SHELL_NAME "[Minishell]"
-# define SYMBOL		"➜"
+# define SYMBOL		"➜ "
+*/
+
+# define ESC_START "\001\033[1;91m\002"
+# define ESC_GREEN "\001\033[0;92m\002"
+# define ESC_RESET "\001\033[0m\002"
+# define PROMPT_START "\001\033[1;91m\002Minishell[\001\033[0;92m\002"
+# define PROMPT_MID "\001\033[1;91m\002][\001\033[0;92m\002"
+# define PROMPT_END "\001\033[1;91m\002] \001\033[0m\002→ "
 
 // core
 int		main(int argc, char const **argv, char **envp);

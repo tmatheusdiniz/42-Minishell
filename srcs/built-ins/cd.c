@@ -90,7 +90,7 @@ void	ft_cd(t_env_v *env_v, char **input)
 		{
 			if (!(home->value))
 			{
-				error_message("Minishell: cd: HOME not set", 2);
+				ft_printf("Minishell: cd: HOME not set\n"); // temporary
 				return ;
 			}
 			else

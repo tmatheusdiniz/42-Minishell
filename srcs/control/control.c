@@ -10,38 +10,35 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "history.h"
-#include "utils.h"
 #include <minishell.h>
-#include <stdlib.h>
-#include <unistd.h>
 
 static void	user_output(t_shell *shell)
 {
-	char	*prompt;
-	char	*cwd;
 	char	*code;
+	char	*cwd;
 	char	*tmp;
-	char	*tmp2;
 
 	code = ft_itoa(exit_code(-1));
 	cwd = getcwd(NULL, 0);
-	prompt = ESC_START SHELL_NAME ESC_RESET;
-	tmp = ft_strjoin(prompt, code);
-	free (code);
+	if (!code || !cwd)
+		return (free(code), free(cwd), malloc_failure(shell, "user_output"));
+	tmp = ft_strjoin(PROMPT_START, code);
+	free(code);
 	if (!tmp)
-		malloc_failure(shell, "user_output");
-	tmp2 = ft_strjoin(tmp, ESC_CODE);
-	free (tmp);
-	if (!tmp2)
-		malloc_failure(shell, "user_output");
-	tmp = ft_strjoin(tmp2, cwd);
-	free (cwd);
+		return (free(cwd), malloc_failure(shell, "user_output"));
+	code = ft_strjoin(tmp, PROMPT_MID);
+	free(tmp);
+	if (!code)
+		return (free(cwd), malloc_failure(shell, "user_output"));
+	tmp = ft_strjoin(code, cwd);
+	free(code);
+	free(cwd);
 	if (!tmp)
+		return (malloc_failure(shell, "user_output"));
+	shell->cwd = ft_strjoin(tmp, PROMPT_END);
+	free(tmp);
+	if (!shell->cwd)
 		malloc_failure(shell, "user_output");
-	shell->cwd = ft_strjoin(tmp, SYMBOL);
-	free (cwd);
-	free (tmp);
 }
 
 void	control(t_shell *shell, char **envp)

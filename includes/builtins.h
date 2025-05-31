@@ -44,4 +44,7 @@ int		ft_echo(char **input);
 // ----------unset----------
 int		ft_unset(t_env_v *env_v, char *env_var);
 
+// ----------exit----------
+void	ft_exit(t_shell *shell);
+
 #endif

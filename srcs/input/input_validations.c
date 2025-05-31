@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.h                                            :+:      :+:    :+:   */
+/*   input_validations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/24 21:34:25 by mreinald          #+#    #+#             */
-/*   Updated: 2025/05/24 21:43:48 by mreinald         ###   ########.fr       */
+/*   Created: 2025/05/26 14:27:54 by mreinald          #+#    #+#             */
+/*   Updated: 2025/05/26 14:28:04 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INPUT_H
-# define INPUT_H
+#include <minishell.h>
 
-# include <structs.h>
-# include <stdbool.h>
-
-bool	input_validation(t_shell *shell);
-
-#endif
+bool	input_validation(t_shell *shell)
+{
+	if (shell->input)
+		return (true);
+	return (false);
+}
