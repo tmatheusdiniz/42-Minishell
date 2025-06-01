@@ -1,49 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 15:06:02 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/06/01 00:01:53 by alberto          ###   ########.fr       */
+/*   Created: 2025/06/01 02:50:43 by mreinald          #+#    #+#             */
+/*   Updated: 2025/06/01 02:50:51 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../../include/minishell.h"
-
-char	**duplicate_env_v(char **envp)
-{
-	char	**duplicate;
-	int		i;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	duplicate = (char **)ft_calloc(sizeof(char *), i + 1);
-	if (!duplicate)
-		return (NULL);
-	i = 0;
-	while (envp[i])
-	{
-		duplicate[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	duplicate[i] = NULL;
-	return (duplicate);
-}
-
-char	*check_space(char *input)
-{
-	int	i;
-
-	if (!input)
-		return (NULL);
-	i = 0;
-	while (input[i] == ' ' || input[i] == '\t' || input[i] == '\n')
-		i++;
-	return (&input[i]);
-}
 
 int	get_index_env_parsing(t_shell *mini, char *var)
 {
@@ -61,16 +26,6 @@ int	get_index_env_parsing(t_shell *mini, char *var)
 		i++;
 	}
 	return (-1);
-}
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
-		i ++;
-	return (s1[i] - s2[i]);
 }
 
 int	match_type(char *token)
@@ -120,4 +75,28 @@ int	check_command(t_shell *shell, char **input)
 	else
 		ft_printf("%s: command not found\n", input[0]);
 	return (0);
+}
+
+int	print_error(char *str1, char *str2, char *str3, char *message)
+{
+	if (str1)
+		ft_putstr_fd(str1, 2);
+	if (str2)
+		ft_putstr_fd(str2, 2);
+	if (str3)
+	{
+		if (str1 || str2)
+			ft_putstr_fd(": ", 2);
+		ft_putstr_fd("`", 2);
+		ft_putstr_fd(str3, 2);
+		ft_putstr_fd("'", 2);
+	}
+	if (message)
+	{
+		if (str1 || str2 || str3)
+			ft_putstr_fd(": ", 2);
+		ft_putstr_fd(message, 2);
+	}
+	ft_putstr_fd("\n", 2);
+	return (-1);
 }
