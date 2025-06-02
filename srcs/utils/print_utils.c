@@ -20,3 +20,27 @@ void	print_exit(void)
 		ft_putstr_fd("exit\n", 1);
 	value++;
 }
+
+int	print_error(char *str1, char *str2, char *str3, char *message)
+{
+	if (str1)
+		ft_putstr_fd(str1, 2);
+	if (str2)
+		ft_putstr_fd(str2, 2);
+	if (str3)
+	{
+		if (str1 || str2)
+			ft_putstr_fd(": ", 2);
+		ft_putstr_fd("`", 2);
+		ft_putstr_fd(str3, 2);
+		ft_putstr_fd("'", 2);
+	}
+	if (message)
+	{
+		if (str1 || str2 || str3)
+			ft_putstr_fd(": ", 2);
+		ft_putstr_fd(message, 2);
+	}
+	ft_putstr_fd("\n", 2);
+	return (-1);
+}

@@ -32,6 +32,7 @@ t_env_v	*get_node_envp(t_env_v *env_v, char *KEY);
 
 // ----------Print----------
 void	print_exit(void);
+int		print_error(char *str1, char *str2, char *str3, char *message);
 
 // free
 void	free_shell(t_shell *shell);
@@ -52,7 +53,6 @@ char	*check_space(char *input);
 int		match_type(char *token);
 char	*clean_other_chars(char *var);
 char	*clean_quotes(char *var, int i, int j);
-int		print_error(char *str1, char *str2, char *str3, char *message);
 
 //tree_utils.c
 void	*create_exec_node(t_token *exec_token, int i);
