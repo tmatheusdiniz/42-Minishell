@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include <minishell.h>
 
 /* char	**tokenizer(char *input)
 {
@@ -27,7 +27,7 @@ void	create_token_list(char **input_split, t_shell *mini, int i)
 	while (input_split[i])
 	{
 		new = (t_token *)ft_calloc(1, sizeof(t_token));
-		ft_memset(new, 0, sizeof(new));
+		ft_memset(new, 0, sizeof(t_token));
 		new->token = ft_strdup(input_split[i]);
 		new->index = i;
 		if (i == 0)

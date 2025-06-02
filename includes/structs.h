@@ -58,6 +58,8 @@ typedef struct s_token
 typedef struct s_shell
 {
 	char	*input;
+	char	*cwd;
+	char	**input_split;
 	char	**envp;
 	void	*root;
 	t_token	*tokens;

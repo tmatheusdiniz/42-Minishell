@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include <minishell.h>
 
 bool	check_dollar(char *input)
 {
@@ -86,7 +86,8 @@ char	**parsing(char *input, t_shell *mini)
 	}
 	return (free(input), input_split);
 }
-/* 
+
+/*
 void	cmds(char **input_split, t_mini *mini)
 {
 	if (!ft_strncmp(input_split[0], "cd", ft_strlen(input_split[0])))

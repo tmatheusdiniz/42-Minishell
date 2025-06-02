@@ -1,0 +1,9 @@
+-Wall
+-Wextra
+-Werror
+-g
+-Iincludes
+-I./42-libft
+-I./42-libft/include
+-I/usr/include/readline
+

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include <minishell.h>
 
 bool	in_quotes(char cur, int *i, bool flag, int quotes, bool inc)
 {
@@ -90,9 +90,9 @@ char	*expand(char *input, t_shell *mini)
 {
 	char	*new_input;
 	int		i;
-	bool	s_flag;
+	//bool	s_flag; seted but not used
 
-	s_flag = false;
+	//s_flag = false;
 	i = 0;
 	if (!input || !mini)
 		return (NULL);

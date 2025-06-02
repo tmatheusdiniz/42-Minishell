@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include <minishell.h>
 
 void	cut_tokens(t_token *tokens, t_token *base, t_token **left_tokens,
 		t_token **right_tokens)

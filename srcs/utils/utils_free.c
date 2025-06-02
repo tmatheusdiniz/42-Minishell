@@ -1,0 +1,60 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/10 13:18:17 by cda-fons          #+#    #+#             */
+/*   Updated: 2025/04/10 15:08:19 by cda-fons         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "utils.h"
+#include <minishell.h>
+
+static void	free_env_v(t_env_v *env_v)
+{
+	t_env_v	*current;
+	t_env_v	*next;
+
+	current = env_v;
+	while (current)
+	{
+		next = current->next;
+		if (current->key)
+			free (current->key);
+		if (current->value)
+			free (current->value);
+		free(current);
+		current = next;
+	}
+}
+
+void	free_shell(t_shell *shell)
+{
+	if (shell)
+	{
+		if (shell->input)
+			free (shell->input);
+		if (shell->input_split)
+			clean_matrix(shell->input_split);
+		if (shell->cwd)
+			free (shell->cwd);
+		if (shell->envp)
+			clean_matrix(shell->envp);
+		if (shell->env_v)
+			free_env_v(shell->env_v);
+		free(shell);
+	}
+}
+
+void	clean_matrix(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+		free(matrix[i++]);
+	free (matrix);
+}

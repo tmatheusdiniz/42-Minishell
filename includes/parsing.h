@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include <structs.h>
+#include <stdbool.h>
 
 //void	cmds(char **input_split, t_mini *mini);
 char	**parsing(char *input, t_shell *mini);

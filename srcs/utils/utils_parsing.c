@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <minishell.h>
+
 int	get_index_env_parsing(t_shell *mini, char *var)
 {
 	char	*clean_var;
