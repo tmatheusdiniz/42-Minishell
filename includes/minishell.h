@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/10 13:20:17 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:32:50 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,22 @@
 # define MINISHELL_H
 
 // Libft
+
 # include <libft.h>
 
 // Standard Libraries
+
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
 
 // Readline
+
 # include <readline/readline.h>
 # include <readline/history.h>
 
 // POSIX and System Headers
+
 # include <unistd.h>
 # include <sys/wait.h>
 # include <fcntl.h>
@@ -36,13 +40,16 @@
 # include <sys/ioctl.h>
 
 // Limits and Directory
+
 # include <limits.h>
 # include <dirent.h>
 
 // Terminal Control
+
 # include <termio.h>
 
 // System
+
 # include <builtins.h>
 # include <structs.h>
 # include <errors.h>
@@ -73,6 +80,7 @@
 # define EXIT_CMD 11
 
 // core
+
 int		main(int argc, char const **argv, char **envp);
 
 #endif

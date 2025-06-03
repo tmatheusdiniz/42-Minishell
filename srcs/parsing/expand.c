@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 23:07:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/29 19:05:13 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:11:46 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,18 @@ bool	in_quotes(char cur, int *i, bool flag, int quotes, bool inc)
 	return (flag);
 }
 
-char	*change_expansible(t_shell *mini, char *input, int *i, char *string, int *j)
+/* char	*change_expansible(t_shell *mini, char *input, int *i, char *string, int *j)
 {
 	char	*env_var;
-	int		index_env;
 	int		c;
+	t_env_v	node_env;
 
 	env_var = check_env_var(input, &*i);
 	c = ft_strlen(env_var) + 1;
-	index_env = get_index_env_parsing(mini, env_var);
-	if (index_env != -1)
+	node_env = get_index_env_parsing(mini, env_var);
+	if (node_env)
 	{
-		while (mini->envp[index_env][c])
+		while (mini->env_v[c] !=)
 		{
 			string[*j] = mini->envp[index_env][c];
 			(*j)++;
@@ -56,6 +56,30 @@ char	*change_expansible(t_shell *mini, char *input, int *i, char *string, int *j
 	}
 	else
 		return (NULL);
+} */
+
+char	*change_expansible(t_shell *mini, char *input, int *i, char *string, int *j)
+{
+	char	*env_var;
+	int		c;
+	t_env_v	*node_env;
+
+	env_var = check_env_var(input, &*i);
+	node_env = get_index_env_parsing(mini, env_var);
+	if (node_env)
+	{
+		c = 0;
+		while (node_env->value[c] != '\0')
+		{
+			string[*j] = node_env->value[c];
+			(*j)++;
+			c++;
+		}
+		free(env_var);
+		return (string);
+	}
+	else
+		return (free(env_var), string);
 }
 
 char	*change_input(t_shell *mini, char *input, int *i)
@@ -90,9 +114,7 @@ char	*expand(char *input, t_shell *mini)
 {
 	char	*new_input;
 	int		i;
-	//bool	s_flag; seted but not used
 
-	//s_flag = false;
 	i = 0;
 	if (!input || !mini)
 		return (NULL);

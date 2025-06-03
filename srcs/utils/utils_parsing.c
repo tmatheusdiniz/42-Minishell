@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 02:50:43 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/01 02:50:51 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/06/03 21:02:40 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	get_index_env_parsing(t_shell *mini, char *var)
+/* int	get_index_env_parsing(t_shell *mini, char *var)
 {
 	char	*clean_var;
 	int		len;
@@ -28,6 +28,33 @@ int	get_index_env_parsing(t_shell *mini, char *var)
 		i++;
 	}
 	return (-1);
+}
+*/
+t_env	*get_env_node_parsing(t_shell *mini, char *var)
+{
+	char	*clean_var;
+	int		len;
+	t_env *current;
+
+	if (!mini || !var || !mini->env_v)
+		return (NULL);
+	clean_var = clean_other_chars(var);
+	if (!clean_var)
+		return (NULL);
+	len = ft_strlen(clean_var);
+	current = mini->env_v;
+	while (current)
+	{
+		if (current->key && ft_strncmp(current->key, clean_var, len) == 0
+				&& (current->key[len] == '\0' || current->key[len] == '='))
+		{
+			free(clean_var);
+			return (current);
+		}
+		current = current->next;
+    }
+	free(clean_var);
+	return (NULL);
 }
 
 int	match_type(char *token)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:55:32 by mreinald          #+#    #+#             */
-/*   Updated: 2025/05/08 13:56:17 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:50:22 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@
 # include <structs.h>
 
 // ----------errors----------
+
 void	handle_errors(t_shell *shell, char *message,
 			int errnbr, char **inp_split);
 void	error_message(char *message, int errnbr);
 
 // ----------exit_code----------
+
 int		exit_code(int value);
 void	malloc_failure(t_shell *shell, char *function);
 
