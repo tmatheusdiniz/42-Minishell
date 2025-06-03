@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "utils.h"
 #include <minishell.h>
 
 static void	user_output(t_shell *shell)
@@ -55,5 +56,6 @@ void	control(t_shell *shell, char **envp)
 		free_shell(shell);
 		return ;
 	}
+	check_command(shell, ft_split(shell->input, ' '));
 	control(shell, envp);
 }

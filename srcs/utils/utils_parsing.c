@@ -73,7 +73,7 @@ int	check_command(t_shell *shell, char **input)
 	else if (!(ft_strncmp(input[0], "export", ft_strlen(input[0]))))
 		ft_export(shell->env_v, input[1]);
 	else if (!check_exec(input[0]))
-		printf("Exec\n");
+		printf("Exec\n"); // temporary
 	else
 		ft_printf("%s: command not found\n", input[0]);
 	return (0);
