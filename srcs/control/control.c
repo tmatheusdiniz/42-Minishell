@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
 #include <minishell.h>
 
 static void	user_output(t_shell *shell)
