@@ -12,6 +12,8 @@
 
 #include <minishell.h>
 
+static void	update_shvl(t_env_v *env_v);
+
 int	check_args(int argc, char const **argv, char **envp)
 {
 	(void)argv;
@@ -39,9 +41,31 @@ t_shell	*init_shell(void)
 	return (shell);
 }
 
+static void	update_shvl(t_env_v *env_v)
+{
+	int		value;
+	char	*value_str;
+	t_env_v	*aux;
+
+	aux = env_v;
+	while (aux)
+	{
+		if (!strcmp(aux->key, "SHVL"))
+		{
+			value = ft_atoi(aux->value);
+			++value;
+			value_str = ft_itoa(value);
+			free (aux->value);
+			aux->value = value_str;
+		}
+		aux = aux->next;
+	}
+}
+
 void	handle_env_vars(t_shell *shell, char **envp)
 {
 	shell->env_v = envp_to_linked_l(envp);
 	if (!shell->env_v)
 		malloc_failure(shell, "handle_env_vars");
+	update_shvl(shell->env_v);
 }
