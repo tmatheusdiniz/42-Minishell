@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   utils_parsing2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 21:57:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/29 20:11:50 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:16:25 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*clean_quotes(char *var, int i, int j)
 			new_var[j++] = var[i++];
 	}
 	new_var[j] = '\0';
-	return (ft_strdup(new_var));
+	return (free(var), ft_strdup(new_var));
 }
 
 bool	check_exec(char *token)

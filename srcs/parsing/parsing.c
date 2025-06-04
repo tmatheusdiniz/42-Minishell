@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/06/03 16:40:44 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/04 17:15:51 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	**make_process(char **input_split, t_shell *mini)
 		if (check_dollar(input_split[i]))
 			input_split[i] = expand(input_split[i], mini);
 		else
-			clean_quotes(input_split[i], 0 , -1);
+			input_split[i] = clean_quotes(input_split[i], 0 , 0 );
 		i++;
 	}
 	return (input_split);
@@ -88,8 +88,8 @@ char	**parsing(char *input, t_shell *mini)
 {
 	char	**input_split;
 	
+	input = check_space(input);
 	input_split = split_token(input);
-	input_split[0] = check_space(input_split[0]);
 	input_split = make_process(input_split, mini);
 	create_token_list(input_split, mini, 0);
 	mini->root = build_tree(mini->tokens);
