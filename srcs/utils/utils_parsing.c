@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 02:50:43 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/04 15:22:20 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/04 21:12:50 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,3 +87,4 @@ int	check_command(t_shell *shell, char **input)
 		ft_printf("%s: command not found\n", input[0]);
 	return (0);
 }
+

@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 18:07:19 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/21 14:45:33 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/04 19:14:31 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	
 } */
 
-void	create_token_list(char **input_split, t_shell *mini, int i)
+/* void	create_token_list(char **input_split, t_shell *mini, int i)
 {
 	t_token	*new;
 	t_token	*cur;
@@ -26,21 +26,77 @@ void	create_token_list(char **input_split, t_shell *mini, int i)
 		return ;
 	while (input_split[i])
 	{
-		new = (t_token *)ft_calloc(1, sizeof(t_token));
-		ft_memset(new, 0, sizeof(t_token));
-		new->token = ft_strdup(input_split[i]);
-		new->index = i;
-		if (i == 0)
-			mini->tokens = new;
-		else if (new->index > 0)
+		if (*input_split[i])
 		{
-			cur = mini->tokens;
-			while (cur && cur->next)
-				cur = cur->next;
-			cur->next = new;
-			new->prev = cur;
+			new = (t_token *)ft_calloc(1, sizeof(t_token));
+			ft_memset(new, 0, sizeof(t_token));
+			new->token = ft_strdup(input_split[i]);
+			new->index = i;
+			if (i == 0)
+				mini->tokens = new;
+			else if (new->index > 0)
+			{
+				cur = mini->tokens;
+				while (cur && cur->next)
+					cur = cur->next;
+				cur->next = new;
+				new->prev = cur;
+			}
+			new->type = match_type(input_split[i]);
 		}
-		new->type = match_type(input_split[i]);
+		i++;
+	}
+} */
+
+static t_token	*create_new_token(char *input, int index)
+{
+	t_token	*new;
+
+	new = (t_token *)ft_calloc(1, sizeof(t_token));
+	if (!new)
+		return (NULL);
+	new->token = ft_strdup(input);
+	new->index = index;
+	new->type = match_type(input);
+	new->next = NULL;
+	new->prev = NULL;
+	return (new);
+}
+
+static void	add_token_to_list(t_shell *mini, t_token *new_token)
+{
+	t_token	*cur;
+
+	if (!mini->tokens)
+	{
+		mini->tokens = new_token;
+		return ;
+	}
+	cur = mini->tokens;
+	while (cur && cur->next)
+		cur = cur->next;
+	cur->next = new_token;
+	new_token->prev = cur;
+}
+
+void	create_token_list(char **input_split, t_shell *mini, int i)
+{
+	t_token	*new_token;
+	int		token_index;
+
+	if (!input_split || !*input_split)
+		return ;
+	token_index = 0;
+	while (input_split[i])
+	{
+		if (input_split[i] && *input_split[i])
+		{
+			new_token = create_new_token(input_split[i], token_index);
+			if (!new_token)
+				return ;
+			add_token_to_list(mini, new_token);
+			token_index++;
+		}
 		i++;
 	}
 }

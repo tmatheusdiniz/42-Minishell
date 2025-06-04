@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 23:07:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/06/04 17:16:50 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/04 20:34:09 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*change_expansible(t_shell *mini, char *input, int *i, char *string, int *j
 		return (string);
 	}
 	else
-		return (free(env_var), string);
+		return (free(env_var), NULL);
 }
 
 char	*change_input(t_shell *mini, char *input, int *i, bool no_expand)
@@ -98,7 +98,6 @@ char	*expand(char *input, t_shell *mini)
 		return (NULL);
 	if (input[i] == '\'')
 		no_expand = true;
-	
 	new_input = change_input(mini, input, &i, no_expand);
 	if (!new_input)
 		return (NULL);
