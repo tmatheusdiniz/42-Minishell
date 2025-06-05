@@ -74,11 +74,9 @@ void	free_structs(t_shell *shell)
 void	clean_env_v(t_env_v *env)
 {
 	t_env_v	*cur;
-	int	i;
 
 	if (!env)
 		return ;
-	i = 0;
 	cur = env;
 	while (cur)
 	{

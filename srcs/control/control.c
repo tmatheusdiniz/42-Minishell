@@ -48,7 +48,7 @@ void	control(t_shell *shell, char **envp)
 	shell->input = readline(shell->cwd);
 	if (shell->input && shell->input[0] != '\0')
 		add_history(shell->input);
-	if (shell->input || input_validation(shell))
+	if (shell->input && input_validation(shell))
 	{
 		free_shell_part(shell);
 		control(shell, envp);
