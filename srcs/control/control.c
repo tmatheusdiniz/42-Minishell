@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   control.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:37:06 by mreinald          #+#    #+#             */
-/*   Updated: 2025/05/21 14:45:06 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:08:47 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,6 @@ void	control(t_shell *shell, char **envp)
 		free_shell(shell);
 		return ;
 	}
-	check_command(shell, ft_split(shell->input, ' '));
+	shell->input_split = parsing(shell->input, shell);
 	control(shell, envp);
 }

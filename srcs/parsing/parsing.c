@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/29 19:45:18 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/04 20:57:32 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,11 @@ bool	check_quotes(char *input_split, char quotes)
 	return (flag_quotes);
 }
 
-char	**parsing(char *input, t_shell *mini)
+char	**make_process(char **input_split, t_shell *mini)
 {
-	char	**input_split;
 	int		i;
 
 	i = 0;
-	input_split = split_token(input);
-	input_split[0] = check_space(input_split[0]);
 	while (input_split[i])
 	{
 		if (check_quotes(input_split[i], '"')
@@ -81,30 +78,22 @@ char	**parsing(char *input, t_shell *mini)
 		if (check_dollar(input_split[i]))
 			input_split[i] = expand(input_split[i], mini);
 		else
-			clean_quotes(input_split[i], 0 , -1);
+			input_split[i] = clean_quotes(input_split[i], 0 , 0 );
 		i++;
 	}
-	return (free(input), input_split);
+	return (input_split);
 }
 
-/*
-void	cmds(char **input_split, t_mini *mini)
+char	**parsing(char *input, t_shell *mini)
 {
-	if (!ft_strncmp(input_split[0], "cd", ft_strlen(input_split[0])))
-		cd(mini, input_split);
-	else if (!ft_strncmp(input_split[0], "pwd", ft_strlen(input_split[0])))
-		pwd();
-	else if (!ft_strncmp(input_split[0], "echo", ft_strlen(input_split[0])))
-		echo(input_split);
-	else if (!ft_strncmp(input_split[0], "env", ft_strlen(input_split[0])))
-	{
-		if (input_split[1])
-			printf("env: '%s': No such file or directory\n", input_split[1]);
-		else
-			env(mini->env);
-	}
-	else if (!ft_strncmp(input_split[0], "unset", ft_strlen(input_split[0])))
-		unset(mini, input_split[1]);
-	else
-		printf("Command '%s' not found\n", input_split[0]);
-} */
+	char	**input_split;
+	
+	input = check_space(input);
+	input_split = split_token(input);
+	input_split = make_process(input_split, mini);
+	create_token_list(input_split, mini, 0);
+	mini->root = build_tree(mini->tokens);
+	if (check_command(mini, input_split) == -1)
+		handle_errors(mini, "exit", SIGQUIT, input_split);
+	return (input_split);
+}

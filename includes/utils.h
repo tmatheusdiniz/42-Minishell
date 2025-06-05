@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:56:50 by mreinald          #+#    #+#             */
-/*   Updated: 2025/05/21 17:49:09 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/04 21:12:26 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*check_env_var(char *input, int *i);
 void	free_shell_part(t_shell *shell);
 
 // ----------Parsing----------
-int		get_index_env_parsing(t_shell *mini, char *var);
+t_env_v	*get_env_node_parsing(t_shell *mini, char *var);
 char	*check_space(char *input);
 int		match_type(char *token);
 char	*clean_other_chars(char *var);

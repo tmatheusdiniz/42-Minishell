@@ -3,31 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 02:50:43 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/01 02:50:51 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/06/04 21:12:50 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	get_index_env_parsing(t_shell *mini, char *var)
+t_env_v	*get_env_node_parsing(t_shell *mini, char *var)
 {
+	t_env_v *current;
 	char	*clean_var;
 	int		len;
-	int		i;
 
-	i = 0;
+	if (!mini || !var || !mini->env_v)
+		return (NULL);
 	clean_var = clean_other_chars(var);
+	if (!clean_var)
+		return (NULL);
 	len = ft_strlen(clean_var);
-	while (mini->envp[i])
+	current = mini->env_v;
+	while (current)
 	{
-		if (ft_strncmp(mini->envp[i], clean_var, len) == 0 && mini->envp[i][len] == '=')
-			return (i);
-		i++;
-	}
-	return (-1);
+		if (current->key && ft_strncmp(current->key, clean_var, len) == 0
+				&& (current->key[len] == '\0' || current->key[len] == '='))
+		{
+			free(clean_var);
+			return (current);
+		}
+		current = current->next;
+    }
+	free(clean_var);
+	return (NULL);
 }
 
 int	match_type(char *token)
@@ -78,3 +87,4 @@ int	check_command(t_shell *shell, char **input)
 		ft_printf("%s: command not found\n", input[0]);
 	return (0);
 }
+
