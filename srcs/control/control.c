@@ -43,12 +43,16 @@ static void	user_output(t_shell *shell)
 
 void	control(t_shell *shell, char **envp)
 {
-	(void)envp;
 	signal_handler();
 	user_output(shell);
 	shell->input = readline(shell->cwd);
-	if (shell->input && input_validation(shell))
+	if (shell->input && shell->input[0] != '\0')
 		add_history(shell->input);
+	if (shell->input || input_validation(shell))
+	{
+		free_shell_part(shell);
+		control(shell, envp);
+	}
 	if (!shell->input || !ft_strcmp(shell->input, "exit"))
 	{
 		print_exit();

@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errors.h"
+#include "libft.h"
 #include <minishell.h>
 
 int	add_env_var(char **envp, char *new_var)
@@ -36,4 +38,31 @@ int	ft_env(char **envp)
 		i++;
 	}
 	return (EXIT_SUCCESS);
+}
+
+char **duplicate_envp(char **envp)
+{
+	int	i;
+	char	**new_envp;
+
+	i = 0;
+	while (envp[i])
+		i ++;
+	new_envp = (char **)malloc((i + 1) * sizeof(char *));
+	if (!new_envp)
+		return (NULL);
+	i = 0;
+	while (envp[i])
+	{
+		new_envp[i] = ft_strdup(envp[i]);
+		if (!new_envp)
+		{
+			while (--i >= 0)
+				free (new_envp[i]);
+			return (free(new_envp), NULL);
+		}
+		i ++;
+	}
+	new_envp[i] = NULL;
+	return (new_envp);
 }

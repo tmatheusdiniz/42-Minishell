@@ -47,6 +47,9 @@ bool	check_exec(char *token);
 bool	check_builtin(char *token);
 char	*check_env_var(char *input, int *i);
 
+// ----------Control----------
+void	free_shell_part(t_shell *shell);
+
 // ----------Parsing----------
 int		get_index_env_parsing(t_shell *mini, char *var);
 char	*check_space(char *input);
