@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errors.h"
+#include "utils.h"
 #include <minishell.h>
 
 static void	update_shvl(t_env_v *env_v);
@@ -64,6 +66,9 @@ static void	update_shvl(t_env_v *env_v)
 
 void	handle_env_vars(t_shell *shell, char **envp)
 {
+	shell->envp = duplicate_env_v(envp);
+	if (!shell->envp)
+		malloc_failure(shell, "handle_env_vars");
 	shell->env_v = envp_to_linked_l(envp);
 	if (!shell->env_v)
 		malloc_failure(shell, "handle_env_vars");

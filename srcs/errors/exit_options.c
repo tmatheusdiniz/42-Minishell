@@ -16,7 +16,7 @@ void	malloc_failure(t_shell *shell, char *function)
 {
 	if (shell)
 		free_shell(shell);
-	ft_putstr_fd(RED"MALLOC ERROR"DEFAULT, 2);
+	ft_putstr_fd(RED"MALLOC ERROR->"DEFAULT, 2);
 	ft_putendl_fd(function, 2);
 	exit (1);
 }

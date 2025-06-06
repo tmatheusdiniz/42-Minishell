@@ -27,6 +27,12 @@ char	**duplicate_env_v(char **envp)
 	while (envp[i])
 	{
 		duplicate[i] = ft_strdup(envp[i]);
+		if (!duplicate[i])
+		{
+			while (--i >= 0)
+				free (duplicate[i]);
+			return (free (duplicate), NULL);
+		}
 		i++;
 	}
 	duplicate[i] = NULL;
