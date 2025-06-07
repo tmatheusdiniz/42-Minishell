@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   control.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:37:06 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/03 17:08:47 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/07 01:28:14 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,15 @@ void	control(t_shell *shell, char **envp)
 	shell->input = readline(shell->cwd);
 	if (shell->input && shell->input[0] != '\0')
 		add_history(shell->input);
-	if (shell->input && input_validation(shell))
-	{
-		free_shell_part(shell);
-		control(shell, envp);
-	}
-	if (!shell->input || !ft_strcmp(shell->input, "exit"))
+	//if (!shell->input || !ft_strcmp(shell->input, "exit") ## A strcmp retornava seg fault quando enviava ctrl+d. Porque tentava acessar uma memoria (shell->input) nao existente)
+	if (!shell->input)
 	{
 		print_exit();
 		free_shell(shell);
-		return ;
+		return ; //seg fault
 	}
+	if (shell->input && input_validation(shell))
+		control(shell, envp);
 	shell->input_split = parsing(shell->input, shell);
 	control(shell, envp);
 }

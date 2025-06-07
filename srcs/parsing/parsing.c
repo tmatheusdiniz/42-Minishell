@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/06/04 20:57:32 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/06 23:37:52 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,6 @@ char	**make_process(char **input_split, t_shell *mini)
 	i = 0;
 	while (input_split[i])
 	{
-		if (check_quotes(input_split[i], '"')
-			|| check_quotes(input_split[i], '\''))
-		{
-			print_error(NAME_SHELL,
-				"syntax error - the quote is open", NULL, NULL);
-			return (NULL);
-		}
 		if (check_quotes(input_split[0], '"')
 			|| check_quotes(input_split[0], '\''))
 			input_split[0] = clean_quotes(input_split[0], 0 , 0);

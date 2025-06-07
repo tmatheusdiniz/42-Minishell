@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:06:02 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/01 16:24:20 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/07 00:59:25 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ char	**duplicate_env_v(char **envp)
 char	*check_space(char *input)
 {
 	int	i;
-
+	
+	if (!input || !*input)
+		return (NULL);
 	i = 0;
 	while (input[i] == ' ' || input[i] == '\t' || input[i] == '\n')
 		i++;
@@ -53,6 +55,8 @@ int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
 
+	if (!s1)
+		return (-1);
 	i = 0;
 	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
 		i ++;
