@@ -68,8 +68,6 @@ char	**split_token(char *str);
 // ---------- *\ ----------
 
 // free
-void	free_structs(t_shell *shell);
 void	clean_matrix(char **matrix);
-void	clean_env_v(t_env_v *env);
 
 #endif

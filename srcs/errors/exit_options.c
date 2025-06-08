@@ -32,7 +32,7 @@ void	handle_errors(t_shell *shell, char *message,
 {
 	if (inp_split)
 		clean_matrix(inp_split);
-	free_structs(shell);
+	free_shell(shell);
 	error_message(message, errnbr);
 	exit(errnbr);
 }

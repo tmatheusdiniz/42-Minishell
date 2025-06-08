@@ -10,10 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <minishell.h>
 
 bool	input_validation(t_shell *shell)
 {
+	if (!shell->input[0])
+		return (true);
+	shell->trimmed = ft_strtrim(shell->input, "\t ");
 	if (!*shell->input)
 		return (exit_code(2));
 	if (shell->input)

@@ -59,6 +59,7 @@ typedef struct s_shell
 {
 	char	*input;
 	char	*cwd;
+	char	*trimmed;
 	char	**input_split;
 	char	**envp;
 	void	*root;
