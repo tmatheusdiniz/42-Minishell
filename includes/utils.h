@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:56:50 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/04 21:12:26 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/09 20:38:23 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		print_error(char *str1, char *str2, char *str3, char *message);
 // free
 void	free_shell(t_shell *shell);
 void	clean_matrix(char **matrix);
+void	free_env_v(t_env_v *env_v);
 
 // ----------General----------
 int		ft_strcmp(char *s1, char *s2);
@@ -51,11 +52,12 @@ char	*check_env_var(char *input, int *i);
 void	free_shell_part(t_shell *shell);
 
 // ----------Parsing----------
-t_env_v	*get_env_node_parsing(t_shell *mini, char *var);
+t_env_v	*get_env_node_parsing(t_shell *mini, char *var, t_env_v	*current);
 char	*check_space(char *input);
 int		match_type(char *token);
 char	*clean_other_chars(char *var);
 char	*clean_quotes(char *var, int i, int j);
+bool	expand_check(char *input);
 
 //tree_utils.c
 void	*create_exec_node(t_token *exec_token, int i);

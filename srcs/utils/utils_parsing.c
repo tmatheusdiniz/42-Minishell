@@ -6,19 +6,18 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 02:50:43 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/04 21:12:50 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/09 20:31:17 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_env_v	*get_env_node_parsing(t_shell *mini, char *var)
+t_env_v	*get_env_node_parsing(t_shell *mini, char *var, t_env_v	*current)
 {
-	t_env_v *current;
 	char	*clean_var;
 	int		len;
 
-	if (!mini || !var || !mini->env_v)
+	if (!mini || !var || !mini->env_v || !current)
 		return (NULL);
 	clean_var = clean_other_chars(var);
 	if (!clean_var)
@@ -28,13 +27,13 @@ t_env_v	*get_env_node_parsing(t_shell *mini, char *var)
 	while (current)
 	{
 		if (current->key && ft_strncmp(current->key, clean_var, len) == 0
-				&& (current->key[len] == '\0' || current->key[len] == '='))
+			&& (current->key[len] || current->key[len] == '='))
 		{
 			free(clean_var);
 			return (current);
 		}
 		current = current->next;
-    }
+	}
 	free(clean_var);
 	return (NULL);
 }
@@ -88,3 +87,24 @@ int	check_command(t_shell *shell, char **input)
 	return (0);
 }
 
+bool	expand_check(char *input)
+{
+	bool	d_flag;
+	int		i;
+
+	i = 0;
+	d_flag = false;
+	while (input[i])
+	{
+		if (input[i] == '"')
+			d_flag = true;
+		if (input[i] == '\'')
+		{
+			if (!d_flag)
+				return (true);
+			return (false);
+		}
+		i++;
+	}
+	return (false);
+}

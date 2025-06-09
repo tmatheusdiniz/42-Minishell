@@ -6,83 +6,74 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 23:07:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/06/04 20:34:09 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/09 21:09:30 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-bool	in_quotes(char cur, int *i, bool flag, int quotes, bool inc)
+bool	in_quotes(char cur, bool flag, int quotes)
 {
-	if (cur == quotes && flag && inc)
-	{
-		flag = false;
-		(*i)++;
-	}
-	if (cur == quotes && inc)
-	{
-		flag = true;
-		(*i)++;
-	}
-	if (cur == quotes && flag && !inc)
+	if (cur == quotes && flag)
 	{
 		flag = false;
 		return (flag);
 	}
-	if (cur == quotes && !inc)
+	if (cur == quotes)
 		flag = true;
 	return (flag);
 }
 
-char	*change_expansible(t_shell *mini, char *input, int *i, char *string, int *j)
+char	*change_expansible(t_shell *mini, char *input, int *inc, char *string)
 {
 	char	*env_var;
 	int		c;
 	t_env_v	*node_env;
 
-	env_var = check_env_var(input, &*i);
-	node_env = get_env_node_parsing(mini, env_var);
+	node_env = NULL;
+	env_var = check_env_var(input, &inc[0]);
+	node_env = get_env_node_parsing(mini, env_var, node_env);
 	if (node_env)
 	{
 		c = 0;
-		while (node_env->value[c] != '\0')
+		while (node_env->value[c])
 		{
-			string[*j] = node_env->value[c];
-			(*j)++;
+			string[inc[1]] = node_env->value[c];
+			inc[1]++;
 			c++;
 		}
-		free(env_var);
-		return (string);
+		return (free_env_v(node_env), free(env_var), string);
 	}
 	else
-		return (free(env_var), NULL);
+		return (free(env_var), free_env_v(node_env), NULL);
 }
 
 char	*change_input(t_shell *mini, char *input, int *i, bool no_expand)
 {
 	char	string[999];
-	int		j;
+	int		inc[2];
 	bool	d_flag;
 	bool	s_flag;
 
-	j = 0;
+	inc[0] = *i;
+	inc[1] = 0;
 	d_flag = false;
 	s_flag = false;
 	while (input[*i])
 	{
-		s_flag = in_quotes(input[*i], &*i, s_flag, '\'', false);
-		d_flag = in_quotes(input[*i], &*i, d_flag, '"', false);
+		s_flag = in_quotes(input[*i], s_flag, '\'');
+		d_flag = in_quotes(input[*i], d_flag, '"');
 		if (input[*i] == '$' && ((d_flag && s_flag) || (!d_flag && !s_flag)
-					|| (d_flag && !s_flag)) && !no_expand)
-			change_expansible(mini, input, &*i, string, &j);
+				|| (d_flag && !s_flag)) && !no_expand)
+			change_expansible(mini, input, inc, string);
 		else
 		{
-			string[j] = input[*i];
-			j++;
+			string[inc[1]] = input[*i];
+			inc[1]++;
 			(*i)++;
 		}
 	}
-	string[j] = '\0';
+	string[inc[1]] = '\0';
 	return (ft_strdup(string));
 }
 
@@ -91,13 +82,11 @@ char	*expand(char *input, t_shell *mini)
 	char	*new_input;
 	int		i;
 	bool	no_expand;
-	
+
 	i = 0;
-	no_expand = false;
+	no_expand = expand_check(input);
 	if (!input || !mini)
 		return (NULL);
-	if (input[i] == '\'')
-		no_expand = true;
 	new_input = change_input(mini, input, &i, no_expand);
 	if (!new_input)
 		return (NULL);
