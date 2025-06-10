@@ -19,7 +19,7 @@
 
 // ----------Main----------
 int		check_args(int argc, char const **argv, char **envp);
-int		check_command(t_shell *shell, char **input);
+int		check_command(t_shell *shell, t_exec *exec_node);
 void	handle_env_vars(t_shell *shell, char **envp);
 t_shell	*init_shell(void);
 

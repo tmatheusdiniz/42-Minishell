@@ -10,9 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
-#include "errors.h"
-#include "utils.h"
 #include <minishell.h>
 #include <stdlib.h>
 
@@ -68,7 +65,7 @@ void	ft_unset(t_shell *shell)
 	while (shell->input_split[i])
 	{
 		if (remove_env_var(shell->env_v, shell->input_split[i]))
-			;
+			continue ;
 		aux = get_node_envp(shell->env_v, shell->input_split[i]);
 		if (aux->value)
 			remove_var_envp(shell->envp, shell->input_split[i]);

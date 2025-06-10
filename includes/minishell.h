@@ -68,7 +68,7 @@
 # define PROMPT_MID "\001\033[1;91m\002][\001\033[0;92m\002"
 # define PROMPT_END "\001\033[1;91m\002] \001\033[0m\002→ "
 
-# define BT 1 // Builtins
+# define BT 1
 # define EXEC 2
 # define PIPE 3
 # define OUTREDIR 4

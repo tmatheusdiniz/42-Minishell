@@ -17,7 +17,6 @@ static void	reset_shell(t_shell *shell)
 	shell->input = NULL;
 	shell->input_split = NULL;
 	shell->cwd = NULL;
-	shell->trimmed = NULL;
 	shell->root = NULL;
 	shell->tokens = NULL;
 }
@@ -30,7 +29,5 @@ void	free_shell_part(t_shell *shell)
 		free (shell->input_split);
 	if (shell->cwd)
 		free (shell->cwd);
-	if (shell->trimmed)
-		free (shell->trimmed);
 	reset_shell(shell);
 }
