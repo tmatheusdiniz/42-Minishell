@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 23:07:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/06/09 21:09:30 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/10 09:54:09 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*change_expansible(t_shell *mini, char *input, int *inc, char *string)
 	t_env_v	*node_env;
 
 	node_env = NULL;
-	env_var = check_env_var(input, &inc[0]);
+	env_var = check_env_var(input, inc);
 	node_env = get_env_node_parsing(mini, env_var, node_env);
 	if (node_env)
 	{
@@ -48,29 +48,26 @@ char	*change_expansible(t_shell *mini, char *input, int *inc, char *string)
 		return (free(env_var), free_env_v(node_env), NULL);
 }
 
-char	*change_input(t_shell *mini, char *input, int *i, bool no_expand)
+char	*change_input(t_shell *mini, char *input, int *inc, bool no_expand)
 {
 	char	string[999];
-	int		inc[2];
 	bool	d_flag;
 	bool	s_flag;
 
-	inc[0] = *i;
-	inc[1] = 0;
 	d_flag = false;
 	s_flag = false;
-	while (input[*i])
+	while (input[inc[0]])
 	{
-		s_flag = in_quotes(input[*i], s_flag, '\'');
-		d_flag = in_quotes(input[*i], d_flag, '"');
-		if (input[*i] == '$' && ((d_flag && s_flag) || (!d_flag && !s_flag)
+		s_flag = in_quotes(input[inc[0]], s_flag, '\'');
+		d_flag = in_quotes(input[inc[0]], d_flag, '"');
+		if (input[inc[0]] == '$' && ((d_flag && s_flag) || (!d_flag && !s_flag)
 				|| (d_flag && !s_flag)) && !no_expand)
 			change_expansible(mini, input, inc, string);
 		else
 		{
-			string[inc[1]] = input[*i];
+			string[inc[1]] = input[inc[0]];
 			inc[1]++;
-			(*i)++;
+			inc[0]++;
 		}
 	}
 	string[inc[1]] = '\0';
@@ -80,14 +77,15 @@ char	*change_input(t_shell *mini, char *input, int *i, bool no_expand)
 char	*expand(char *input, t_shell *mini)
 {
 	char	*new_input;
-	int		i;
+	int		inc[2];
 	bool	no_expand;
 
-	i = 0;
+	inc[0] = 0;
+	inc[2] = 0;
 	no_expand = expand_check(input);
 	if (!input || !mini)
 		return (NULL);
-	new_input = change_input(mini, input, &i, no_expand);
+	new_input = change_input(mini, input, inc, no_expand);
 	if (!new_input)
 		return (NULL);
 	new_input = clean_quotes(new_input, 0, 0);

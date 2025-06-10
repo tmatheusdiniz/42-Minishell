@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 21:57:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/06/09 18:56:13 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/10 09:24:01 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ bool	check_builtin(char *token)
 		return (false);
 }
 
-char	*check_env_var(char *input, int *i)
+char	*check_env_var(char *input, int *inc)
 {
 	char	env_var[999];
 	int		j;
@@ -107,12 +107,12 @@ char	*check_env_var(char *input, int *i)
 	if (!input)
 		return (NULL);
 	j = 0;
-	(*i)++;
-	while (input[*i] && input[*i] != ' ' && (input[*i] != '"'
-			&& input[*i] != '\''))
+	inc[0]++;
+	while (input[inc[0]] && input[inc[0]] != ' ' && (input[inc[0]] != '"'
+			&& input[inc[0]] != '\''))
 	{
-		env_var[j] = input[*i];
-		(*i)++;
+		env_var[j] = input[inc[0]];
+		inc[0]++;
 		j++;
 	}
 	env_var[j] = '\0';
