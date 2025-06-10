@@ -81,12 +81,11 @@ char	**parsing(char *input, t_shell *mini)
 {
 	char	**input_split;
 
-	input = check_space(input);
 	input_split = split_token(input);
 	input_split = make_process(input_split, mini);
 	create_token_list(input_split, mini, 0);
 	mini->root = build_tree(mini->tokens);
-	if (check_command(mini, input_split) == -1)
+	if (check_command(mini, input_split) == -1) // change to shell and t_exec
 		handle_errors(mini, "exit", SIGQUIT, input_split);
 	return (input_split);
 }

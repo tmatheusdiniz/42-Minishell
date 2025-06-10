@@ -17,11 +17,10 @@ bool	input_validation(t_shell *shell)
 {
 	if (!shell->input[0])
 		return (true);
-	shell->trimmed = ft_strtrim(shell->input, "\t ");
 	if (!*shell->input)
 		return (exit_code(2));
 	if (shell->input)
-		shell->input = check_space(shell->input);
+		shell->input = ft_strtrim(shell->input, "\t ");
 	if (check_quotes(shell->input, '"')
 		|| check_quotes(shell->input, '\''))
 	{
