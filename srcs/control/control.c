@@ -53,7 +53,7 @@ void	control(t_shell *shell, char **envp)
 		free_shell_part(shell);
 		control(shell, envp);
 	}
-	if (!shell->input || ft_strcmp(shell->trimmed, "exit"))
+	if (!shell->input || !ft_strcmp(shell->trimmed, "exit"))
 	{
 		print_exit();
 		free_shell(shell); //it's necessary free shell itself in the main

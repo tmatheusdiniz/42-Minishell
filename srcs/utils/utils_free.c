@@ -25,7 +25,7 @@ static void	reset_for_exit(t_shell *shell)
 	shell->env_v = NULL;
 }
 
-static void	free_env_v(t_env_v *env_v)
+void	free_env_v(t_env_v *env_v)
 {
 	t_env_v	*current;
 	t_env_v	*next;

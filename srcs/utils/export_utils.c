@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errors.h"
 #include <minishell.h>
 
 static void	aux_sort_linked_l(t_env_v *env_v,
@@ -47,7 +48,7 @@ void	ft_sort_linked(t_env_v *env_v)
 	i = 1;
 	j = 1;
 	flag = 0;
-	linked_size = count_linked_list(env_v);
+	linked_size = linked_env_size(env_v);
 	while (i < linked_size)
 	{
 		j = 1;
@@ -69,12 +70,10 @@ t_env_v	*set_only_key(t_env_v *env_v, char *key)
 
 	if (!key || !env_v)
 		return (NULL);
-	if (check_duplicated(env_v, key))
-		return (NULL);
 	new_node = create_node(key, NULL);
 	if (!new_node)
 		return (NULL);
-	position = find_position(env_v, key, count_linked_list(env_v));
+	position = find_position(env_v, key, linked_env_size(env_v));
 	if (position == 0)
 		return (new_node->next = env_v, new_node);
 	i = 1;

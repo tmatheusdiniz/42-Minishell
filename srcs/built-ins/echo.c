@@ -27,26 +27,25 @@ bool	check_flag(char *str)
 		return (false);
 }
 
-int	ft_echo(char **input)
+void	ft_echo(char **arguments)
 {
 	int		i;
 	bool	printline;
 
 	i = 1;
 	printline = true;
-	while (input[i] && check_flag(input[i]))
+	while (arguments[i] && check_flag(arguments[i]))
 	{
 		printline = false;
 		i++;
 	}
-	while (input[i])
+	while (arguments[i])
 	{
-		ft_putstr_fd(input[i], 1);
-		if (input[i + 1])
+		ft_putstr_fd(arguments[i], 1);
+		if (arguments[i + 1])
 			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (printline)
 		write(1, "\n", 1);
-	return (EXIT_SUCCESS);
 }

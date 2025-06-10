@@ -10,9 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errors.h"
+#include "libft.h"
+#include "structs.h"
 #include <minishell.h>
 
-void	update_oldpwd(t_env_v *env_v)
+int	update_oldpwd(t_env_v *env_v)
 {
 	t_env_v	*oldpwd;
 	t_env_v	*current_pwd;
@@ -26,12 +29,13 @@ void	update_oldpwd(t_env_v *env_v)
 			free(oldpwd->value);
 			oldpwd->value = ft_strdup(current_pwd->value);
 			if (!oldpwd->value)
-				return ; //Handle this error after
+				return (1);
 		}
 	}
+	return (0);
 }
 
-void	update_pwd(t_env_v *env_v)
+int	update_pwd(t_env_v *env_v)
 {
 	char	pwd[PATH_MAX];
 	t_env_v	*pwd_node;
@@ -39,7 +43,7 @@ void	update_pwd(t_env_v *env_v)
 	if (getcwd(pwd, sizeof(pwd)) == NULL)
 	{
 		perror("pwd error:");
-		return ;
+		return (1);
 	}
 	pwd_node = get_node_envp(env_v, "PWD");
 	if (pwd_node)
@@ -47,20 +51,28 @@ void	update_pwd(t_env_v *env_v)
 		free(pwd_node->value);
 		pwd_node->value = ft_strdup(pwd);
 		if (!pwd_node->value)
-			return ;
-	}
-}
-
-int	change_dir(t_env_v *env_v, char *target)
-{
-	if (chdir(target) != 0)
-		ft_printf("Minishell: cd: %s: No such file or directory\n", target);
-	else
-	{
-		update_oldpwd(env_v);
-		update_pwd(env_v);
+			return (2);
 	}
 	return (0);
+}
+
+void	change_dir(t_shell *shell, char *target)
+{
+	if (chdir(target) != 0)
+	{
+		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd(target, 2);
+		ft_putendl_fd(": No such file or directory", 2);
+	}
+	else
+	{
+		if (update_oldpwd(shell->env_v))
+			malloc_failure(shell, "change_dir");
+		if (update_pwd(shell->env_v) == 1)
+			return ;
+		else if (update_pwd(shell->env_v) == 2)
+			malloc_failure(shell, "change_dir");
+	}
 }
 
 char	*get_target(t_env_v *env_v, char *input)
@@ -76,31 +88,31 @@ char	*get_target(t_env_v *env_v, char *input)
 	return (input);
 }
 
-void	ft_cd(t_env_v *env_v, char **input)
+void	ft_cd(t_shell *shell, t_exec *exec_node)
 {
 	char	*target;
 	t_env_v	*home;
 
-	home = get_node_envp(env_v, "HOME");
-	if (input[2])
-		printf("Minishell: cd: too many arguments\n");
+	(void)exec_node; // after i have to handle it
+	home = get_node_envp(shell->env_v, "HOME");
+	if (shell->input_split[2])
+		ft_putendl_fd("minishell: cd: too many arguments", 2);
 	else
 	{
-		if (!input[1])
+		if (!shell->input_split[1])
 		{
 			if (!(home->value))
 			{
-				ft_printf("Minishell: cd: HOME not set\n"); // temporary
+				ft_putendl_fd("minishell: cd: HOME not set", 2);
 				return ;
 			}
 			else
 				target = home->value;
 		}
 		else
-			target = get_target(env_v, input[1]);
-		if (input[1] && ft_strncmp(input[1], "-", 2) == 0)
+			target = get_target(shell->env_v, shell->input_split[1]);
+		if (shell->input_split[1] && ft_strncmp(shell->input_split[1], "-", 2) == 0)
 			ft_printf("%s\n", target);
-		change_dir(env_v, target);
+		change_dir(shell, target);
 	}
-	return ;
 }

@@ -10,11 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "errors.h"
-#include "utils.h"
 #include <minishell.h>
 
-static void	update_shvl(t_env_v *env_v);
+static void	update_shlv(t_env_v *env_v);
 
 int	check_args(int argc, char const **argv, char **envp)
 {
@@ -37,13 +35,17 @@ t_shell	*init_shell(void)
 	if (!shell)
 		malloc_failure(shell, "init_shell");
 	shell->input = NULL;
+	shell->trimmed = NULL;
+	shell->cwd = NULL;
 	shell->input_split = NULL;
 	shell->envp = NULL;
 	shell->env_v = NULL;
+	shell->root = NULL;
+	shell->tokens = NULL;
 	return (shell);
 }
 
-static void	update_shvl(t_env_v *env_v)
+static void	update_shlv(t_env_v *env_v)
 {
 	int		value;
 	char	*value_str;
@@ -52,7 +54,7 @@ static void	update_shvl(t_env_v *env_v)
 	aux = env_v;
 	while (aux)
 	{
-		if (!strcmp(aux->key, "SHVL"))
+		if (!strcmp(aux->key, "SHLVL"))
 		{
 			value = ft_atoi(aux->value);
 			++value;
@@ -66,11 +68,11 @@ static void	update_shvl(t_env_v *env_v)
 
 void	handle_env_vars(t_shell *shell, char **envp)
 {
-	shell->envp = duplicate_env_v(envp);
-	if (!shell->envp)
-		malloc_failure(shell, "handle_env_vars");
 	shell->env_v = envp_to_linked_l(envp);
 	if (!shell->env_v)
 		malloc_failure(shell, "handle_env_vars");
-	update_shvl(shell->env_v);
+	update_shlv(shell->env_v);
+	shell->envp = linked_to_envp(shell);
+	if (!shell->envp)
+		malloc_failure(shell, "handle_env_vars");
 }

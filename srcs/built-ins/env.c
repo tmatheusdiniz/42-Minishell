@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <minishell.h>
 
-int	add_env_var(char **envp, char *new_var)
+int	add_var_envp(char **envp, char *new_var)
 {
 	int	i;
 
@@ -25,17 +26,30 @@ int	add_env_var(char **envp, char *new_var)
 	return (0);
 }
 
-int	ft_env(char **envp)
+int	remove_var_envp(char **envp, char *key)
 {
 	int	i;
+	int	j;
+	int	len;
 
 	i = 0;
+	len = ft_strlen(key);
 	while (envp[i])
 	{
-		ft_printf("%s\n", envp[i]);
-		i++;
+		if (!ft_strcmp(envp[i], key) && envp[i][len] == '=')
+		{
+			free (envp[i]);
+			j = i;
+			while (envp[j])
+			{
+				envp[j] = envp[j + 1];
+				j ++;
+			}
+		}
+		else
+			i ++;
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
 char **duplicate_envp(char **envp)
@@ -63,4 +77,21 @@ char **duplicate_envp(char **envp)
 	}
 	new_envp[i] = NULL;
 	return (new_envp);
+}
+
+void	ft_env(char **envp, char **arguments)
+{
+	int	i;
+
+	if (arguments[1])
+	{
+		ft_putendl_fd("minishell: env: too many arguments", 2);
+		return ;
+	}
+	i = 0;
+	while (envp[i])
+	{
+		ft_printf("%s\n", envp[i]);
+		i++;
+	}
 }

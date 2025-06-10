@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "builtins.h"
+#include "errors.h"
+#include "utils.h"
 #include <minishell.h>
+#include <stdlib.h>
 
 static void	remove_head(t_env_v *head);
 
@@ -52,11 +56,23 @@ static void	remove_head(t_env_v *head)
 	free(temp);
 }
 
-int	ft_unset(t_env_v *env_v, char *env_var)
+void	ft_unset(t_shell *shell)
 {
-	if (!env_v)
-		return (-1);
-	if (remove_env_var(env_v, env_var))
-		return (-1);
-	return (0);
+	int		i;
+	t_env_v	*aux;
+
+	i = 0;
+	shell->input_split = ft_split(shell->input, ' ');
+	if (!shell->input_split)
+		malloc_failure(shell, "ft_unset");
+	while (shell->input_split[i])
+	{
+		if (remove_env_var(shell->env_v, shell->input_split[i]))
+			;
+		aux = get_node_envp(shell->env_v, shell->input_split[i]);
+		if (aux->value)
+			remove_var_envp(shell->envp, shell->input_split[i]);
+		i ++;
+	}
+	free_env_v(aux);
 }
