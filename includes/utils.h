@@ -26,7 +26,7 @@ t_shell	*init_shell(void);
 // ----------Linked List----------
 int		get_index_env(t_env_v *env_v, char *var);
 int		find_position(t_env_v *env_v, char *new_key, int linked_size);
-int		count_linked_list(t_env_v *list);
+int		linked_env_size(t_env_v *list);
 t_env_v	*envp_to_linked_l(char **envp);
 t_env_v	*get_node_envp(t_env_v *env_v, char *KEY);
 
@@ -36,13 +36,14 @@ int		print_error(char *str1, char *str2, char *str3, char *message);
 
 // free
 void	free_shell(t_shell *shell);
+void	free_env_v(t_env_v *env_v);
 void	clean_matrix(char **matrix);
 void	free_env_v(t_env_v *env_v);
 
 // ----------General----------
 int		ft_strcmp(char *s1, char *s2);
 char	*check_space(char *input);
-char	**duplicate_env_v(char **envp);
+char	**linked_to_envp(t_shell *shell);
 int		match_type(char *token);
 bool	check_exec(char *token);
 bool	check_builtin(char *token);

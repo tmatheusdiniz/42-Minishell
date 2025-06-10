@@ -10,7 +10,35 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+#include "utils.h"
 #include <minishell.h>
+
+int	modify_value_env(t_env_v *env_v, char *argument)
+{
+	char	**splt;
+
+	splt = ft_split(argument, '=');
+	if (!splt)
+		return (-1);
+	while (env_v)
+	{
+		if(!ft_strcmp(env_v->key, splt[0]))
+		{
+			if (env_v->value)
+				free (env_v->value);
+			if (!splt[1] || splt[1][0] == '\0')
+				env_v->value = ft_strdup("");
+			else
+				env_v->value = ft_strdup(splt[1]);
+			if (!env_v->value)
+				return (clean_matrix(splt), -1);
+			break ;
+		}
+		env_v = env_v->next;
+	}
+	return (clean_matrix(splt), 0);
+}
 
 int	find_position(t_env_v *env_v, char *new_key, int linked_size)
 {
@@ -19,7 +47,7 @@ int	find_position(t_env_v *env_v, char *new_key, int linked_size)
 
 	i = 1;
 	count = 0;
-	linked_size = count_linked_list(env_v);
+	linked_size = linked_env_size(env_v);
 	while (i < linked_size && env_v)
 	{
 		if (ft_strcmp(env_v->key, new_key) < 0)

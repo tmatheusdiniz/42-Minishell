@@ -60,9 +60,9 @@ typedef struct s_shell
 	char	*input;
 	char	*cwd;
 	char	*trimmed;
+	void	*root;
 	char	**input_split;
 	char	**envp;
-	void	*root;
 	t_token	*tokens;
 	t_env_v	*env_v;
 }		t_shell;

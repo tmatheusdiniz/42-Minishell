@@ -38,7 +38,7 @@ int	get_index_env(t_env_v *env_v, char *var)
 	return (-1);
 }
 
-int	count_linked_list(t_env_v *list)
+int	linked_env_size(t_env_v *list)
 {
 	int	i;
 

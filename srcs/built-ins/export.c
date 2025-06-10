@@ -10,18 +10,45 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "builtins.h"
+#include "errors.h"
+#include "utils.h"
 #include <minishell.h>
+#include <stdlib.h>
 
 static void		print_all_var(t_env_v *env_v);
 static t_env_v	*key_and_value(t_env_v *env_v, char *arg);
 static t_env_v	*aux_key_value(t_env_v *env_v, t_env_v *new_node, int position);
 
-static void	parse_of_arguments(t_env_v *env_v, char *argument)
+static void	parse_of_arguments(t_shell *shell, char **arguments)
 {
-	if (!(ft_strchr(argument, '=')))
-		env_v = set_only_key(env_v, argument);
-	else
-		env_v = key_and_value(env_v, argument);
+	int	i;
+
+	i = 0;
+	while (arguments[i])
+	{
+		if (!(ft_strchr(arguments[i], '=')))
+		{
+			if (check_duplicated(shell->env_v, arguments[i]))
+				return ;
+			shell->env_v = set_only_key(shell->env_v, arguments[i]);
+			if (!shell->env_v)
+				malloc_failure(shell, "parse_of_arguments");
+		}
+		else
+		{
+			if (check_duplicated(shell->env_v, arguments[i]))
+			{
+				if (modify_value_env(shell->env_v, arguments[i]))
+					malloc_failure(shell, "parse_of_arguments");
+				else
+					;
+			}
+			shell->env_v = key_and_value(shell->env_v, arguments[i]);
+			if (!shell->env_v)
+				malloc_failure(shell, "parse_of_arguments");
+		}
+	}
 }
 
 static t_env_v	*aux_key_value(t_env_v *env_v, t_env_v *new_node, int position)
@@ -52,8 +79,10 @@ static t_env_v	*key_and_value(t_env_v *env_v, char *arg)
 		return (NULL);
 	value = ft_strchr(arg, '=');
 	new_node = create_node(matrix[0], value + 1);
+	if (!new_node)
+		return (NULL);
 	clean_matrix(matrix);
-	position = find_position(env_v, matrix[0], count_linked_list(env_v));
+	position = find_position(env_v, matrix[0], linked_env_size(env_v));
 	if (position == 0)
 		return (new_node->next = env_v, new_node);
 	env_v = aux_key_value(env_v, new_node, position);
@@ -72,10 +101,14 @@ static void	print_all_var(t_env_v *env_v)
 	}
 }
 
-void	ft_export(t_env_v *env_v, char *argument)
+void	ft_export(t_shell *shell)
 {
-	if (!argument)
-		print_all_var(env_v);
+	ft_sort_linked(shell->env_v);
+	shell->input_split = ft_split(shell->input, ' ');
+	if (!shell->input_split || !(*(shell->input_split)))
+		malloc_failure(shell, "ft_export");
+	if (!shell->input_split[1])
+		print_all_var(shell->env_v);
 	else
-		parse_of_arguments(env_v, argument);
+		parse_of_arguments(shell, shell->input_split + 1);
 }
