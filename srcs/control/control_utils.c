@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   control_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:14:21 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/05 14:19:34 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/06/09 18:59:28 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	free_shell_part(t_shell *shell)
 		free (shell->input_split);
 	if (shell->cwd)
 		free (shell->cwd);
-	if(shell->trimmed)
+	if (shell->trimmed)
 		free (shell->trimmed);
 	reset_shell(shell);
 }

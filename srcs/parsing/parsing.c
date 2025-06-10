@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/06/06 23:37:52 by alberto          ###   ########.fr       */
+/*   Updated: 2025/06/09 21:08:50 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ char	**make_process(char **input_split, t_shell *mini)
 	{
 		if (check_quotes(input_split[0], '"')
 			|| check_quotes(input_split[0], '\''))
-			input_split[0] = clean_quotes(input_split[0], 0 , 0);
+			input_split[0] = clean_quotes(input_split[0], 0, 0);
 		if (check_dollar(input_split[i]))
 			input_split[i] = expand(input_split[i], mini);
 		else
-			input_split[i] = clean_quotes(input_split[i], 0 , 0 );
+			input_split[i] = clean_quotes(input_split[i], 0, 0);
 		i++;
 	}
 	return (input_split);
@@ -80,7 +80,7 @@ char	**make_process(char **input_split, t_shell *mini)
 char	**parsing(char *input, t_shell *mini)
 {
 	char	**input_split;
-	
+
 	input = check_space(input);
 	input_split = split_token(input);
 	input_split = make_process(input_split, mini);
