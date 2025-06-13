@@ -53,22 +53,19 @@ static void	remove_head(t_env_v *head)
 	free(temp);
 }
 
-void	ft_unset(t_shell *shell)
+void	ft_unset(t_shell *shell, char **argv)
 {
 	int		i;
 	t_env_v	*aux;
 
 	i = 0;
-	shell->input_split = ft_split(shell->input, ' ');
-	if (!shell->input_split)
-		malloc_failure(shell, "ft_unset");
-	while (shell->input_split[i])
+	while (argv[i])
 	{
-		if (remove_env_var(shell->env_v, shell->input_split[i]))
+		if (remove_env_var(shell->env_v, argv[i]))
 			continue ;
-		aux = get_node_envp(shell->env_v, shell->input_split[i]);
+		aux = get_node_envp(shell->env_v, argv[i]);
 		if (aux->value)
-			remove_var_envp(shell->envp, shell->input_split[i]);
+			remove_var_envp(shell->envp, argv[i]);
 		i ++;
 	}
 	free_env_v(aux);

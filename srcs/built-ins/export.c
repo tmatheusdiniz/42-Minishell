@@ -101,14 +101,11 @@ static void	print_all_var(t_env_v *env_v)
 	}
 }
 
-void	ft_export(t_shell *shell)
+void	ft_export(t_shell *shell, char **argv)
 {
 	ft_sort_linked(shell->env_v);
-	shell->input_split = ft_split(shell->input, ' ');
-	if (!shell->input_split || !(*(shell->input_split)))
-		malloc_failure(shell, "ft_export");
-	if (!shell->input_split[1])
+	if (!argv[1])
 		print_all_var(shell->env_v);
 	else
-		parse_of_arguments(shell, shell->input_split + 1);
+		parse_of_arguments(shell, argv);
 }
