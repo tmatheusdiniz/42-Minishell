@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:56:50 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/09 20:38:23 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:55:38 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int		check_args(int argc, char const **argv, char **envp);
 int		check_command(t_shell *shell, t_exec *exec_node);
 void	handle_env_vars(t_shell *shell, char **envp);
 t_shell	*init_shell(void);
+t_exec	*find_t_exec(void *root);
 
 // ----------Linked List----------
 int		get_index_env(t_env_v *env_v, char *var);

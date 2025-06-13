@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:37:06 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/09 17:24:00 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:56:03 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ void	control(t_shell *shell, char **envp)
 		free_shell(shell); //it's necessary free shell itself in the main
 		return ;
 	}
-	shell->input_split = parsing(shell->input, shell);
+	shell->input_split = parsing(shell);
+	if (check_command(shell, find_t_exec(shell->root)) == -1) // change to shell and t_exec
+		handle_errors(shell, "exit", SIGQUIT);
+	free_shell_part(shell);
 	control(shell, envp);
 }

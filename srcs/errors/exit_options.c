@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_options.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 20:08:41 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/07 00:07:05 by alberto          ###   ########.fr       */
+/*   Updated: 2025/06/13 18:48:54 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,8 @@ void	error_message(char *message, int errnbr)
 }
 
 void	handle_errors(t_shell *shell, char *message,
-		int errnbr, char **inp_split)
+		int errnbr)
 {
-	if (inp_split)
-		clean_matrix(inp_split);
 	free_shell(shell);
 	error_message(message, errnbr);
 	exit(errnbr);

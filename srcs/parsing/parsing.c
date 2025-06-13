@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/06/09 21:08:50 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:46:55 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,23 @@ char	**make_process(char **input_split, t_shell *mini)
 	return (input_split);
 }
 
-char	**parsing(char *input, t_shell *mini)
+t_exec	*find_t_exec(void *root)
+{
+	if (!root)
+		return (NULL);
+	if (*((int *)root) == BT || *((int *)root) == EXEC)
+		return ((t_exec *) root);
+	else
+		return (NULL);
+}
+
+char	**parsing(t_shell *mini)
 {
 	char	**input_split;
 
-	input_split = split_token(input);
+	input_split = split_token(mini->input);
 	input_split = make_process(input_split, mini);
 	create_token_list(input_split, mini, 0);
 	mini->root = build_tree(mini->tokens);
-	if (check_command(mini, input_split) == -1) // change to shell and t_exec
-		handle_errors(mini, "exit", SIGQUIT, input_split);
 	return (input_split);
 }

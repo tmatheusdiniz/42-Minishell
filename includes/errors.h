@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:55:32 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/09 18:55:07 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:49:04 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 // ----------errors----------
 
 void	handle_errors(t_shell *shell, char *message,
-			int errnbr, char **inp_split);
+			int errnbr);
 void	error_message(char *message, int errnbr);
 
 // ----------exit_code----------
