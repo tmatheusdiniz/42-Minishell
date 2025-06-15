@@ -57,7 +57,6 @@
 # include <errors.h>
 # include <colors.h>
 # include <signals.h>
-# include <control.h>
 # include <input.h>
 # include <utils.h>
 

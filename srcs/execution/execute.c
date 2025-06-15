@@ -6,7 +6,7 @@
 /*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:23:13 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/15 20:26:03 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:38:00 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	ft_execution(t_shell *shell, t_exec *exec_node)
 {
-
+	
 }
