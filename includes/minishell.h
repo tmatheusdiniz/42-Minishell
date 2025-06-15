@@ -51,12 +51,13 @@
 // System
 
 # include <builtins.h>
+# include <execution.h>
+# include <parsing.h>
 # include <structs.h>
 # include <errors.h>
 # include <colors.h>
 # include <signals.h>
 # include <control.h>
-# include <parsing.h>
 # include <input.h>
 # include <utils.h>
 
@@ -82,5 +83,8 @@
 // core
 
 int		main(int argc, char const **argv, char **envp);
+
+// Control
+void	control(t_shell *shell, char **envp);
 
 #endif

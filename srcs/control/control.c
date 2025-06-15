@@ -60,7 +60,7 @@ void	control(t_shell *shell, char **envp)
 		return ;
 	}
 	shell->input_split = parsing(shell);
-	if (check_command(shell, find_t_exec(shell->root)) == -1) // change to shell and t_exec
+	if (check_command(shell, find_t_exec(shell->root)) == -1)
 		handle_errors(shell, "exit", SIGQUIT);
 	free_shell_part(shell);
 	control(shell, envp);

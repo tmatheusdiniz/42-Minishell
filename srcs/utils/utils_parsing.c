@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "builtins.h"
+#include "errors.h"
 #include "libft.h"
 #include <minishell.h>
 
@@ -62,7 +63,7 @@ int	match_type(char *token)
 int	check_command(t_shell *shell, t_exec *exec_node)
 {
 	if (!exec_node)
-		return (-1);
+		malloc_failure(shell, "check_command");
 	if (!ft_strncmp(exec_node->argv[0], "cd", ft_strlen(exec_node->argv[0])))
 		ft_cd(shell, exec_node);
 	else if (!ft_strncmp(exec_node->argv[0], "pwd", ft_strlen(exec_node->argv[0])))

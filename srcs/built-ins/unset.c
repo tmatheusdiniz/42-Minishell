@@ -13,17 +13,17 @@
 #include <minishell.h>
 #include <stdlib.h>
 
-static void	remove_head(t_env_v *head);
+static t_env_v	*remove_head(t_env_v *head);
 
-static int	remove_env_var(t_env_v *head, char *key)
+static t_env_v	*remove_env_var(t_env_v *head, char *key)
 {
 	t_env_v	*current;
 	t_env_v	*prev;
 
 	if (!head || !key)
-		return (-1);
+		return (NULL);
 	if (ft_strcmp(head->key, key) == 0)
-		return (remove_head(head), 0);
+		return (head = remove_head(head));
 	prev = head;
 	current = head->next;
 	while (current)
@@ -32,17 +32,18 @@ static int	remove_env_var(t_env_v *head, char *key)
 		{
 			prev->next = current->next;
 			free(current->key);
-			free(current->value);
+			if (current->value)
+				free(current->value);
 			free(current);
-			return (0);
+			return (head);
 		}
 		prev = current;
 		current = current->next;
 	}
-	return (-1);
+	return (head);
 }
 
-static void	remove_head(t_env_v *head)
+static t_env_v	*remove_head(t_env_v *head)
 {
 	t_env_v	*temp;
 
@@ -51,6 +52,7 @@ static void	remove_head(t_env_v *head)
 	free(temp->key);
 	free(temp->value);
 	free(temp);
+	return (head);
 }
 
 void	ft_unset(t_shell *shell, char **argv)
@@ -61,12 +63,11 @@ void	ft_unset(t_shell *shell, char **argv)
 	i = 0;
 	while (argv[i])
 	{
-		if (remove_env_var(shell->env_v, argv[i]))
-			continue ;
 		aux = get_node_envp(shell->env_v, argv[i]);
 		if (aux->value)
 			remove_var_envp(shell->envp, argv[i]);
+		if (aux)
+			shell->env_v = remove_env_var(shell->env_v, argv[i]);
 		i ++;
 	}
-	free_env_v(aux);
 }

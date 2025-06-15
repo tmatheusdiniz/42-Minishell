@@ -80,7 +80,7 @@ static void	exit_sucess(t_shell *shell)
 void	ft_exit(t_shell *shell, t_exec *exec_node)
 {
 	(void)exec_node;
-	if (ft_is_numeric(shell->input_split[1]))
+	if (ft_is_numeric(exec_node->argv[1]))
 	{
 		exit_sucess(shell);
 		return ;
