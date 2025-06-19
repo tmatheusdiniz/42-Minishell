@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 02:50:43 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/13 18:59:03 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/19 22:14:27 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ t_env_v	*get_env_node_parsing(t_shell *mini, char *var, t_env_v	*current)
 	current = mini->env_v;
 	while (current)
 	{
-		if (current->key && !ft_strncmp(current->key, clean_var, len))
+		if (current->key && !ft_strcmp(current->key, clean_var)
+			&& (current->key[len] || current->key[len] == '='))
 		{
 			free(clean_var);
 			return (current);
