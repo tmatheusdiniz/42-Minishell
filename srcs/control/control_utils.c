@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   control_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:14:21 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/19 16:23:23 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/19 22:30:49 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ void	free_redir(void *root)
 void	free_exec(void *root)
 {
 	t_exec	*exec;
-	int		i;
 
-	i = 0;
 	exec = (t_exec *)root;
 	if (exec->argv)
 		clean_matrix(exec->argv);
@@ -45,13 +43,11 @@ void	free_exec(void *root)
 
 void	free_tree(void *root)
 {
-	int		i;
 	int		type;
 	t_pipe	*pipe;
 
 	if (!root)
 		return ;
-	i = 0;
 	type = *(int *)root;
 	if (type == PIPE)
 	{

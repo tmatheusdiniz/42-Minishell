@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 21:57:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/06/19 22:16:02 by alberto          ###   ########.fr       */
+/*   Updated: 2025/06/19 22:34:23 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,9 @@ char	*check_env_var(char *input, int *inc)
 	if (!input)
 		return (NULL);
 	j = 0;
-	(*i)++;
-	while (input[*i] && input[*i] != ' ' && (input[*i] != '"'
-			&& input[*i] != '\'' && input[*i] != '$'))
+	inc[0]++;
+	while (input[inc[0]] && input[inc[0]] != ' ' && (input[inc[0]] != '"'
+			&& input[inc[0]] != '\'' && input[inc[0]] != '$'))
 	{
 		env_var[j] = input[inc[0]];
 		inc[0]++;

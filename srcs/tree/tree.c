@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:43:21 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/05/20 15:27:54 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/19 22:27:24 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ t_token	*search_pipe(t_token *token)
 	while (cur)
 	{
 		if (cur->type == PIPE)
-			pipe = cur;
+			return (pipe);
 		cur = cur->next;
 	}
-	return (pipe);
+	return (NULL);
 }
 
 t_token	*search_redir(t_token *token)
