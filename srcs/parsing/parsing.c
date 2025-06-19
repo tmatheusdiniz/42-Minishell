@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/06/13 18:46:55 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:20:34 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,18 @@ t_exec	*find_t_exec(void *root)
 		return (NULL);
 }
 
-char	**parsing(t_shell *mini)
+int	parsing(t_shell *mini)
 {
 	char	**input_split;
 
 	input_split = split_token(mini->input);
+	if (!input_split)
+		return (-1);
 	input_split = make_process(input_split, mini);
+	if (!input_split)
+		return (-1);
 	create_token_list(input_split, mini, 0);
 	mini->root = build_tree(mini->tokens);
-	return (input_split);
+	clean_matrix(input_split);
+	return (0);	
 }
