@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   control.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:37:06 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/19 15:23:59 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/19 22:23:05 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,9 @@ void	control(t_shell *shell, char **envp)
 	if (!shell->input || !ft_strcmp(shell->input, "exit"))
 	{
 		print_exit();
-		free_shell(shell); //it's necessary free shell itself in the main
+		free_shell(shell);
 		return ;
 	}
-	//shell->input_split = parsing(shell);
 	if (parsing(shell) == 0)
 	{
 		if (check_command(shell, find_t_exec(shell->root)) == -1)
