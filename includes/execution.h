@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control.h                                          :+:      :+:    :+:   */
+/*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 14:55:37 by mreinald          #+#    #+#             */
-/*   Updated: 2025/05/22 14:59:40 by mreinald         ###   ########.fr       */
+/*   Created: 2025/06/15 20:23:56 by mreinald          #+#    #+#             */
+/*   Updated: 2025/06/15 20:28:06 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <structs.h>
 
-void	control(t_shell *shell, char **envp);
+void	ft_execution(t_shell *shell, t_exec *exec_node);
+

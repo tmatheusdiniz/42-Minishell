@@ -18,7 +18,6 @@ static void	reset_for_exit(t_shell *shell)
 	shell->input = NULL;
 	shell->input_split = NULL;
 	shell->cwd = NULL;
-	shell->trimmed = NULL;
 	shell->root = NULL;
 	shell->tokens = NULL;
 	shell->envp = NULL;
@@ -49,8 +48,6 @@ void	free_shell(t_shell *shell)
 	{
 		if (shell->input)
 			free (shell->input);
-		if (shell->trimmed)
-			free (shell->trimmed);
 		if (shell->cwd)
 			free (shell->cwd);
 		if (shell->input_split)

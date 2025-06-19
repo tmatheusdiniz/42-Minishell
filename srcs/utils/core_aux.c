@@ -35,7 +35,6 @@ t_shell	*init_shell(void)
 	if (!shell)
 		malloc_failure(shell, "init_shell");
 	shell->input = NULL;
-	shell->trimmed = NULL;
 	shell->cwd = NULL;
 	shell->input_split = NULL;
 	shell->envp = NULL;

@@ -25,7 +25,7 @@ char	*get_target(t_env_v *env_v, char *input);
 
 // ----------export----------
 
-void	ft_export(t_shell *shell);
+void	ft_export(t_shell *shell, char **argv);
 void	ft_sort_linked(t_env_v *env_v);
 void	*create_node(char *key_name, char *content);
 int		modify_value_env(t_env_v *env_v, char *argument);
@@ -50,10 +50,10 @@ void	ft_echo(char **arguments);
 
 // ----------unset----------
 
-void	ft_unset(t_shell *shell);
+void	ft_unset(t_shell *shell, char **args);
 
 // ----------exit----------
 
-void	ft_exit(t_shell *shell);
+void	ft_exit(t_shell *shell, t_exec *exec_node);
 
 #endif

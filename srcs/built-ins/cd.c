@@ -95,11 +95,11 @@ void	ft_cd(t_shell *shell, t_exec *exec_node)
 
 	(void)exec_node; // after i have to handle it
 	home = get_node_envp(shell->env_v, "HOME");
-	if (shell->input_split[2])
+	if (exec_node->argv[2])
 		ft_putendl_fd("minishell: cd: too many arguments", 2);
 	else
 	{
-		if (!shell->input_split[1])
+		if (!exec_node->argv[1])
 		{
 			if (!(home->value))
 			{
@@ -110,8 +110,8 @@ void	ft_cd(t_shell *shell, t_exec *exec_node)
 				target = home->value;
 		}
 		else
-			target = get_target(shell->env_v, shell->input_split[1]);
-		if (shell->input_split[1] && ft_strncmp(shell->input_split[1], "-", 2) == 0)
+			target = get_target(shell->env_v, exec_node->argv[1]);
+		if (exec_node->argv[1] && ft_strncmp(exec_node->argv[1], "-", 2) == 0)
 			ft_printf("%s\n", target);
 		change_dir(shell, target);
 	}

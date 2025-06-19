@@ -30,10 +30,9 @@ static void	parse_of_arguments(t_shell *shell, char **arguments)
 		if (!(ft_strchr(arguments[i], '=')))
 		{
 			if (check_duplicated(shell->env_v, arguments[i]))
-				return ;
-			shell->env_v = set_only_key(shell->env_v, arguments[i]);
-			if (!shell->env_v)
-				malloc_failure(shell, "parse_of_arguments");
+				continue ;
+			else
+				shell->env_v = set_only_key(shell->env_v, arguments[i]);
 		}
 		else
 		{
@@ -41,13 +40,12 @@ static void	parse_of_arguments(t_shell *shell, char **arguments)
 			{
 				if (modify_value_env(shell->env_v, arguments[i]))
 					malloc_failure(shell, "parse_of_arguments");
-				else
-					return ;
 			}
 			shell->env_v = key_and_value(shell->env_v, arguments[i]);
-			if (!shell->env_v)
-				malloc_failure(shell, "parse_of_arguments");
 		}
+		if (!shell->env_v)
+				malloc_failure(shell, "parse_of_arguments");
+		++i;
 	}
 }
 
@@ -101,14 +99,11 @@ static void	print_all_var(t_env_v *env_v)
 	}
 }
 
-void	ft_export(t_shell *shell)
+void	ft_export(t_shell *shell, char **argv)
 {
 	ft_sort_linked(shell->env_v);
-	shell->input_split = ft_split(shell->input, ' ');
-	if (!shell->input_split || !(*(shell->input_split)))
-		malloc_failure(shell, "ft_export");
-	if (!shell->input_split[1])
+	if (!argv[1])
 		print_all_var(shell->env_v);
 	else
-		parse_of_arguments(shell, shell->input_split + 1);
+		parse_of_arguments(shell, argv + 1);
 }

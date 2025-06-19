@@ -51,12 +51,12 @@
 // System
 
 # include <builtins.h>
+# include <execution.h>
+# include <parsing.h>
 # include <structs.h>
 # include <errors.h>
 # include <colors.h>
 # include <signals.h>
-# include <control.h>
-# include <parsing.h>
 # include <input.h>
 # include <utils.h>
 
@@ -68,7 +68,7 @@
 # define PROMPT_MID "\001\033[1;91m\002][\001\033[0;92m\002"
 # define PROMPT_END "\001\033[1;91m\002] \001\033[0m\002→ "
 
-# define BT 1 // Builtins
+# define BT 1
 # define EXEC 2
 # define PIPE 3
 # define OUTREDIR 4
@@ -82,5 +82,8 @@
 // core
 
 int		main(int argc, char const **argv, char **envp);
+
+// Control
+void	control(t_shell *shell, char **envp);
 
 #endif

@@ -6,15 +6,14 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 03:03:53 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/09 18:46:25 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:19:35 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <structs.h>
 #include <stdbool.h>
 
-//void	cmds(char **input_split, t_mini *mini);
-char	**parsing(char *input, t_shell *mini);
+int		parsing(t_shell *mini);
 bool	check_quotes(char *input_split, char quotes);
 bool	in_quotes(char cur, bool flag, int quotes);
 
