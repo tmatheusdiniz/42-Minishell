@@ -14,3 +14,7 @@
 
 void	ft_execution(t_shell *shell, t_exec *exec_node);
 
+// Utils
+
+int		check_whatis(void *root);
+
