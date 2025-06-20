@@ -28,16 +28,14 @@ void	cut_tokens(t_token *tokens, t_token *base, t_token **left_tokens,
 
 t_token	*search_pipe(t_token *token)
 {
-	t_token	*cur;
 	t_token	*pipe;
 
-	pipe = NULL;
-	cur = token;
-	while (cur)
+	pipe = token;
+	while (pipe)
 	{
-		if (cur->type == PIPE)
+		if (pipe->type == PIPE)
 			return (pipe);
-		cur = cur->next;
+		pipe = pipe->next;
 	}
 	return (NULL);
 }
