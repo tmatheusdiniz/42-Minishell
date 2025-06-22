@@ -10,11 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdbool.h>
 #include <structs.h>
 
 void	ft_execution(t_shell *shell, t_exec *exec_node);
 
 // Utils
 
-int		check_whatis(void *root);
+int		check_pipe_lft(void *root);
+bool	check_pipe_rgt(void	*root);
+int		count_pipes(void *root);
 

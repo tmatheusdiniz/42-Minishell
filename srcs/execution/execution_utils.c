@@ -10,20 +10,53 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "structs.h"
 #include <minishell.h>
 
-int	check_whatis(void *root)
+int	count_pipes(void *root)
 {
-	int	*type_ptr;
+	int		nbr_pipe;
+	t_pipe	*pipe;
 
-	type_ptr = (int *)root;
-	if (*type_ptr == EXEC)
+	nbr_pipe = 0;
+	pipe = (t_pipe *)root;
+	while (pipe && pipe->right)
+	{
+		++nbr_pipe;
+		pipe = (t_pipe *)pipe->right;
+	}
+	return (nbr_pipe);
+}
+
+bool	check_pipe_rgt(void	*root)
+{
+	int	*type_right;
+
+	type_right = (int *)((t_pipe *)root)->right;
+	if (type_right)
+	{
+		if (*type_right == PIPE)
+			return (true);
+	}
+	return (false);
+}
+
+int	check_pipe_lft(void *root)
+{
+	int	*type_left;
+
+	type_left = (int *)((t_pipe *)root)->left;
+	if (*type_left == BT)
+		return (BT);
+	if (*type_left == EXEC)
 		return (EXEC);
-	else if (*type_ptr == PIPE)
-		return (PIPE);
-	else if (*type_ptr == INREDIR)
+	else if (*type_left == INREDIR)
 		return (INREDIR);
-	else if (*type_ptr == OUTREDIR)
+	else if (*type_left == OUTREDIR)
 		return (OUTREDIR);
-	return (-1);
+	else if (*type_left == HEREDOC)
+		return (HEREDOC);
+	else if (*type_left == APPEND)
+		return (APPEND);
+	return (0);
 }

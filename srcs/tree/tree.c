@@ -51,7 +51,8 @@ t_token	*search_redir(t_token *token)
 	{
 		if (cur->type == OUTREDIR
 			|| cur->type == INREDIR
-			|| cur->type == APPEND)
+			|| cur->type == APPEND
+			|| cur->type == HEREDOC)
 			redir = cur;
 		cur = cur->next;
 	}
