@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 02:50:43 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/19 22:14:27 by alberto          ###   ########.fr       */
+/*   Updated: 2025/06/22 17:07:05 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ t_env_v	*get_env_node_parsing(t_shell *mini, char *var, t_env_v	*current)
 	current = mini->env_v;
 	while (current)
 	{
-		if (current->key && !ft_strcmp(current->key, clean_var)
-			&& (current->key[len] || current->key[len] == '='))
+		if (current->key && !ft_strncmp(current->key, clean_var, len))
 		{
 			free(clean_var);
 			return (current);
@@ -60,7 +59,7 @@ int	match_type(char *token)
 
 int	check_command(t_shell *shell, t_exec *exec_node)
 {
-	if (!exec_node && *(int *)shell->root != PIPE)
+	if (!exec_node)
 		malloc_failure(shell, "check_command");
 	if (!ft_strncmp(exec_node->argv[0], "cd", ft_strlen(exec_node->argv[0])))
 		ft_cd(shell, exec_node);
