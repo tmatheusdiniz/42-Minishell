@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <libft.h>
+
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
@@ -22,7 +24,10 @@ typedef struct s_env_v	t_env_v;
 typedef struct s_exec
 {
 	int		type;
+	char	*cmd_path;
 	char	**argv;
+	t_list	*infile;
+	t_list	*outfile;
 }				t_exec;
 
 typedef struct s_redir
@@ -43,7 +48,7 @@ typedef struct s_env_v
 {
 	char			*key;
 	char			*value;
-	struct s_env_v	*next;
+	t_env_v			*next;
 }	t_env_v;
 
 typedef struct s_token
@@ -54,6 +59,15 @@ typedef struct s_token
 	t_token	*next;
 	t_token	*prev;
 }				t_token;
+
+typedef struct s_fork
+{
+	int		fd_in;
+	int		fd_out;
+	int		nbr_cmds;
+	int		**pipe;
+	pid_t	*pid;
+}				t_fork;
 
 typedef struct s_shell
 {

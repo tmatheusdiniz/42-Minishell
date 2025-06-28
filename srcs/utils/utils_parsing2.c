@@ -58,7 +58,7 @@ char	*clean_quotes(char *var, int i, int j)
 	return (free(var), ft_strdup(new_var));
 }
 
-bool	check_exec(char *token)
+bool	check_if_exec(char *token)
 {
 	char	**splitted_path;
 	char	*path;

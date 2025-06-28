@@ -60,10 +60,7 @@ void	control(t_shell *shell, char **envp)
 		return ;
 	}
 	if (parsing(shell) == 0)
-	{
-		if (check_command(shell, find_t_exec(shell->root)) == -1)
-			handle_errors(shell, "exit", SIGQUIT);
-	}
+		ft_execution(shell);
 	free_shell_part(shell);
 	control(shell, envp);
 }

@@ -19,7 +19,6 @@
 
 // ----------Main----------
 int		check_args(int argc, char const **argv, char **envp);
-int		check_command(t_shell *shell, t_exec *exec_node);
 void	handle_env_vars(t_shell *shell, char **envp);
 t_shell	*init_shell(void);
 t_exec	*find_t_exec(void *root);
@@ -46,13 +45,13 @@ int		ft_strcmp(char *s1, char *s2);
 char	*check_space(char *input);
 char	**linked_to_envp(t_shell *shell);
 int		match_type(char *token);
-bool	check_exec(char *token);
+bool	check_if_exec(char *token);
 bool	check_builtin(char *token);
 char	*check_env_var(char *input, int *i);
 
 // ----------Control----------
 void	free_shell_part(t_shell *shell);
-void free_tree(void *root);
+void 	free_tree(void *root);
 
 // ----------Parsing----------
 t_env_v	*get_env_node_parsing(t_shell *mini, char *var, t_env_v	*current);

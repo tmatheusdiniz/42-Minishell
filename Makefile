@@ -92,7 +92,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo "$(RED)Compiling minishell sources $<$(RESET)"
 
 $(LIBFT):
-	@make --silent -C $(LIBFT_DIR)
+	@make bonus --silent -C $(LIBFT_DIR)
 
 $(VALGRIND_SUPP):
 	@echo "{" > $(VALGRIND_SUPP)
