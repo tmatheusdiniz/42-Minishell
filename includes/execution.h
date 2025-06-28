@@ -28,10 +28,14 @@ bool	check_pipe_rgt(void	*root);
 int		count_pipes(void *root);
 void	set_pipe(t_fork *frk, int pipe_index);
 
+// ----------Utils Execute----------
+void	check_lastcmd(t_shell *shell, void *root,
+			t_fork *frk, int pipe_index);
+
 // ----------Fork----------
 void	handle_fork(t_shell *shell, t_fork *frk, int pipe_index);
 
 // ----------Checks----------
 
-void	check_bt(t_shell *shell, t_exec *exec_node, t_fork *frk);
+void	check_bt(t_shell *shell, t_exec *exec_node);
 int		find_executable(t_shell *shell, t_exec *exec_node, char *command);

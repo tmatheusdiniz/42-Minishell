@@ -32,8 +32,11 @@ void	ft_execution(t_shell *shell)
 		}
 		i = 0;
 		while (i < frk->nbr_cmds)
-			waitpid(frk->pid[i], NULL, 0);
+			waitpid(frk->pid[i++], NULL, 0);
 	}
+	else if (*(int *)shell->root == BT)
+		check_bt(shell, (t_exec *)shell->root);
+
 }
 
 void	ft_execute_cmmd(t_shell *shell, void *root, t_fork *frk, int pipe_index)
@@ -57,5 +60,25 @@ void	ft_execute_cmmd(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 			execve(exec_node->cmd_path, exec_node->argv, shell->envp);
 	}
 	else if (*(int *)root == BT)
-		check_bt(shell, exec_node, frk);
+	{
+		check_bt(shell, exec_node);
+		exit (0);
+	}
+}
+
+void	execute_tree_recur(t_shell *shell, void *root, t_fork *frk, int pipe_index)
+{
+	t_pipe	*pipe_root;
+
+	if (*(int *)root == PIPE)
+	{
+		pipe_root = (t_pipe *)root;
+		execute_tree_recur(shell, pipe_root->left, frk, pipe_index);
+		if (*(int *)pipe_root->right == PIPE)
+			execute_tree_recur(shell, pipe_root->right, frk, pipe_index + 1);
+		else
+			check_lastcmd(shell, pipe_root->right, frk, pipe_index + 1);
+	}
+	else if (*(int *)root == BT || *(int *)root == EXEC)
+		ft_execute_cmmd(shell, root, frk, pipe_index);
 }
