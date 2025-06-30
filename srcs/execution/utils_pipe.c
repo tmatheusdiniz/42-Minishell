@@ -7,6 +7,8 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 15:01:38 by mreinald          #+#    #+#             */
 /*   Updated: 2025/06/30 15:01:45 by mreinald         ###   ########.fr       */
+/*   Created: 2025/06/28 20:01:08 by mreinald          #+#    #+#             */
+/*   Updated: 2025/06/28 20:01:17 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +39,17 @@ void	set_pipe(t_fork *frk, int pipe_index)
 		close(frk->pipe[pipe_index][1]);
 		close(frk->pipe[pipe_index][1]);
 	}
+}
+
+bool	check_pipe_rgt(void	*root)
+{
+	int	*type_right;
+
+	type_right = (int *)((t_pipe *)root)->right;
+	if (type_right)
+	{
+		if (*type_right == PIPE)
+			return (true);
+	}
+	return (false);
 }

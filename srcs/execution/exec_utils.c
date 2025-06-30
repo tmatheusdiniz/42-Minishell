@@ -33,9 +33,9 @@ bool	check_pipe_rgt(void	*root)
 	return (false);
 }
 
-void	check_bt(t_shell *shell, t_exec *exec_node, t_fork *frk)
+void	check_bt(t_shell *shell, t_exec *exec_node)
 {
-	(void)frk; // after i will need to clean it in fail case
+	// after i will need to clean it in fail case
 	if (!exec_node)
 		malloc_failure(shell, "check_command");
 	if (!ft_strncmp(exec_node->argv[0], "cd", ft_strlen(exec_node->argv[0])))
