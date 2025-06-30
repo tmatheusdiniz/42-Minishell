@@ -59,3 +59,22 @@ void	ft_execute_cmmd(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 	else if (*(int *)root == BT)
 		check_bt(shell, exec_node, frk);
 }
+
+void	execute_tree_recur(t_shell *shell, void *root, t_fork *frk, int pipe_index)
+{
+	t_pipe	*pipe_root;
+
+	if (!root)
+		return;
+		
+	if (*(int *)root == PIPE)
+	{
+		pipe_root = (t_pipe *)root;
+		execute_tree_recur(shell, pipe_root->left, frk, pipe_index);
+		execute_tree_recur(shell, pipe_root->right, frk, pipe_index + 1);
+	}
+	else if (*(int *)root == BT || *(int *)root == EXEC)
+	{
+		ft_execute_cmmd(shell, root, frk, pipe_index);
+	}
+}

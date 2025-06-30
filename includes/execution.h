@@ -28,6 +28,10 @@ bool	check_pipe_rgt(void	*root);
 int		count_pipes(void *root);
 void	set_pipe(t_fork *frk, int pipe_index);
 
+// ----------Utils Fork----------
+void	check_lastcmd(t_shell *shell, void *root,
+			t_fork *frk, int pipe_index);
+
 // ----------Fork----------
 void	handle_fork(t_shell *shell, t_fork *frk, int pipe_index);
 

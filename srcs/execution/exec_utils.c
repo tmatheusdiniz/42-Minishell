@@ -12,37 +12,12 @@
 
 #include <minishell.h>
 
-static void	check_lastcmd(t_shell *shell, void *root,
+void	check_lastcmd(t_shell *shell, void *root,
 			t_fork *frk, int pipe_index)
 {
 	if (*(int *)root == BT || *(int *)root == EXEC)
 			ft_execute_cmmd(shell, root, frk, pipe_index);
 	// after add checks to other types of input
-}
-
-void	set_pipe(t_fork *frk, int pipe_index)
-{
-	int	i;
-
-	i = 0;
-	while (i < frk->nbr_cmds - 1)
-	{
-		if (i != pipe_index - 1)
-			close (frk->pipe[i][0]);
-		if (i != pipe_index)
-			close (frk->pipe[i][1]);
-		i ++;
-	}
-	if (pipe_index > 0)
-	{
-		dup2(frk->pipe[pipe_index - 1][0], STDIN_FILENO);
-		close(frk->pipe[pipe_index - 1][0]);
-	}
-	if (pipe_index < frk->nbr_cmds - 1)
-	{
-		dup2(frk->pipe[pipe_index][1], STDOUT_FILENO);
-		close(frk->pipe[pipe_index][1]);
-	}
 }
 
 bool	check_pipe_rgt(void	*root)
@@ -82,21 +57,4 @@ void	check_bt(t_shell *shell, t_exec *exec_node, t_fork *frk)
 		ft_putstr_fd(exec_node->argv[0], 2);
 		ft_putendl_fd(": command not found", 2);
 	}
-}
-
-void	execute_tree_recur(t_shell *shell, void *root, t_fork *frk, int pipe_index)
-{
-	t_pipe	*pipe_root;
-
-	if (*(int *)root == PIPE)
-	{
-		pipe_root = (t_pipe *)root;
-		execute_tree_recur(shell, pipe_root->left, frk, pipe_index);
-		if (*(int *)pipe_root->right == PIPE)
-			execute_tree_recur(shell, pipe_root->right, frk, pipe_index + 1);
-		else
-			check_lastcmd(shell, pipe_root->right, frk, pipe_index + 1);
-	}
-	else if (*(int *)root == BT || *(int *)root == EXEC)
-		ft_execute_cmmd(shell, root, frk, pipe_index);
 }
