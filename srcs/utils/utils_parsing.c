@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 02:50:43 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/22 17:07:05 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/07/11 21:40:01 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	match_type(char *token)
 	else if (!check_if_exec(token))
 		return (EXEC);
 	else
-		return (ARG);
+		return (EXEC);
 }
 
 int	check_command(t_shell *shell, t_exec *exec_node)
