@@ -33,12 +33,10 @@ void	ft_execution(t_shell *shell)
 		i = 0;
 		while (i < frk->nbr_cmds)
 			waitpid(frk->pid[i++], NULL, 0);
-		// free frk
+		cleanup_fork_fds(frk);
 	}
-	else if (*(int *)shell->root == BT)
-		check_bt(shell, (t_exec *)shell->root);
-	else if (*(int *)shell->root == EXEC)
-		aux_execute(shell);
+	else
+		aux_execution(shell);
 }
 
 void	ft_execute_cmmd(t_shell *shell, void *root, t_fork *frk, int pipe_index)
@@ -60,6 +58,8 @@ void	ft_execute_cmmd(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 		}
 		else
 			execve(exec_node->cmd_path, exec_node->argv, shell->envp);
+		error_message("EXECV", 0);
+		exit(126);
 	}
 	else if (*(int *)root == BT)
 	{

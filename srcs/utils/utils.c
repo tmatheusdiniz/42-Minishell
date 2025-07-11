@@ -35,7 +35,10 @@ char	**linked_to_envp(t_shell *shell)
 		aux = ft_strjoin(tmp->key, "=");
 		if (!aux)
 			return (aux_to_envp(envp), NULL);
-		envp[i] = ft_strjoin(aux, tmp->value);
+		if (tmp->value)
+			envp[i] = ft_strjoin(aux, tmp->value);
+		else
+			envp[i] = ft_strdup(aux);
 		free (aux);
 		if (!envp[i])
 			return (aux_to_envp(envp), NULL);

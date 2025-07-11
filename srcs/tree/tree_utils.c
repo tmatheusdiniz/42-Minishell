@@ -1,94 +1,102 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tree_utils.c                                       :+:      :+:    :+:   */
+/*   tree_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 19:54:14 by alberto           #+#    #+#             */
-/*   Updated: 2025/05/20 15:27:48 by cda-fons         ###   ########.fr       */
+/*   Created: 2025/07/10 22:31:44 by mreinald          #+#    #+#             */
+/*   Updated: 2025/07/10 22:32:44 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	count_tokens(t_token *tokens)
-{
-	t_token	*cur;
-	int		count;
+static void	*create_inredir(t_token *right_tokens, void *next_node);
+static void	*create_append(t_token *right_tokens, void *next_node);
+static void	*create_heredoc(t_token *right_tokens, void *next_node);
 
-	cur = tokens;
-	count = 0;
-	while (cur)
-	{
-		count++;
-		cur = cur->next;
-	}
-	return (count);
+static void	*create_outredir(t_token *right_tokens, void *next_node)
+{
+	t_outredir	*redir;
+
+	redir = ft_calloc(sizeof(t_outredir), 1);
+	if (!redir)
+		return (NULL);
+	redir->type = OUTREDIR;
+	if (right_tokens)
+		redir->file = ft_strdup(right_tokens->token);
+	else
+		redir->file = NULL;
+	redir->next = next_node;
+	free_right_tokens(right_tokens);
+	return (redir);
 }
 
-void	*create_pipe_node(t_token *left_tokens, t_token *right_tokens)
+static void	*create_inredir(t_token *right_tokens, void *next_node)
 {
-	t_pipe	*pipe;
+	t_inredir	*redir;
 
-	pipe = (t_pipe *)ft_calloc(sizeof(t_pipe), 1);
-	if (!pipe)
+	redir = ft_calloc(sizeof(t_inredir), 1);
+	if (!redir)
 		return (NULL);
-	pipe->type = PIPE;
-	pipe->left = build_tree(left_tokens);
-	pipe->right = build_tree(right_tokens);
-	return (pipe);
+	redir->type = INREDIR;
+	if (right_tokens)
+		redir->file = ft_strdup(right_tokens->token);
+	else
+		redir->file = NULL;
+	redir->next = next_node;
+	free_right_tokens(right_tokens);
+	return (redir);
+}
+
+static void	*create_append(t_token *right_tokens, void *next_node)
+{
+	t_append	*redir;
+
+	redir = ft_calloc(sizeof(t_append), 1);
+	if (!redir)
+		return (NULL);
+	redir->type = APPEND;
+	if (right_tokens)
+		redir->file = ft_strdup(right_tokens->token);
+	else
+		redir->file = NULL;
+	redir->next = next_node;
+	free_right_tokens(right_tokens);
+	return (redir);
+}
+
+static void	*create_heredoc(t_token *right_tokens, void *next_node)
+{
+	t_heredoc	*redir;
+
+	redir = ft_calloc(sizeof(t_heredoc), 1);
+	if (!redir)
+		return (NULL);
+	redir->type = HEREDOC;
+	if (right_tokens)
+		redir->delimiter = ft_strdup(right_tokens->token);
+	else
+		redir->delimiter = NULL;
+	redir->next = next_node;
+	redir->content = NULL;
+	free_right_tokens(right_tokens);
+	return (redir);
 }
 
 void	*create_redir_node(t_token *redir_token, t_token *right_tokens)
 {
-	t_redir	*redir;
-	t_token	*remaining;
+	void	*next_node;
 
-	redir = (t_redir *)ft_calloc(sizeof(t_redir), 1);
-	if (!redir)
-		return (NULL);
-	redir->type = redir_token->type;
-	redir->file = NULL;
-	if (right_tokens)
-		redir->file = ft_strdup(right_tokens->token);
-	if (right_tokens && right_tokens->next)
-	{
-		remaining = right_tokens->next;
-		remaining->next = NULL;
-		redir->next = build_tree(remaining);
-		free(right_tokens->token);
-		free(right_tokens);
-	}
-	else
-		redir->next = NULL;
-	return (redir);
-}
-
-void	*create_exec_node(t_token *exec_token, int i)
-{
-	t_exec	*exec;
-	t_token	*cur;
-	int		args_count;
-
-	exec = (t_exec *)ft_calloc(sizeof(t_exec), 1);
-	if (!exec)
-		return (NULL);
-	exec->type = exec_token->type;
-	args_count = count_tokens(exec_token);
-	exec->argv = (char **)ft_calloc(sizeof(char *), (args_count + 1));
-	if (!exec->argv)
-	{
-		free(exec);
-		return (NULL);
-	}
-	cur = exec_token;
-	while (cur)
-	{
-		exec->argv[i] = ft_strdup(cur->token);
-		i++;
-		cur = cur->next;
-	}
-	exec->argv[i] = NULL;
-	return (exec);
+	next_node = get_next_node(right_tokens);
+	if (redir_token->type == OUTREDIR)
+		return (create_outredir(right_tokens, next_node));
+	else if (redir_token->type == INREDIR)
+		return (create_inredir(right_tokens, next_node));
+	else if (redir_token->type == APPEND)
+		return (create_append(right_tokens, next_node));
+	else if (redir_token->type == HEREDOC)
+		return (create_heredoc(right_tokens, next_node));
+	return (NULL);
 }

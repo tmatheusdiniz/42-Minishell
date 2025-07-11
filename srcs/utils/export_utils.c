@@ -89,7 +89,7 @@ t_env_v	*set_only_key(t_env_v *env_v, char *key)
 // I had to create this function for
 // case which the var has a value with "=" inside.
 // e.g.: TEST="xx=1 , yy=1"
-
+/*
 char	**aux_set(char *envp)
 {
 	char	**save;
@@ -110,6 +110,45 @@ char	**aux_set(char *envp)
 		temp ++;
 		save[1] = ft_strdup(temp);
 		save[2] = NULL;
+	}
+	return (save);
+}
+*/
+
+char	**aux_set(char *envp)
+{
+	char	**save;
+	char	*temp;
+	int		i;
+
+	save = ft_split(envp, '=');
+	if (!save)
+		return (NULL);
+	
+	// Count how many elements we got
+	i = 0;
+	while (save[i])
+		i++;
+	
+	// If we have more than 2 elements (KEY=VALUE=SOMETHING)
+	if (i > 2)
+	{
+		// We need to reconstruct the value part
+		temp = ft_strchr(envp, '=');
+		if (temp)
+		{
+			temp++; // Skip the '='
+			// Free all elements except the first
+			i = 1;
+			while (save[i])
+			{
+				free(save[i]);
+				i++;
+			}
+			// Recreate the array with just key and full value
+			save[1] = ft_strdup(temp);
+			save[2] = NULL;
+		}
 	}
 	return (save);
 }

@@ -10,19 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
 #include <minishell.h>
-
-static void	reset_for_exit(t_shell *shell)
-{
-	shell->input = NULL;
-	shell->input_split = NULL;
-	shell->cwd = NULL;
-	shell->root = NULL;
-	shell->tokens = NULL;
-	shell->envp = NULL;
-	shell->env_v = NULL;
-}
 
 void	free_env_v(t_env_v *env_v)
 {
@@ -42,30 +30,20 @@ void	free_env_v(t_env_v *env_v)
 	}
 }
 
-void	free_shell(t_shell *shell)
+void	free_shell_final(t_shell *shell)
 {
-	if (shell)
+	if (!shell)
+		return ;
+	free_shell_part(shell);
+	if (shell->envp)
 	{
-		if (shell->input)
-			free (shell->input);
-		if (shell->cwd)
-			free (shell->cwd);
-		if (shell->input_split)
-			clean_matrix(shell->input_split);
-		if (shell->envp)
-			clean_matrix(shell->envp);
-		if (shell->env_v)
-			free_env_v(shell->env_v);
+		clean_matrix(shell->envp);
+		shell->envp = NULL;
 	}
-	reset_for_exit(shell);
-}
-
-void	clean_matrix(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	while (matrix[i])
-		free(matrix[i++]);
-	free(matrix);
+	if (shell->env_v)
+	{
+		free_env_v(shell->env_v);
+		shell->env_v = NULL;
+	}
+	free(shell);
 }

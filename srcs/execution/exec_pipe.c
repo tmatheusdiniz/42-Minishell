@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errors.h"
 #include "structs.h"
 #include <minishell.h>
 
@@ -28,21 +29,21 @@ static void	pipe_cleanup(t_fork *frk, int index)
 int	count_pipes(void *root)
 {
 	int		nbr_pipe;
-	t_pipe	*pipe;
+	t_pipe	*pipe_node;
 
 	nbr_pipe = 0;
-	pipe = (t_pipe *)root;
-	while (pipe && pipe->right)
-	{
-		++nbr_pipe;
-		pipe = (t_pipe *)pipe->right;
-	}
+	if (!root || *(int *)root != PIPE)
+		return (0);
+	pipe_node = (t_pipe *)root;
+	nbr_pipe = 1;
+	if (pipe_node->right && *(int *)pipe_node->right == PIPE)
+		nbr_pipe += count_pipes(pipe_node->right);
 	return (nbr_pipe);
 }
 
 static t_fork	*init_tfork(int nbr_pipe)
 {
-	t_fork *frk;
+	t_fork	*frk;
 
 	frk = (t_fork *)malloc(sizeof(t_fork));
 	if (!frk)
@@ -81,8 +82,13 @@ t_fork	*handle_pipe(t_shell *shell, void *root)
 	int		nbr_pipe;
 	t_fork	*frk;
 
+	nbr_pipe = 0;
 	if (check_pipe_rgt(root))
+	{
 		nbr_pipe = count_pipes(root);
+		if (!nbr_pipe)
+			malloc_failure(shell, "handle_pipe");
+	}
 	else
 		nbr_pipe = 1;
 	frk = init_tfork(nbr_pipe);

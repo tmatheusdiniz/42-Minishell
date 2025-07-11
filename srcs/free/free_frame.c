@@ -15,21 +15,9 @@
 static void	reset_shell(t_shell *shell)
 {
 	shell->input = NULL;
-	shell->input_split = NULL;
 	shell->cwd = NULL;
 	shell->root = NULL;
 	shell->tokens = NULL;
-}
-
-void	free_redir(void *root)
-{
-	t_redir	*redir;
-
-	redir = (t_redir *)root;
-	if (redir->file)
-		free(redir->file);
-	if (redir->next)
-		free_tree(redir->next);
 }
 
 void	free_exec(void *root)
@@ -39,6 +27,8 @@ void	free_exec(void *root)
 	exec = (t_exec *)root;
 	if (exec->argv)
 		clean_matrix(exec->argv);
+	if (exec->cmd_path)
+		free (exec->cmd_path);
 }
 
 void	free_tree(void *root)
@@ -57,10 +47,14 @@ void	free_tree(void *root)
 	}
 	else if (type == EXEC || type == BT)
 		free_exec(root);
-	else if (type == OUTREDIR
-		|| type == INREDIR
-		|| type == APPEND)
-		free_redir(root);
+	else if (type == OUTREDIR)
+		free_outredir(root);
+	else if (type == INREDIR)
+		free_inredir(root);
+	else if (type == APPEND)
+		free_append(root);
+	else if (type == HEREDOC)
+		free_heredoc(root);
 	free(root);
 }
 
@@ -68,11 +62,11 @@ void	free_shell_part(t_shell *shell)
 {
 	if (shell->input)
 		free (shell->input);
-	if (shell->input_split)
-		free (shell->input_split);
 	if (shell->cwd)
 		free (shell->cwd);
 	if (shell->root)
 		free_tree(shell->root);
+	if (shell->tokens)
+		free_tokens(shell->tokens);
 	reset_shell(shell);
 }

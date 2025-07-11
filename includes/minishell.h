@@ -14,22 +14,18 @@
 # define MINISHELL_H
 
 // Libft
-
 # include <libft.h>
 
 // Standard Libraries
-
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
 
 // Readline
-
 # include <readline/readline.h>
 # include <readline/history.h>
 
 // POSIX and System Headers
-
 # include <unistd.h>
 # include <sys/wait.h>
 # include <fcntl.h>
@@ -40,16 +36,13 @@
 # include <sys/ioctl.h>
 
 // Limits and Directory
-
 # include <limits.h>
 # include <dirent.h>
 
 // Terminal Control
-
 # include <termio.h>
 
 // System
-
 # include <builtins.h>
 # include <execution.h>
 # include <parsing.h>
@@ -59,6 +52,7 @@
 # include <signals.h>
 # include <input.h>
 # include <utils.h>
+# include <free.h>
 
 # define NAME_SHELL "minishell"
 # define ESC_START "\001\033[1;91m\002"

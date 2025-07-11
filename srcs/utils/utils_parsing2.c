@@ -62,21 +62,29 @@ bool	check_if_exec(char *token)
 {
 	char	**splitted_path;
 	char	*path;
-	char	*the_return_of_spplited_path;
+	char	*full_path;
+	int		i;
+	bool	found;
 
 	splitted_path = ft_split(getenv("PATH"), ':');
-	path = ft_strjoin(splitted_path[6], "/");
-	free(splitted_path);
-	the_return_of_spplited_path = ft_strjoin(path, token);
-	if (access(the_return_of_spplited_path, X_OK))
+	if (!splitted_path)
+		return (false);
+	found = false;
+	i = 0;
+	while (splitted_path[i] && !found)
 	{
-		free(the_return_of_spplited_path);
+		path = ft_strjoin(splitted_path[i++], "/");
+		if (!path)
+			return (clean_matrix(splitted_path), false);
+		full_path = ft_strjoin(path, token);
 		free(path);
-		return (true);
+		if (!full_path)
+			return (clean_matrix(splitted_path), false);
+		if (access(full_path, X_OK) == 0)
+			found = true;
+		free(full_path);
 	}
-	free(the_return_of_spplited_path);
-	free(path);
-	return (false);
+	return (clean_matrix(splitted_path), !found);
 }
 
 bool	check_builtin(char *token)

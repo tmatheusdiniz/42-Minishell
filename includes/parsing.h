@@ -13,6 +13,8 @@
 #include <structs.h>
 #include <stdbool.h>
 
+// parsing.c
+
 int		parsing(t_shell *mini);
 bool	check_quotes(char *input_split, char quotes);
 bool	in_quotes(char cur, bool flag, int quotes);

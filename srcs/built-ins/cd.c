@@ -93,9 +93,8 @@ void	ft_cd(t_shell *shell, t_exec *exec_node)
 	char	*target;
 	t_env_v	*home;
 
-	(void)exec_node; // after i have to handle it
 	home = get_node_envp(shell->env_v, "HOME");
-	if (exec_node->argv[2])
+	if (exec_node->argv[1] && exec_node->argv[2])
 		ft_putendl_fd("minishell: cd: too many arguments", 2);
 	else
 	{

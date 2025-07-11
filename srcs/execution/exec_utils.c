@@ -53,6 +53,16 @@ void	check_bt(t_shell *shell, t_exec *exec_node)
 	}
 }
 
+void	aux_execution(t_shell *shell)
+{
+	if (*(int *)shell->root == BT)
+		check_bt(shell, (t_exec *)shell->root);
+	else if (*(int *)shell->root == EXEC)
+		aux_execute(shell);
+	else if (*(int *)shell->root == OUTREDIR)
+		exec_outredir(shell, shell->root);
+}
+
 void	aux_execute(t_shell *shell)
 {
 	pid_t	pid;
