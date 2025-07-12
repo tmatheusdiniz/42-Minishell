@@ -36,7 +36,7 @@ void	ft_execution(t_shell *shell)
 		cleanup_fork_fds(frk);
 	}
 	else
-		aux_execution(shell);
+		aux_execution(shell, shell->root);
 }
 
 void	ft_execute_cmmd(t_shell *shell, void *root, t_fork *frk, int pipe_index)

@@ -25,7 +25,7 @@ void	exec_outredir(t_shell *shell, void *root);
 
 // ----------Utils Execute----------
 void	aux_execute(t_shell *shell);
-void	aux_execution(t_shell *shell);
+void	aux_execution(t_shell *shell, void *root);
 
 // ----------Utils Pipe----------
 t_fork	*handle_pipe(t_shell *shell, void *root);

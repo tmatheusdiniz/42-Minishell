@@ -53,13 +53,13 @@ void	check_bt(t_shell *shell, t_exec *exec_node)
 	}
 }
 
-void	aux_execution(t_shell *shell)
+void	aux_execution(t_shell *shell, void *root)
 {
-	if (*(int *)shell->root == BT)
+	if (*(int *)root == BT)
 		check_bt(shell, (t_exec *)shell->root);
-	else if (*(int *)shell->root == EXEC)
+	else if (*(int *)root == EXEC)
 		aux_execute(shell);
-	else if (*(int *)shell->root == OUTREDIR)
+	else if (*(int *)root == OUTREDIR)
 		exec_outredir(shell, shell->root);
 }
 

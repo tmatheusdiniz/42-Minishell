@@ -26,7 +26,7 @@ void	exec_outredir(t_shell *shell, void *root)
 	outr = (t_outredir *)current;
 	while (current)
 	{
-		if (*(int *)root == OUTREDIR)
+		if (*(int *)current == OUTREDIR)
 		{
 			fd = open(outr->file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 			if (!fd)
@@ -35,6 +35,10 @@ void	exec_outredir(t_shell *shell, void *root)
 			close (fd);
 			current = outr->next;
 		}
-
+		else if (*(int *)current == EXEC || *(int *)current == BT)
+		{
+			shell->root = current;
+			aux_execution(shell, current);
+		}
 	}
 }
