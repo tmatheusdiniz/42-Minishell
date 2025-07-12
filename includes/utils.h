@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:56:50 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/19 16:19:08 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/07/12 23:35:55 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ bool	expand_check(char *input);
 
 //tree_utils.c
 void	*create_exec_node(t_token *exec_token, int i);
-void	*create_redir_node(t_token *redir_token, t_token *right_tokens);
+void	*create_redir_node(t_token *redir_token, t_token *right_tokens, t_token *left_tokens);
 void	*create_pipe_node(t_token *left_tokens, t_token *right_tokens);
 void	*get_next_node(t_token *right_tokens);
 

@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:43:21 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/06/19 22:27:24 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/12 23:34:58 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	*build_tree(t_token *tokens)
 		right_tokens = NULL;
 		left_tokens = tokens;
 		cut_tokens(tokens, redir, &left_tokens, &right_tokens);
-		return (create_redir_node(redir, left_tokens));
+		return (create_redir_node(redir, right_tokens, left_tokens));
 	}
 	return (create_exec_node(tokens, 0));
 }

@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 22:31:44 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/11 21:43:47 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/12 23:36:35 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ static void	*create_heredoc(t_token *right_tokens, void *next_node)
 	return (redir);
 }
 
-void	*create_redir_node(t_token *redir_token, t_token *right_tokens)
+void	*create_redir_node(t_token *redir_token, t_token *right_tokens, t_token *left_tokens)
 {
 	void	*next_node;
 
-	next_node = get_next_node(right_tokens);
+	next_node = build_tree(left_tokens);
 	if (redir_token->type == OUTREDIR)
 		return (create_outredir(right_tokens, next_node));
 	else if (redir_token->type == INREDIR)
