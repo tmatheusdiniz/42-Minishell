@@ -16,6 +16,7 @@
 #include <minishell.h>
 #include <unistd.h>
 
+/*
 void	exec_outredir(t_shell *shell, void *root)
 {
 	int			fd;
@@ -23,7 +24,7 @@ void	exec_outredir(t_shell *shell, void *root)
 	t_outredir	*outr;
 
 	current = root;
-	outr = (t_outredir *)current;
+	outr = (t_outredir *)root;
 	while (current)
 	{
 		if (*(int *)current == OUTREDIR)
@@ -33,12 +34,43 @@ void	exec_outredir(t_shell *shell, void *root)
 				malloc_failure(shell, "EXEC_OUTREDIR_FD");
 			dup2(fd, STDOUT_FILENO);
 			close (fd);
-			current = outr->next;
+			outr = outr->next;
+			current = outr;
 		}
 		else if (*(int *)current == EXEC || *(int *)current == BT)
 		{
 			shell->root = current;
 			aux_execution(shell, current);
+			outr = outr->next;
+			current = outr;
 		}
+	}
+}
+*/
+
+void	exec_outredir(t_shell *shell, void *root)
+{
+	int			fd;
+	void		*current;
+	t_outredir	*redir;
+
+	current = root;
+	while (current && *(int *)current == OUTREDIR)
+	{
+		redir = (t_outredir *)current;
+		fd = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+		if (fd == -1)
+		{
+			perror("open");
+			return ;
+		}
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+		current = redir->next;
+	}
+	if (current && (*(int *)current == EXEC || *(int *)current == BT))
+	{
+		shell->root = current;
+		aux_execution(shell, current);
 	}
 }
