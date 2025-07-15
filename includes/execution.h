@@ -21,7 +21,7 @@ void	ft_execute_cmmd(t_shell *shell, void *root,
 			t_fork *frk, int pipe_index);
 
 // ----------Execute Redir----------
-void	exec_outredir(t_shell *shell, void *root);
+int		exec_outredir(t_shell *shell, void *root);
 
 // ----------Utils Execute----------
 void	aux_execute(t_shell *shell);

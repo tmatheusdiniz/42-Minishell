@@ -48,7 +48,7 @@ void	exec_outredir(t_shell *shell, void *root)
 }
 */
 
-void	exec_outredir(t_shell *shell, void *root)
+int	exec_outredir(t_shell *shell, void *root)
 {
 	int			fd;
 	int			save_fdout;
@@ -60,10 +60,9 @@ void	exec_outredir(t_shell *shell, void *root)
 	while (current && *(int *)current == OUTREDIR)
 	{
 		redir = (t_outredir *)current;
-		//printf("DEBUG: Abrindo arquivo: %s\n", redir->file);
 		fd = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 		if (fd == -1)
-			return ;
+				return (close(save_fdout), perror("open"), 1);
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 		current = redir->next;
@@ -74,5 +73,5 @@ void	exec_outredir(t_shell *shell, void *root)
 		aux_execution(shell, current);
 	}
 	dup2(save_fdout, STDOUT_FILENO);
-	close (save_fdout);
+	return (close (save_fdout), 0);
 }
