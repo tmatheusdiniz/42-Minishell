@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 22:31:44 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/12 23:36:35 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/15 11:57:32 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void	*create_heredoc(t_token *right_tokens, void *next_node)
 	return (redir);
 }
 
-void	*create_redir_node(t_token *redir_token, t_token *right_tokens, t_token *left_tokens)
+/* void	*create_redir_node(t_token *redir_token, t_token *right_tokens, t_token *left_tokens)
 {
 	void	*next_node;
 
@@ -98,5 +98,44 @@ void	*create_redir_node(t_token *redir_token, t_token *right_tokens, t_token *le
 		return (create_append(right_tokens, next_node));
 	else if (redir_token->type == HEREDOC)
 		return (create_heredoc(right_tokens, next_node));
+	return (NULL);
+} */
+
+void	*create_redir_node(t_token *redir_token, t_token *right_tokens,
+		t_token *left_tokens)
+{
+	void	*next_node;
+	t_token	*file_token;
+	t_token	*remaining_tokens;
+	t_token	*recombined_list;
+
+	if (!right_tokens)
+		return (NULL);
+	file_token = right_tokens;
+	remaining_tokens = right_tokens->next;
+	file_token->next = NULL;
+	if (remaining_tokens)
+		remaining_tokens->prev = NULL;
+	if (left_tokens)
+	{
+		t_token	*tail = left_tokens;
+		while (tail && tail->next)
+			tail = tail->next;
+		tail->next = remaining_tokens;
+		if (remaining_tokens)
+			remaining_tokens->prev = tail;
+		recombined_list = left_tokens;
+	}
+	else
+		recombined_list = remaining_tokens;
+	next_node = build_tree(recombined_list);
+	if (redir_token->type == OUTREDIR)
+		return (create_outredir(file_token, next_node));
+	else if (redir_token->type == INREDIR)
+		return (create_inredir(file_token, next_node));
+	else if (redir_token->type == APPEND)
+		return (create_append(file_token, next_node));
+	else if (redir_token->type == HEREDOC)
+		return (create_heredoc(file_token, next_node));
 	return (NULL);
 }

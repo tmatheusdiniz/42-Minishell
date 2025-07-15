@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:43:21 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/07/12 23:34:58 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/15 11:39:48 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ t_token	*search_redir(t_token *token)
 			|| cur->type == INREDIR
 			|| cur->type == APPEND
 			|| cur->type == HEREDOC)
+		{
 			redir = cur;
+			return (redir);
+		}
 		cur = cur->next;
 	}
 	return (redir);
