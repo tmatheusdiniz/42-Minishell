@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tree_utils.c                                       :+:      :+:    :+:   */
+/*   tree_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:54:14 by alberto           #+#    #+#             */
-/*   Updated: 2025/05/20 15:27:48 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/07/16 00:11:34 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,33 +40,6 @@ void	*create_pipe_node(t_token *left_tokens, t_token *right_tokens)
 	return (pipe);
 }
 
-/*
-void	*create_redir_node(t_token *redir_token, t_token *right_tokens)
-{
-	t_redir	*redir;
-	t_token	*remaining;
-
-	redir = (t_redir *)ft_calloc(sizeof(t_redir), 1);
-	if (!redir)
-		return (NULL);
-	redir->type = redir_token->type;
-	redir->file = NULL;
-	if (right_tokens)
-		redir->file = ft_strdup(right_tokens->token);
-	if (right_tokens && right_tokens->next)
-	{
-		remaining = right_tokens->next;
-		remaining->next = NULL;
-		redir->next = build_tree(remaining);
-		free(right_tokens->token);
-		free(right_tokens);
-	}
-	else
-		redir->next = NULL;
-	return (redir);
-}
-*/
-
 void	*create_exec_node(t_token *exec_token, int i)
 {
 	t_exec	*exec;
@@ -95,15 +68,19 @@ void	*create_exec_node(t_token *exec_token, int i)
 	return (exec);
 }
 
-void	*get_next_node(t_token *right_tokens)
+void	*aux_redir_node(t_token *redir_token, t_token	*file_token, 
+		t_token	*recombined_list)
 {
-	t_token	*remaining;
+	void	*next_node;
 
-	if (right_tokens && right_tokens->next)
-	{
-		remaining = right_tokens->next;
-		remaining->next = NULL;
-		return (build_tree(remaining));
-	}
+	next_node = build_tree(recombined_list);
+	if (redir_token->type == OUTREDIR)
+		return (create_outredir(file_token, next_node));
+	else if (redir_token->type == INREDIR)
+		return (create_inredir(file_token, next_node));
+	else if (redir_token->type == APPEND)
+		return (create_append(file_token, next_node));
+	else if (redir_token->type == HEREDOC)
+		return (create_heredoc(file_token, next_node));
 	return (NULL);
 }
