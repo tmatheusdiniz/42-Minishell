@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/06/22 17:20:31 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/07/17 00:25:42 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ bool	check_quotes(char *input_split, char quotes)
 char	**make_process(char **input_split, t_shell *mini)
 {
 	int		i;
+	char	*temp;
 
 	i = 0;
 	while (input_split[i])
@@ -69,7 +70,13 @@ char	**make_process(char **input_split, t_shell *mini)
 			|| check_quotes(input_split[0], '\''))
 			input_split[0] = clean_quotes(input_split[0], 0, 0);
 		if (check_dollar(input_split[i]))
-			input_split[i] = expand(input_split[i], mini);
+		{
+			temp = expand(input_split[i], mini);
+			if (!temp)
+				return (NULL);
+			free(input_split[i]);
+			input_split[i] = temp;
+		}
 		else
 			input_split[i] = clean_quotes(input_split[i], 0, 0);
 		i++;
@@ -94,11 +101,16 @@ int	parsing(t_shell *mini)
 	input_split = split_token(mini->input);
 	if (!input_split)
 		return (-1);
-	input_split = make_process(input_split, mini);
-	if (!input_split)
+	if (make_process(input_split, mini) == NULL)
+	{
+		clean_matrix(input_split);
 		return (-1);
+	}
 	create_token_list(input_split, mini, 0);
-	mini->root = build_tree(mini->tokens);
+	if (mini->tokens)
+		mini->root = build_tree(mini->tokens);
 	clean_matrix(input_split);
+	if (!mini->root)
+		return (-1);
 	return (0);	
 }

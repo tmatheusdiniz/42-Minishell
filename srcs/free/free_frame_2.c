@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_frame_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 15:52:45 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/06 15:55:38 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:08:08 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	free_tokens(t_token *tokens)
 	t_token	*current;
 	t_token	*next;
 
+	if (!tokens)
+		return ;
 	current = tokens;
 	while (current)
 	{

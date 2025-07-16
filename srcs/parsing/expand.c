@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 23:07:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/06/19 22:14:53 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/17 00:23:35 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ char	*change_expansible(t_shell *mini, char *input, int *inc, char *string)
 
 	node_env = NULL;
 	env_var = check_env_var(input, inc);
+	if (!env_var)
+		return (NULL);
 	node_env = get_env_node_parsing(mini, env_var, node_env);
-	if (node_env)
+	if (node_env && node_env->value)
 	{
 		c = 0;
 		while (node_env->value[c])
@@ -42,10 +44,8 @@ char	*change_expansible(t_shell *mini, char *input, int *inc, char *string)
 			inc[1]++;
 			c++;
 		}
-		return (free(env_var), string);
 	}
-	else
-		return (free(env_var), NULL);
+	return (free(env_var), string);
 }
 
 char	*change_input(t_shell *mini, char *input, int *inc, bool no_expand)
