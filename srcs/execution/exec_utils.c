@@ -12,6 +12,43 @@
 
 #include <minishell.h>
 
+void	aux_execution(t_shell *shell, void *root)
+{
+	if (*(int *)root == BT)
+		check_bt(shell, (t_exec *)shell->root);
+	else if (*(int *)root == EXEC)
+		aux_execute(shell);
+	else if (*(int *)root == OUTREDIR)
+		exec_outredir(shell, shell->root);
+	else if (*(int *)root == INREDIR)
+		exec_inredir(shell, shell->root);
+	else if (*(int *)root == APPEND)
+		exec_append(shell, root);
+}
+
+void	aux_execute(t_shell *shell)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		if (find_executable(shell, (t_exec *)shell->root,
+				((t_exec *)shell->root)->argv[0]) == 0)
+			execve(((t_exec *)shell->root)->cmd_path,
+				((t_exec *)shell->root)->argv, shell->envp);
+		else
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(((t_exec *)shell->root)->argv[0], 2);
+			ft_putendl_fd(": command not found", 2);
+			exit(127);
+		}
+	}
+	else if (pid > 0)
+		waitpid(pid, NULL, 0);
+}
+
 void	check_lastcmd(t_shell *shell, void *root,
 			t_fork *frk, int pipe_index)
 {
@@ -51,37 +88,4 @@ void	check_bt(t_shell *shell, t_exec *exec_node)
 		ft_putstr_fd(exec_node->argv[0], 2);
 		ft_putendl_fd(": command not found", 2);
 	}
-}
-
-void	aux_execution(t_shell *shell, void *root)
-{
-	if (*(int *)root == BT)
-		check_bt(shell, (t_exec *)shell->root);
-	else if (*(int *)root == EXEC)
-		aux_execute(shell);
-	else if (*(int *)root == OUTREDIR)
-		exec_outredir(shell, shell->root);
-}
-
-void	aux_execute(t_shell *shell)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		if (find_executable(shell, (t_exec *)shell->root,
-				((t_exec *)shell->root)->argv[0]) == 0)
-			execve(((t_exec *)shell->root)->cmd_path,
-				((t_exec *)shell->root)->argv, shell->envp);
-		else
-		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(((t_exec *)shell->root)->argv[0], 2);
-			ft_putendl_fd(": command not found", 2);
-			exit(127);
-		}
-	}
-	else if (pid > 0)
-		waitpid(pid, NULL, 0);
 }

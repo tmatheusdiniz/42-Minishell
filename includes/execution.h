@@ -22,6 +22,8 @@ void	ft_execute_cmmd(t_shell *shell, void *root,
 
 // ----------Execute Redir----------
 int		exec_outredir(t_shell *shell, void *root);
+int		exec_inredir(t_shell *shell, void *root);
+int		exec_append(t_shell *shell, void *root);
 
 // ----------Utils Execute----------
 void	aux_execute(t_shell *shell);
