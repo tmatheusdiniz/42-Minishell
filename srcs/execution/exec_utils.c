@@ -24,6 +24,8 @@ void	aux_execution(t_shell *shell, void *root)
 		exec_inredir(shell, shell->root);
 	else if (*(int *)root == APPEND)
 		exec_append(shell, root);
+	else if (*(int *)root == HEREDOC)
+		exec_heredoc(shell, root);
 }
 
 void	aux_execute(t_shell *shell)
