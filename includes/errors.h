@@ -16,11 +16,14 @@
 
 # include <structs.h>
 
-// ----------errors----------
+// ----------Errors----------
 
 void	handle_errors(t_shell *shell, char *message,
 			int errnbr);
 void	error_message(char *message, int errnbr);
+
+// ----------Redir----------
+void	check_outredir_errors(char *file, int fd);
 
 // ----------exit_code----------
 
