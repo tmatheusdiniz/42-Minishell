@@ -6,28 +6,36 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 15:52:45 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/16 12:08:08 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/20 23:13:57 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	free_tokens(t_token *tokens)
+void	free_tokens(t_token **tokens)
 {
 	t_token	*current;
 	t_token	*next;
+	t_token *start;
 
-	if (!tokens)
+	if (!tokens || !*tokens)
 		return ;
-	current = tokens;
+	start = *tokens;
+	while (start && start->prev)
+		start = start->prev;
+	current = start;
 	while (current)
 	{
 		next = current->next;
 		if (current->token)
+		{
 			free(current->token);
+			current->token = NULL;
+		}
 		free(current);
 		current = next;
 	}
+	*tokens = NULL;
 }
 
 void	cleanup_fork_fds(t_fork *frk)
@@ -57,7 +65,7 @@ void	cleanup_parsing_error(t_shell *shell)
 {
 	if (shell->tokens)
 	{
-		free_tokens(shell->tokens);
+		free_tokens(&shell->tokens);
 		shell->tokens = NULL;
 	}
 }

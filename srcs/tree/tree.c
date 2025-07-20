@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:43:21 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/07/15 11:39:48 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/21 00:40:49 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@ void	cut_tokens(t_token *tokens, t_token *base, t_token **left_tokens,
 	if (*right_tokens)
 		(*right_tokens)->prev = NULL;
 	if (base->prev)
+	{
 		base->prev->next = NULL;
-	if (base == tokens)
-		*left_tokens = NULL;
-	else
 		*left_tokens = tokens;
+	}
+	else
+		*left_tokens = NULL;
+	base->next = NULL;
+	base->prev = NULL;
 }
 
 t_token	*search_pipe(t_token *token)
@@ -75,7 +78,7 @@ void	*build_tree(t_token *tokens)
 	if (pipe)
 	{
 		right_tokens = NULL;
-		left_tokens = tokens;
+		left_tokens = NULL;
 		cut_tokens(tokens, pipe, &left_tokens, &right_tokens);
 		return (create_pipe_node(left_tokens, right_tokens));
 	}
@@ -83,7 +86,7 @@ void	*build_tree(t_token *tokens)
 	if (redir)
 	{
 		right_tokens = NULL;
-		left_tokens = tokens;
+		left_tokens = NULL;
 		cut_tokens(tokens, redir, &left_tokens, &right_tokens);
 		return (create_redir_node(redir, right_tokens, left_tokens));
 	}

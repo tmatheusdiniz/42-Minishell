@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/07/17 00:25:42 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/21 00:33:39 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,21 +94,26 @@ t_exec	*find_t_exec(void *root)
 		return (NULL);
 }
 
-int	parsing(t_shell *mini)
+int		parsing(t_shell *mini)
 {
 	char	**input_split;
+	t_tokens	*token_data;
 
 	input_split = split_token(mini->input);
 	if (!input_split)
 		return (-1);
 	if (make_process(input_split, mini) == NULL)
-	{
-		clean_matrix(input_split);
-		return (-1);
-	}
+		return (clean_matrix(input_split), -1);
 	create_token_list(input_split, mini, 0);
+	token_data = collect_all_tokens(mini->tokens);
+	if (!token_data && mini->tokens)
+		return (clean_matrix(input_split), -1);
 	if (mini->tokens)
 		mini->root = build_tree(mini->tokens);
+	mini->original_root = mini->root;
+	if (token_data)
+		free_all_collected_tokens(token_data);
+	mini->tokens = NULL;
 	clean_matrix(input_split);
 	if (!mini->root)
 		return (-1);

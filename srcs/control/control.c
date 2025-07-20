@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:37:06 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/19 22:23:05 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/20 17:19:57 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	control(t_shell *shell, char **envp)
 		ft_execution(shell);
 	else
 		cleanup_parsing_error(shell);
-	free_shell_part(shell);
+	if (shell->original_root != NULL)
+		free_shell_part(shell);
 	control(shell, envp);
 }

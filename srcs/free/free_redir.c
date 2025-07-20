@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 22:34:47 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/10 22:40:53 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:41:32 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-void	free_right_tokens(t_token *right_tokens)
-{
-	if (right_tokens)
-	{
-		free(right_tokens->token);
-		free(right_tokens);
-	}
-}
 
 void	free_outredir(void *root)
 {

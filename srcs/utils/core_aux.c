@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   core_aux.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 14:08:30 by mreinald          #+#    #+#             */
-/*   Updated: 2025/04/19 15:50:38 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/07/20 16:53:08 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_shell	*init_shell(void)
 	shell->envp = NULL;
 	shell->env_v = NULL;
 	shell->root = NULL;
+	shell->original_root = NULL;
 	shell->tokens = NULL;
 	return (shell);
 }

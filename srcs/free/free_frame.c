@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control_utils.c                                    :+:      :+:    :+:   */
+/*   free_frame.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 14:14:21 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/19 22:30:49 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/20 23:47:35 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	reset_shell(t_shell *shell)
 	shell->input = NULL;
 	shell->cwd = NULL;
 	shell->root = NULL;
+	shell->original_root = NULL;
 	shell->tokens = NULL;
 }
 
@@ -56,6 +57,7 @@ void	free_tree(void *root)
 	else if (type == HEREDOC)
 		free_heredoc(root);
 	free(root);
+	root = NULL;
 }
 
 void	free_shell_part(t_shell *shell)
@@ -64,9 +66,9 @@ void	free_shell_part(t_shell *shell)
 		free (shell->input);
 	if (shell->cwd)
 		free (shell->cwd);
-	if (shell->root)
-		free_tree(shell->root);
-	if (shell->tokens)
-		free_tokens(shell->tokens);
+	if (shell->original_root)
+		free_tree(shell->original_root);
+//	if (shell->tokens)
+//		free_tokens(&shell->tokens);
 	reset_shell(shell);
 }

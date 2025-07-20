@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:54:14 by alberto           #+#    #+#             */
-/*   Updated: 2025/07/16 00:11:34 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/21 00:41:49 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,18 @@ void	*aux_redir_node(t_token *redir_token, t_token	*file_token,
 		t_token	*recombined_list)
 {
 	void	*next_node;
+	void	*redir_node;
 
 	next_node = build_tree(recombined_list);
 	if (redir_token->type == OUTREDIR)
-		return (create_outredir(file_token, next_node));
+		redir_node = create_outredir(file_token, next_node);
 	else if (redir_token->type == INREDIR)
-		return (create_inredir(file_token, next_node));
+		redir_node = create_inredir(file_token, next_node);
 	else if (redir_token->type == APPEND)
-		return (create_append(file_token, next_node));
+		redir_node =  create_append(file_token, next_node);
 	else if (redir_token->type == HEREDOC)
-		return (create_heredoc(file_token, next_node));
-	return (NULL);
+		redir_node = create_heredoc(file_token, next_node);
+	else
+		redir_node = NULL;
+	return (redir_node);
 }

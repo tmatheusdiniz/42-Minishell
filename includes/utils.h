@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:56:50 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/16 00:23:14 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/21 00:33:30 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,10 @@ void	*create_inredir(t_token *right_tokens, void *next_node);
 void	*create_append(t_token *right_tokens, void *next_node);
 void	*create_heredoc(t_token *right_tokens, void *next_node);
 void	*create_outredir(t_token *right_tokens, void *next_node);
+
+//utils_token.c
+t_tokens	*collect_all_tokens(t_token *tokens);
+void		free_all_collected_tokens(t_tokens *data);
 
 //split_token.c
 char	**split_token(char *str);

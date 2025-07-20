@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 15:53:24 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/06 16:03:19 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:42:58 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,13 @@ void	free_env_v(t_env_v *env_v);
 
 // ----------Free Frame----------
 void	free_shell_part(t_shell *shell);
-void	free_tokens(t_token *tokens);
+void	free_tokens(t_token **tokens);
 void	free_tree(void *root);
 void	cleanup_fork_fds(t_fork *frk);
 void	free_redir(void *root);
 void	free_exec(void *root);
 
 // ----------Free Redir----------
-void	free_right_tokens(t_token *right_tokens);
 void	free_outredir(void *root);
 void	free_inredir(void *root);
 void	free_append(void *root);

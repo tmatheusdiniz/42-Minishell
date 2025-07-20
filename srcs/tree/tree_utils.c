@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 22:31:44 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/16 00:22:40 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/20 16:38:51 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	*create_outredir(t_token *right_tokens, void *next_node)
 	else
 		redir->file = NULL;
 	redir->next = next_node;
-	free_right_tokens(right_tokens);
 	return (redir);
 }
 
@@ -46,7 +45,6 @@ void	*create_inredir(t_token *right_tokens, void *next_node)
 	else
 		redir->file = NULL;
 	redir->next = next_node;
-	free_right_tokens(right_tokens);
 	return (redir);
 }
 
@@ -63,7 +61,6 @@ void	*create_append(t_token *right_tokens, void *next_node)
 	else
 		redir->file = NULL;
 	redir->next = next_node;
-	free_right_tokens(right_tokens);
 	return (redir);
 }
 
@@ -81,7 +78,6 @@ void	*create_heredoc(t_token *right_tokens, void *next_node)
 		redir->delimiter = NULL;
 	redir->next = next_node;
 	redir->content = NULL;
-	free_right_tokens(right_tokens);
 	return (redir);
 }
 

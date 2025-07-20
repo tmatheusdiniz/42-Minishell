@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:19:07 by mreinald          #+#    #+#             */
-/*   Updated: 2025/05/21 14:44:52 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/07/21 00:32:30 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,12 @@ typedef struct s_env_v
 	t_env_v			*next;
 }				t_env_v;
 
+typedef struct s_tokens
+{
+	t_token	**tokens;
+	int		count;
+}	t_tokens;
+
 typedef struct s_fork
 {
 	int		fd_in;
@@ -97,6 +103,7 @@ typedef struct s_shell
 	char	*cwd;
 	char	**envp;
 	void	*root;
+	void	*original_root;
 	t_token	*tokens;
 	t_env_v	*env_v;
 }				t_shell;
