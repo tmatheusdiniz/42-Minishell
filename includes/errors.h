@@ -17,7 +17,6 @@
 # include <structs.h>
 
 // ----------Errors----------
-
 void	handle_errors(t_shell *shell, char *message,
 			int errnbr);
 void	error_message(char *message, int errnbr);
@@ -26,7 +25,6 @@ void	error_message(char *message, int errnbr);
 void	check_outredir_errors(char *file, int fd);
 
 // ----------exit_code----------
-
 int		exit_code(int value);
 void	malloc_failure(t_shell *shell, char *function);
 
