@@ -6,4 +6,3 @@
 -I./42-libft
 -I./42-libft/include
 -I/usr/include/readline
-
