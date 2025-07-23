@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_utils_2.c                                     :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 16:02:31 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/22 19:10:10 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/07/23 11:25:02 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	aux_execute(t_shell *shell)
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 			exit_code(WEXITSTATUS(status));
+		else if (WIFSIGNALED(status))
+			exit_code(128 + WTERMSIG(status));
 	}
 }
 
@@ -95,6 +97,6 @@ void	check_bt(t_shell *shell, t_exec *exec_node)
 	{
 		ft_putstr_fd(exec_node->argv[0], 2);
 		ft_putendl_fd(": command not found", 2);
+		exit_code(127);
 	}
-	exit_code(127);
 }

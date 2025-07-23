@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 19:49:38 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/21 21:54:55 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/07/23 11:30:22 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@
 
 void	ft_execution(t_shell *shell)
 {
-	int	i;
+	int		i;
 	t_fork	*frk;
+	int		status;
+	int		last_exit_code;
 
 	i = 0;
+	last_exit_code = 0;
 	if (*(int *)shell->root == PIPE)
 	{
 		frk = handle_pipe(shell, shell->root);
@@ -32,7 +35,18 @@ void	ft_execution(t_shell *shell)
 		}
 		i = 0;
 		while (i < frk->nbr_cmds)
-			waitpid(frk->pid[i++], NULL, 0);
+		{
+			waitpid(frk->pid[i], &status, 0);
+			if (i == frk->nbr_cmds - 1)
+			{
+				if (WIFEXITED(status))
+					last_exit_code = WEXITSTATUS(status);
+				else if (WIFSIGNALED(status))
+					last_exit_code = 128 + WTERMSIG(status);
+			}
+			i++;
+		}
+		exit_code(last_exit_code);
 		cleanup_fork_fds(frk);
 	}
 	else
