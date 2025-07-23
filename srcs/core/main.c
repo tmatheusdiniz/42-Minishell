@@ -20,4 +20,5 @@ int	main(int argc, char const **argv, char **envp)
 	shell = init_shell();
 	handle_env_vars(shell, envp);
 	control(shell, envp);
+	free_shell_final(shell);
 }

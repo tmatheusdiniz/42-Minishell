@@ -31,6 +31,7 @@ void	aux_execution(t_shell *shell, void *root)
 void	aux_execute(t_shell *shell)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	if (pid == 0)
@@ -44,11 +45,16 @@ void	aux_execute(t_shell *shell)
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(((t_exec *)shell->root)->argv[0], 2);
 			ft_putendl_fd(": command not found", 2);
+			free_shell_final(shell);
 			exit(127);
 		}
 	}
 	else if (pid > 0)
-		waitpid(pid, NULL, 0);
+	{
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			exit_code(WEXITSTATUS(status));
+	}
 }
 
 void	check_lastcmd(t_shell *shell, void *root,
@@ -90,4 +96,5 @@ void	check_bt(t_shell *shell, t_exec *exec_node)
 		ft_putstr_fd(exec_node->argv[0], 2);
 		ft_putendl_fd(": command not found", 2);
 	}
+	exit_code(127);
 }

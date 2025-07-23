@@ -56,7 +56,6 @@ void	control(t_shell *shell, char **envp)
 	if (!shell->input || !ft_strcmp(shell->input, "exit"))
 	{
 		print_exit();
-		free_shell_final(shell);
 		return ;
 	}
 	if (parsing(shell) == 0)

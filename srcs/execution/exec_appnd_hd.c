@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line/includes/get_next_line.h"
+#include "readline.h"
 #include <minishell.h>
 #include <unistd.h>
 
@@ -79,8 +80,7 @@ static void	consume_input(t_heredoc *heredoc, int fd)
 
 	while (1)
 	{
-		write (STDOUT_FILENO, ">", 1);
-		line = get_next_line(STDIN_FILENO);
+		line = readline("> ");
 		if (!line)
 			break ;
 		if ((line[ft_strlen(heredoc->delimiter)] == '\n'
@@ -92,6 +92,7 @@ static void	consume_input(t_heredoc *heredoc, int fd)
 			break ;
 		}
 		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
 		free(line);
 	}
 }

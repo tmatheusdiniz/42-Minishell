@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <minishell.h>
 
 static void	update_shlv(t_env_v *env_v);
@@ -59,7 +60,8 @@ static void	update_shlv(t_env_v *env_v)
 			++value;
 			value_str = ft_itoa(value);
 			free (aux->value);
-			aux->value = value_str;
+			aux->value = ft_strdup(value_str);
+			free (value_str);
 		}
 		aux = aux->next;
 	}
