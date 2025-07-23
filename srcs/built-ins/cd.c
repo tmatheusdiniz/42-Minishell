@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:13 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/10 15:30:04 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/07/23 11:26:59 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,20 @@ void	change_dir(t_shell *shell, char *target)
 		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(target, 2);
 		ft_putendl_fd(": No such file or directory", 2);
+		exit_code(1);
 	}
 	else
 	{
 		if (update_oldpwd(shell->env_v))
 			malloc_failure(shell, "change_dir");
 		if (update_pwd(shell->env_v) == 1)
+		{
+			exit_code(1);
 			return ;
+		}	
 		else if (update_pwd(shell->env_v) == 2)
 			malloc_failure(shell, "change_dir");
+		exit_code(0);
 	}
 }
 
