@@ -41,7 +41,7 @@ static void	parse_of_arguments(t_shell *shell, char **arguments)
 			shell->env_v = key_and_value(shell->env_v, arguments[i]);
 		}
 		if (!shell->env_v)
-				malloc_failure(shell, "parse_of_arguments");
+			malloc_failure(shell, "parse_of_arguments");
 		++i;
 	}
 }

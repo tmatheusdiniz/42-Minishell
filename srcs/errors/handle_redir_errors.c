@@ -14,6 +14,7 @@
 
 static void	check_outr_other(char *file);
 static void	check_outr_last(char *file);
+static void	aux_check_outr(char *file);
 
 void	check_outredir_errors(char *file, int fd)
 {
@@ -60,7 +61,13 @@ static void	check_outr_other(char *file)
 		ft_putstr_fd(file, 2);
 		ft_putendl_fd(": Too many symbolic links", 2);
 	}
-	else if (errno == EMFILE || errno == ENFILE)
+	else
+		aux_check_outr(file);
+}
+
+static void	aux_check_outr(char *file)
+{
+	if (errno == EMFILE || errno == ENFILE)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(file, 2);

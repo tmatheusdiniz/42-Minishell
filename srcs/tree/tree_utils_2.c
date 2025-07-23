@@ -68,7 +68,7 @@ void	*create_exec_node(t_token *exec_token, int i)
 	return (exec);
 }
 
-void	*aux_redir_node(t_token *redir_token, t_token	*file_token, 
+void	*aux_redir_node(t_token *redir_token, t_token	*file_token,
 		t_token	*recombined_list)
 {
 	void	*next_node;
@@ -80,7 +80,7 @@ void	*aux_redir_node(t_token *redir_token, t_token	*file_token,
 	else if (redir_token->type == INREDIR)
 		redir_node = create_inredir(file_token, next_node);
 	else if (redir_token->type == APPEND)
-		redir_node =  create_append(file_token, next_node);
+		redir_node = create_append(file_token, next_node);
 	else if (redir_token->type == HEREDOC)
 		redir_node = create_heredoc(file_token, next_node);
 	else

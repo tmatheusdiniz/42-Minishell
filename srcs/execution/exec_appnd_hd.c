@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line/includes/get_next_line.h"
-#include "readline.h"
 #include <minishell.h>
-#include <unistd.h>
 
 static void	consume_input(t_heredoc *heredoc, int fd);
 
@@ -31,7 +28,7 @@ int	exec_append(t_shell *shell, void *root)
 		redir = (t_append *)current;
 		fd = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0666);
 		if (fd == -1)
-			return (close(save_fdout), perror("open"), 1); //handler
+			return (close(save_fdout), -1); //handler
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 		current = redir->next;
@@ -58,7 +55,7 @@ int	exec_heredoc(t_shell *shell, void *root)
 	{
 		redir = (t_heredoc *)current;
 		if (pipe(fd) == -1)
-			return (close(save_fdhere), -1); // handler
+			return (close(save_fdhere), -1); //handler
 		consume_input(redir, fd[1]);
 		close (fd[1]);
 		dup2(fd[0], STDIN_FILENO);

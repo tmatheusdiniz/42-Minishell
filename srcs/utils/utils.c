@@ -40,10 +40,9 @@ char	**linked_to_envp(t_shell *shell)
 		else
 			envp[i] = ft_strdup(aux);
 		free (aux);
-		if (!envp[i])
+		if (!envp[i++])
 			return (aux_to_envp(envp), NULL);
 		tmp = tmp->next;
-		i ++;
 	}
 	return (envp);
 }

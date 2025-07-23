@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <minishell.h>
-#include <stdio.h>
 
 void	handle_fork(t_shell *shell, t_fork *frk, int pipe_index)
 {
@@ -22,5 +21,5 @@ void	handle_fork(t_shell *shell, t_fork *frk, int pipe_index)
 	else if (frk->pid[pipe_index] > 0)
 		return ;
 	else
-		perror("fork failed"); // temporary
+		handle_errors(shell, "fork failed!", errno);
 }

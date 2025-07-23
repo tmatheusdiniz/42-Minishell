@@ -63,7 +63,7 @@ static void	not_is_numeric(t_shell *shell, char *str)
 
 static void	exit_sucess(t_shell *shell, t_exec *exec_node)
 {
-	long long exit_cd;
+	long long	exit_cd;
 
 	exit_cd = ft_atoll(exec_node->argv[1]);
 	if (exec_node->argv[2])

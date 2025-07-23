@@ -94,9 +94,9 @@ t_exec	*find_t_exec(void *root)
 		return (NULL);
 }
 
-int		parsing(t_shell *mini)
+int	parsing(t_shell *mini)
 {
-	char	**input_split;
+	char		**input_split;
 	t_tokens	*token_data;
 
 	input_split = split_token(mini->input);
@@ -117,5 +117,5 @@ int		parsing(t_shell *mini)
 	clean_matrix(input_split);
 	if (!mini->root)
 		return (-1);
-	return (0);	
+	return (0);
 }

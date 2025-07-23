@@ -12,6 +12,8 @@
 
 #include <minishell.h>
 
+static void	aux_checkbt(t_shell *shell, t_exec *exec_node);
+
 void	aux_execution(t_shell *shell, void *root)
 {
 	if (*(int *)root == BT)
@@ -67,9 +69,8 @@ void	check_lastcmd(t_shell *shell, void *root,
 
 void	check_bt(t_shell *shell, t_exec *exec_node)
 {
-	// after i will need to clean it in fail case
 	if (!exec_node)
-		malloc_failure(shell, "check_command");
+		malloc_failure(shell, "check_bt");
 	if (!ft_strncmp(exec_node->argv[0], "cd",
 			ft_strlen(exec_node->argv[0])))
 		ft_cd(shell, exec_node);
@@ -85,7 +86,13 @@ void	check_bt(t_shell *shell, t_exec *exec_node)
 	else if (!ft_strncmp(exec_node->argv[0], "unset",
 			ft_strlen(exec_node->argv[0])))
 		ft_unset(shell, exec_node->argv + 1);
-	else if (!(ft_strncmp(exec_node->argv[0], "export",
+	else
+		aux_checkbt(shell, exec_node);
+}
+
+static void	aux_checkbt(t_shell *shell, t_exec *exec_node)
+{
+	if (!(ft_strncmp(exec_node->argv[0], "export",
 				ft_strlen(exec_node->argv[0]))))
 		ft_export(shell, exec_node->argv);
 	else if (!(ft_strncmp(exec_node->argv[0], "exit",

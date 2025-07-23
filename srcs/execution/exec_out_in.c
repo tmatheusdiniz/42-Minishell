@@ -10,12 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "errors.h"
-#include "libft.h"
-#include "structs.h"
-#include <fcntl.h>
 #include <minishell.h>
-#include <unistd.h>
 
 static void	check_errors(char *file, int fd);
 static void	check_other_e(char *file);
@@ -35,7 +30,7 @@ int	exec_outredir(t_shell *shell, void *root)
 		redir = (t_outredir *)current;
 		fd = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 		if (fd == -1)
-				return (close(save_fdout), perror("open"), 1);
+			return (close(save_fdout), -1); // handler
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 		current = redir->next;
@@ -63,7 +58,7 @@ int	exec_inredir(t_shell *shell, void *root)
 		redir = (t_inredir *)current;
 		fd = open(redir->file, O_RDONLY);
 		if (fd == -1)
-				return (check_errors(redir->file, save_fdin), 1);
+			return (check_errors(redir->file, save_fdin), -1);
 		dup2(fd, STDIN_FILENO);
 		close(fd);
 		current = redir->next;

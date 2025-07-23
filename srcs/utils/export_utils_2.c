@@ -23,7 +23,7 @@ int	modify_value_env(t_env_v *env_v, char *argument)
 		return (-1);
 	while (env_v)
 	{
-		if(!ft_strcmp(env_v->key, splt[0]))
+		if (!ft_strcmp(env_v->key, splt[0]))
 		{
 			if (env_v->value)
 				free (env_v->value);

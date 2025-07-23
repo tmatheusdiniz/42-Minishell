@@ -52,9 +52,9 @@ int	remove_var_envp(char **envp, char *key)
 	return (0);
 }
 
-char **duplicate_envp(char **envp)
+char	**duplicate_envp(char **envp)
 {
-	int	i;
+	int		i;
 	char	**new_envp;
 
 	i = 0;

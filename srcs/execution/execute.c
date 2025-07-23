@@ -16,7 +16,7 @@
 
 void	ft_execution(t_shell *shell)
 {
-	int	i;
+	int		i;
 	t_fork	*frk;
 
 	i = 0;
@@ -41,7 +41,7 @@ void	ft_execution(t_shell *shell)
 
 void	ft_execute_cmmd(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 {
-	t_exec *exec_node;
+	t_exec	*exec_node;
 
 	exec_node = (t_exec *)root;
 	handle_fork(shell, frk, pipe_index);
@@ -68,12 +68,13 @@ void	ft_execute_cmmd(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 	}
 }
 
-void	execute_tree_recur(t_shell *shell, void *root, t_fork *frk, int pipe_index)
+void	execute_tree_recur(t_shell *shell, void *root,
+		t_fork *frk, int pipe_index)
 {
 	t_pipe	*pipe_root;
 
 	if (!root)
-		return;
+		return ;
 	if (*(int *)root == PIPE)
 	{
 		pipe_root = (t_pipe *)root;
