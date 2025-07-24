@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:56:50 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/21 00:33:30 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/24 20:15:52 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int			match_type(char *token);
 char		*clean_other_chars(char *var);
 char		*clean_quotes(char *var, int i, int j);
 bool		expand_check(char *input);
+char		*aux_handle_exit_expand(char *string, int *inc);
+char		*handle_exit_status(int *inc);
 
 //tree_utils.c
 void		*create_exec_node(t_token *exec_token, int i);

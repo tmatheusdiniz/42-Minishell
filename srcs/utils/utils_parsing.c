@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 02:50:43 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/11 21:40:01 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/24 20:17:45 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,23 @@ bool	expand_check(char *input)
 		i++;
 	}
 	return (false);
+}
+
+char	*aux_handle_exit_expand(char *string, int *inc)
+{
+	char	*temp;
+	int		c;
+
+	c = 0;
+	temp = handle_exit_status(inc);
+	if (!temp)
+		return (NULL);
+	while (temp[c])
+	{
+		string[inc[1]] = temp[c];
+		inc[1]++;
+		c++;
+	}
+	free(temp);
+	return (string);
 }
