@@ -13,6 +13,7 @@
 #include <minishell.h>
 
 static void	consume_input(t_heredoc *heredoc, int fd);
+static int	check_heredoc_errors(int save_fd);
 
 static void	check_append_errors(char *file, int fd)
 {
@@ -61,7 +62,7 @@ int	exec_heredoc(t_shell *shell, void *root)
 	{
 		redir = (t_heredoc *)current;
 		if (pipe(fd) == -1)
-			return (close(save_fdhere), -1); //handler
+			return (check_heredoc_errors(save_fdhere), -1);
 		consume_input(redir, fd[1]);
 		close (fd[1]);
 		dup2(fd[0], STDIN_FILENO);
@@ -98,4 +99,31 @@ static void	consume_input(t_heredoc *heredoc, int fd)
 		write(fd, "\n", 1);
 		free(line);
 	}
+}
+
+static int	check_heredoc_errors(int save_fd)
+{
+	if (save_fd != -1)
+		close(save_fd);
+	if (errno == EMFILE || errno == ENFILE)
+		ft_putstr_fd("minishell: heredoc: too many open files\n", 2);
+	else if (errno == ENOMEM)
+		ft_putstr_fd("minishell: heredoc: out of memory\n", 2);
+	else if (errno == ENOSPC)
+		ft_putstr_fd("minishell: heredoc: no space left on device\n", 2);
+	else if (errno == EIO)
+		ft_putstr_fd("minishell: heredoc: input/output error\n", 2);
+	else if (errno == EFAULT)
+		ft_putstr_fd("minishell: heredoc: bad address\n", 2);
+	else if (errno == EINTR)
+		ft_putstr_fd("minishell: heredoc: interrupted system call\n", 2);
+	else if (errno == EPIPE)
+		ft_putstr_fd("minishell: heredoc: broken pipe\n", 2);
+	else
+	{
+		ft_putstr_fd("minishell: heredoc: error (", 2);
+		ft_putnbr_fd(errno, 2);
+		ft_putstr_fd(")\n", 2);
+	}
+	return (-1);
 }
