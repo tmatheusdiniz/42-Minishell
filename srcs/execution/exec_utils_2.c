@@ -13,6 +13,8 @@
 #include "errors.h"
 #include <minishell.h>
 
+static int	check_if_relative_path(t_exec *exec_node, char *command);
+
 static char	*find_path(char **env_var)
 {
 	while (*env_var)
@@ -24,6 +26,14 @@ static char	*find_path(char **env_var)
 	return (NULL);
 }
 
+static int	check_if_relative_path(t_exec *exec_node, char *command)
+{
+	if (access(command, X_OK) == 0)
+		return (exec_node->cmd_path = command, 1);
+	else
+		return (0);
+}
+
 int	find_executable(t_shell *shell, t_exec *exec_node, char *command)
 {
 	int		i;
@@ -32,6 +42,8 @@ int	find_executable(t_shell *shell, t_exec *exec_node, char *command)
 	char	**directories;
 
 	i = 0;
+	if (check_if_relative_path(exec_node, command))
+		return (0);
 	path = find_path(shell->envp);
 	if (!path)
 		return (-1);
