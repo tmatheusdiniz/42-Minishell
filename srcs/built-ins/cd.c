@@ -73,7 +73,7 @@ void	change_dir(t_shell *shell, char *target)
 		{
 			exit_code(1);
 			return ;
-		}	
+		}
 		else if (update_pwd(shell->env_v) == 2)
 			malloc_failure(shell, "change_dir");
 		exit_code(0);

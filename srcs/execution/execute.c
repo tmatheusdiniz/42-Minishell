@@ -14,11 +14,33 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+static int	complete_execution(t_fork *frk)
+{
+	int	status;
+	int	i;
+	int	last_exit_code;
+
+	i = 0;
+	last_exit_code = 0;
+	while (i < frk->nbr_cmds)
+	{
+		waitpid(frk->pid[i], &status, 0);
+		if (i == frk->nbr_cmds - 1)
+		{
+			if (WIFEXITED(status))
+				last_exit_code = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				last_exit_code = 128 + WTERMSIG(status);
+		}
+		i++;
+	}
+	return (last_exit_code);
+}
+
 void	ft_execution(t_shell *shell)
 {
-	int		i;
 	t_fork	*frk;
-	int		status;
+	int		i;
 	int		last_exit_code;
 
 	i = 0;
@@ -33,19 +55,7 @@ void	ft_execution(t_shell *shell)
 			close (frk->pipe[i][1]);
 			i ++;
 		}
-		i = 0;
-		while (i < frk->nbr_cmds)
-		{
-			waitpid(frk->pid[i], &status, 0);
-			if (i == frk->nbr_cmds - 1)
-			{
-				if (WIFEXITED(status))
-					last_exit_code = WEXITSTATUS(status);
-				else if (WIFSIGNALED(status))
-					last_exit_code = 128 + WTERMSIG(status);
-			}
-			i++;
-		}
+		last_exit_code = complete_execution(frk);
 		exit_code(last_exit_code);
 		cleanup_fork_fds(frk);
 	}

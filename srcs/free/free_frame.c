@@ -68,7 +68,5 @@ void	free_shell_part(t_shell *shell)
 		free (shell->cwd);
 	if (shell->original_root)
 		free_tree(shell->original_root);
-//	if (shell->tokens)
-//		free_tokens(&shell->tokens);
 	reset_shell(shell);
 }

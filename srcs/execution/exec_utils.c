@@ -13,6 +13,7 @@
 #include <minishell.h>
 
 static void	aux_checkbt(t_shell *shell, t_exec *exec_node);
+static void	aux_fork(pid_t pid, int status);
 
 void	aux_execution(t_shell *shell, void *root)
 {
@@ -36,6 +37,7 @@ void	aux_execute(t_shell *shell)
 	int		status;
 
 	pid = fork();
+	status = 0;
 	if (pid == 0)
 	{
 		if (find_executable(shell, (t_exec *)shell->root,
@@ -52,21 +54,16 @@ void	aux_execute(t_shell *shell)
 		}
 	}
 	else if (pid > 0)
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			exit_code(WEXITSTATUS(status));
-		else if (WIFSIGNALED(status))
-			exit_code(128 + WTERMSIG(status));
-	}
+		aux_fork(pid, status);
 }
 
-void	check_lastcmd(t_shell *shell, void *root,
-			t_fork *frk, int pipe_index)
+static void	aux_fork(pid_t pid, int status)
 {
-	if (*(int *)root == BT || *(int *)root == EXEC)
-		ft_execute_cmmd(shell, root, frk, pipe_index);
-	// after add checks to other types of input
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		exit_code(WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+		exit_code(128 + WTERMSIG(status));
 }
 
 void	check_bt(t_shell *shell, t_exec *exec_node)

@@ -30,7 +30,7 @@ int	exec_outredir(t_shell *shell, void *root)
 		redir = (t_outredir *)current;
 		fd = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 		if (fd == -1)
-			return (close(save_fdout), -1); // handler
+			return (check_outredir_errors(redir->file, save_fdout), -1);
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 		current = redir->next;

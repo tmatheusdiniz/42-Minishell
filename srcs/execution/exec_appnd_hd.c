@@ -14,6 +14,12 @@
 
 static void	consume_input(t_heredoc *heredoc, int fd);
 
+static void	check_append_errors(char *file, int fd)
+{
+	close(fd);
+	check_outredir_errors(file, fd);
+}
+
 int	exec_append(t_shell *shell, void *root)
 {
 	int			fd;
@@ -28,7 +34,7 @@ int	exec_append(t_shell *shell, void *root)
 		redir = (t_append *)current;
 		fd = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0666);
 		if (fd == -1)
-			return (close(save_fdout), -1); //handler
+			return (check_append_errors(redir->file, save_fdout), -1);
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 		current = redir->next;

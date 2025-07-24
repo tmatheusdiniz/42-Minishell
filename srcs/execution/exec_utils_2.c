@@ -50,3 +50,18 @@ int	find_executable(t_shell *shell, t_exec *exec_node, char *command)
 	}
 	return (clean_matrix(directories), -1);
 }
+
+void	check_lastcmd(t_shell *shell, void *root,
+			t_fork *frk, int pipe_index)
+{
+	if (*(int *)root == BT || *(int *)root == EXEC)
+		ft_execute_cmmd(shell, root, frk, pipe_index);
+	else if (*(int *)root == OUTREDIR)
+		exec_outredir(shell, shell->root);
+	else if (*(int *)root == INREDIR)
+		exec_inredir(shell, shell->root);
+	else if (*(int *)root == APPEND)
+		exec_append(shell, root);
+	else if (*(int *)root == HEREDOC)
+		exec_heredoc(shell, root);
+}
