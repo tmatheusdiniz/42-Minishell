@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:56:50 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/24 20:15:52 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/07/25 19:41:21 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char		*clean_quotes(char *var, int i, int j);
 bool		expand_check(char *input);
 char		*aux_handle_exit_expand(char *string, int *inc);
 char		*handle_exit_status(int *inc);
+char		*aux_handle_literal_dollar(int *inc, char *input, char *env_var);
 
 //tree_utils.c
 void		*create_exec_node(t_token *exec_token, int i);
