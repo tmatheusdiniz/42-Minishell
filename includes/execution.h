@@ -25,6 +25,7 @@ int		exec_outredir(t_shell *shell, void *root);
 int		exec_inredir(t_shell *shell, void *root);
 int		exec_append(t_shell *shell, void *root);
 int		exec_heredoc(t_shell *shell, void *root);
+void	read_all_heredocs(void *root);
 
 // ----------Utils Execute----------
 void	aux_execute(t_shell *shell);

@@ -107,4 +107,14 @@ void	execute_tree_recur(t_shell *shell, void *root,
 	}
 	else if (*(int *)root == BT || *(int *)root == EXEC)
 		ft_execute_cmmd(shell, root, frk, pipe_index);
+	else if (*(int *)root == OUTREDIR || *(int *)root == INREDIR
+		|| *(int *)root == APPEND || *(int *)root == HEREDOC)
+	{
+		handle_fork(shell, frk, pipe_index);
+		if (frk->pid[pipe_index] == 0)
+		{
+			aux_execution(shell, root);
+			exit(0);
+		}
+	}
 }

@@ -111,6 +111,7 @@ int	parsing(t_shell *mini)
 	if (mini->tokens)
 		mini->root = build_tree(mini->tokens);
 	mini->original_root = mini->root;
+	read_all_heredocs(mini->root);
 	if (token_data)
 		free_all_collected_tokens(token_data);
 	mini->tokens = NULL;

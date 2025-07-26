@@ -35,11 +35,11 @@ int	exec_outredir(t_shell *shell, void *root)
 		close(fd);
 		current = redir->next;
 	}
-	if (current && (*(int *)current == EXEC || *(int *)current == BT))
+	if (current)
 	{
 		shell->root = current;
 		aux_execution(shell, current);
-	}
+	}	
 	dup2(save_fdout, STDOUT_FILENO);
 	return (close (save_fdout), 0);
 }
@@ -63,7 +63,7 @@ int	exec_inredir(t_shell *shell, void *root)
 		close(fd);
 		current = redir->next;
 	}
-	if (current && (*(int *)current == EXEC || *(int *)current == BT))
+	if (current)
 	{
 		shell->root = current;
 		aux_execution(shell, current);

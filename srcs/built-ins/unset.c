@@ -65,9 +65,9 @@ void	ft_unset(t_shell *shell, char **argv)
 	{
 		aux = get_node_envp(shell->env_v, argv[i]);
 		if (aux->value)
-			remove_var_envp(shell->envp, argv[i]);
+			remove_var_envp(shell, argv[i]);
 		if (aux)
-			shell->env_v = remove_env_var(shell->env_v, argv[i]);
+			shell->env_v = remove_env_var(shell->env_v, aux->key);
 		i ++;
 	}
 }

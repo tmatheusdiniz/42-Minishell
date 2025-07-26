@@ -10,11 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "builtins.h"
+#include "libft.h"
 #include <minishell.h>
 #include <stdlib.h>
 
 static void		print_all_var(t_env_v *env_v);
-static t_env_v	*key_and_value(t_env_v *env_v, char *arg);
+static t_env_v	*key_and_value(t_shell *shell, t_env_v *env_v, char *arg);
 static t_env_v	*aux_key_value(t_env_v *env_v, t_env_v *new_node, int position);
 
 static void	parse_of_arguments(t_shell *shell, char **arguments)
@@ -26,22 +28,21 @@ static void	parse_of_arguments(t_shell *shell, char **arguments)
 	{
 		if (!(ft_strchr(arguments[i], '=')))
 		{
-			if (check_duplicated(shell->env_v, arguments[i]))
+			if (check_duplicated(shell->env_v, arguments[i], 0))
 				continue ;
 			else
 				shell->env_v = set_only_key(shell->env_v, arguments[i]);
 		}
 		else
 		{
-			if (check_duplicated(shell->env_v, arguments[i]))
+			if (check_duplicated(shell->env_v, arguments[i], 1))
 			{
 				if (modify_value_env(shell->env_v, arguments[i]))
 					malloc_failure(shell, "parse_of_arguments");
 			}
-			shell->env_v = key_and_value(shell->env_v, arguments[i]);
+			else
+				shell->env_v = key_and_value(shell, shell->env_v, arguments[i]);
 		}
-		if (!shell->env_v)
-			malloc_failure(shell, "parse_of_arguments");
 		++i;
 	}
 }
@@ -62,7 +63,7 @@ static t_env_v	*aux_key_value(t_env_v *env_v, t_env_v *new_node, int position)
 	return (head);
 }
 
-static t_env_v	*key_and_value(t_env_v *env_v, char *arg)
+static t_env_v	*key_and_value(t_shell *shell, t_env_v *env_v, char *arg)
 {
 	int		position;
 	char	*value;
@@ -77,10 +78,11 @@ static t_env_v	*key_and_value(t_env_v *env_v, char *arg)
 	if (!new_node)
 		return (NULL);
 	clean_matrix(matrix);
-	position = find_position(env_v, matrix[0], linked_env_size(env_v));
+	position = find_position(env_v, new_node->key, linked_env_size(env_v));
 	if (position == 0)
 		return (new_node->next = env_v, new_node);
 	env_v = aux_key_value(env_v, new_node, position);
+	add_var_envp(shell, ft_strjoin(new_node->key, value));
 	return (env_v);
 }
 

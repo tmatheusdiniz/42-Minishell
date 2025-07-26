@@ -13,41 +13,55 @@
 #include "libft.h"
 #include <minishell.h>
 
-int	add_var_envp(char **envp, char *new_var)
+int add_var_envp(t_shell *shell, char *new_var)
 {
-	int	i;
+	int		i;
+	char	**new_envp;
 
 	i = 0;
-	while (envp[i])
-		i ++;
-	envp[i] = (char *)malloc(sizeof(char *) * ft_strlen(new_var));
-	if (!envp[i])
-		return (1);
+	while (shell->envp[i])
+		i++;
+	new_envp = (char **)realloc(shell->envp, sizeof(char *) * (i + 2));
+    if (!new_envp)
+		return (free(new_var), 1);
+	shell->envp = new_envp;
+	shell->envp[i] = new_var;
+	shell->envp[i + 1] = NULL;
 	return (0);
 }
 
-int	remove_var_envp(char **envp, char *key)
+int remove_var_envp(t_shell *shell, char *key)
 {
-	int	i;
-	int	j;
-	int	len;
+	int		i;
+	int		j;
+	int		len;
+	char	**new_envp;
+	int		size;
 
 	i = 0;
 	len = ft_strlen(key);
-	while (envp[i])
+	size = 0;
+	while (shell->envp[size])
+		size++;
+	while (shell->envp[i])
 	{
-		if (!ft_strcmp(envp[i], key) && envp[i][len] == '=')
+		if (!ft_strncmp(shell->envp[i], key, len) && shell->envp[i][len] == '=')
 		{
-			free (envp[i]);
+			free(shell->envp[i]);
 			j = i;
-			while (envp[j])
+			while (shell->envp[j + 1])
 			{
-				envp[j] = envp[j + 1];
-				j ++;
+				shell->envp[j] = shell->envp[j + 1];
+				j++;
 			}
+			new_envp = (char **)realloc(shell->envp, sizeof(char *) * size);
+			if (!new_envp)
+				return (1);
+			shell->envp = new_envp;
+			shell->envp[size - 1] = NULL;
+			return (0);
 		}
-		else
-			i ++;
+		i++;
 	}
 	return (0);
 }

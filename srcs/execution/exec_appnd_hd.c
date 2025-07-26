@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <unistd.h>
 
-static void	consume_input(t_heredoc *heredoc, int fd);
 static int	check_heredoc_errors(int save_fd);
 
 static void	check_append_errors(char *file, int fd)
@@ -40,7 +40,7 @@ int	exec_append(t_shell *shell, void *root)
 		close(fd);
 		current = redir->next;
 	}
-	if (current && (*(int *)current == EXEC || *(int *)current == BT))
+	if (current)
 	{
 		shell->root = current;
 		aux_execution(shell, current);
@@ -62,43 +62,20 @@ int	exec_heredoc(t_shell *shell, void *root)
 	{
 		redir = (t_heredoc *)current;
 		if (pipe(fd) == -1)
-			return (check_heredoc_errors(save_fdhere), -1);
-		consume_input(redir, fd[1]);
-		close (fd[1]);
+			return (check_heredoc_errors(save_fdhere), close(save_fdhere), -1);
+		if (redir->content)
+			write(fd[1], redir->content, ft_strlen(redir->content));
+		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 		current = redir->next;
 	}
-	if (current && (*(int *)current == EXEC || *(int *)current == BT))
+	if (current)
 	{
 		shell->root = current;
 		aux_execution(shell, current);
 	}
-	dup2(save_fdhere, STDIN_FILENO);
-	return (close (save_fdhere), 0);
-}
-
-static void	consume_input(t_heredoc *heredoc, int fd)
-{
-	char	*line;
-
-	while (1)
-	{
-		line = readline("> ");
-		if (!line)
-			break ;
-		if ((line[ft_strlen(heredoc->delimiter)] == '\n'
-				|| line[ft_strlen(heredoc->delimiter)] == '\0')
-			&& !(ft_strncmp(line, heredoc->delimiter,
-					ft_strlen(heredoc->delimiter))))
-		{
-			free (line);
-			break ;
-		}
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
-		free(line);
-	}
+	return (dup2(save_fdhere, STDIN_FILENO), close(save_fdhere), 0);
 }
 
 static int	check_heredoc_errors(int save_fd)

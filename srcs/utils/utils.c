@@ -30,7 +30,7 @@ char	**linked_to_envp(t_shell *shell)
 	len = linked_env_size(shell->env_v);
 	tmp = shell->env_v;
 	envp = (char **)ft_calloc(sizeof(char *), len + 1);
-	while (tmp)
+	while (tmp && i < len)
 	{
 		aux = ft_strjoin(tmp->key, "=");
 		if (!aux)
@@ -44,7 +44,7 @@ char	**linked_to_envp(t_shell *shell)
 			return (aux_to_envp(envp), NULL);
 		tmp = tmp->next;
 	}
-	return (envp);
+	return (envp[i] = NULL, envp);
 }
 
 char	**duplicate_env_v(char **envp)

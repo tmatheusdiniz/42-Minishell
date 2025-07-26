@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errors.h"
 #include "libft.h"
 #include "utils.h"
 #include <minishell.h>
@@ -59,14 +60,26 @@ int	find_position(t_env_v *env_v, char *new_key, int linked_size)
 	return (count);
 }
 
-int	check_duplicated(t_env_v *current, char *key)
+int	check_duplicated(t_env_v *current, char *key, int flag)
 {
-	while (current->next)
+	char	**matrix;
+
+	matrix = NULL;
+	if (flag)
+	{
+		matrix = ft_split(key, '=');
+		if (!matrix || !matrix[0])
+			return (-1); //modify
+		key = matrix[0];
+	}
+	while (current)
 	{
 		if (current->key && ft_strcmp(current->key, key) == 0)
 			return (1);
 		current = current->next;
 	}
+	if (matrix)
+		clean_matrix(matrix);
 	return (0);
 }
 
