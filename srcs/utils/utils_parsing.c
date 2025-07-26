@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 02:50:43 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/11 21:40:01 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/25 23:51:30 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,55 @@ int	match_type(char *token)
 
 bool	expand_check(char *input)
 {
-	bool	d_flag;
-	int		i;
+	int	len;
+	int	i;
 
-	i = 0;
-	d_flag = false;
-	while (input[i])
+	if (!input || !input[0])
+		return (false);
+	len = ft_strlen(input);
+	if (len >= 2 && input[0] == '\'' && input[len - 1] == '\'')
 	{
-		if (input[i] && input[i] == '"')
-			d_flag = true;
-		if (input[i] && input[i] == '\'')
+		i = 1;
+		while (i < len - 1)
 		{
-			if (!d_flag)
-				return (true);
-			return (false);
+			if (input[i] == '\'' || input[i] == '"')
+				return (false);
+			i++;
 		}
-		i++;
+		return (true);
 	}
 	return (false);
+}
+
+char	*aux_handle_exit_expand(char *string, int *inc)
+{
+	char	*temp;
+	int		c;
+
+	c = 0;
+	temp = handle_exit_status(inc);
+	if (!temp)
+		return (NULL);
+	while (temp[c])
+	{
+		string[inc[1]] = temp[c];
+		inc[1]++;
+		c++;
+	}
+	free(temp);
+	return (string);
+}
+
+char	*aux_handle_literal_dollar(int *inc, char *input, char *env_var)
+{
+	char	quote;
+
+	quote = input[inc[0]];
+	inc[0]++;
+	while (input[inc[0]] && input[inc[0]] != quote)
+		inc[0]++;
+	if (input[inc[0]] == quote)
+		inc[0]++;
+	env_var[0] = '\0';
+	return (ft_strdup(env_var));
 }

@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 21:57:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/06/19 22:34:23 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/25 23:13:20 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,13 @@ char	*check_env_var(char *input, int *inc)
 		return (NULL);
 	j = 0;
 	inc[0]++;
+	if (input[inc[0]] == '\'' || input[inc[0]] == '"')
+		return (aux_handle_literal_dollar(inc, input, env_var));
+	if (input[inc[0]] == '$')
+	{
+		env_var[0] = '\0';
+		return (ft_strdup(env_var));
+	}
 	while (input[inc[0]] && input[inc[0]] != ' ' && (input[inc[0]] != '"'
 			&& input[inc[0]] != '\'' && input[inc[0]] != '$'))
 	{

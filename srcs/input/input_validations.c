@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_validations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:27:54 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/22 11:24:52 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/24 20:28:26 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ void	handle_metachar(const char *input, char *new_str, int *i, int *j)
 	if (*j > 0 && new_str[*j - 1] != ' ')
 		new_str[(*j)++] = ' ';
 	new_str[(*j)++] = input[*i];
-	if ((input[*i] == '>' || input[*i] == '<')
-		&& input[*i + 1] == input[*i])
-		new_str[(*j)++] = input[++(*i)];
+	if ((input[*i] == '>' || input[*i] == '<') && input[*i + 1] == input[*i])
+	{
+		new_str[(*j)++] = input[*i];
+	}
 	if (input[*i + 1] && input[*i + 1] != ' ')
 		new_str[(*j)++] = ' ';
 }
@@ -76,7 +77,7 @@ bool	input_validation(t_shell *shell)
 		|| check_quotes(shell->input, '\''))
 	{
 		print_error(NAME_SHELL,
-			" syntax error - the quote is open", NULL, NULL);
+			" syntax error - unclosed quotes", NULL, NULL);
 		return (exit_code(2));
 	}
 	return (false);

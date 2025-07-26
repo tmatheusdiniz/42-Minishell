@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 23:07:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/07/23 11:23:28 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/25 23:48:49 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	in_quotes(char cur, bool flag, int quotes)
 	return (flag);
 }
 
-static char	*handle_exit_status(int *inc)
+char	*handle_exit_status(int *inc)
 {
 	char	*exit_str;
 
@@ -36,29 +36,17 @@ static char	*handle_exit_status(int *inc)
 char	*change_expansible(t_shell *mini, char *input, int *inc, char *string)
 {
 	char	*env_var;
-	char	*temp;
 	int		c;
 	t_env_v	*node_env;
 
 	node_env = NULL;
 	if (input[inc[0] + 1] == '?')
-	{
-		temp = handle_exit_status(inc);
-		if (!temp)
-			return (NULL);
-		c = 0;
-		while (temp[c])
-		{
-			string[inc[1]] = temp[c];
-			inc[1]++;
-			c++;
-		}
-		free(temp);
-		return (string);
-	}
+		return (aux_handle_exit_expand(string, inc));
 	env_var = check_env_var(input, inc);
 	if (!env_var)
 		return (NULL);
+	if (env_var[0] == '\0')
+		return (free(env_var), string);
 	node_env = get_env_node_parsing(mini, env_var, node_env);
 	if (node_env && node_env->value)
 	{
@@ -83,10 +71,11 @@ char	*change_input(t_shell *mini, char *input, int *inc, bool no_expand)
 	s_flag = false;
 	while (input[inc[0]])
 	{
-		s_flag = in_quotes(input[inc[0]], s_flag, '\'');
-		d_flag = in_quotes(input[inc[0]], d_flag, '"');
-		if (input[inc[0]] == '$' && ((d_flag && s_flag) || (!d_flag && !s_flag)
-				|| (d_flag && !s_flag)) && !no_expand)
+		if (input[inc[0]] == '"' && !s_flag)
+			d_flag = !d_flag;
+		else if (input[inc[0]] == '\'' && !d_flag)
+			s_flag = !s_flag;
+		if (input[inc[0]] == '$' && !s_flag && !no_expand)
 			change_expansible(mini, input, inc, string);
 		else
 		{
