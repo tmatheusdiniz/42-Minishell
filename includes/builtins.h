@@ -30,7 +30,7 @@ void	ft_sort_linked(t_env_v *env_v);
 void	*create_node(char *key_name, char *content);
 int		modify_value_env(t_env_v *env_v, char *argument);
 int		find_position(t_env_v *env_v, char *new_key, int linked_size);
-int		check_duplicated(t_env_v *current, char *key, int flag);
+int		check_duplicated(t_shell *shell, t_env_v *current, char *key, int flag);
 char	**aux_set(char *envp);
 t_env_v	*set_only_key(t_env_v *env_v, char *key);
 int		is_valid_identifier(char *str);

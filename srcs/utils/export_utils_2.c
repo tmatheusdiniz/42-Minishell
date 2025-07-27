@@ -60,17 +60,29 @@ int	find_position(t_env_v *env_v, char *new_key, int linked_size)
 	return (count);
 }
 
-int	check_duplicated(t_env_v *current, char *key, int flag)
+int	check_duplicated(t_shell *shell, t_env_v *current, char *key, int flag)
 {
 	char	**matrix;
+	char	*equal_sign;
 
+	equal_sign = ft_strchr(key, '=');
 	matrix = NULL;
-	if (flag)
+	if (equal_sign && equal_sign != key)
 	{
-		matrix = ft_split(key, '=');
-		if (!matrix || !matrix[0])
-			return (-1); //modify
-		key = matrix[0];
+		if (flag)
+		{
+			matrix = ft_split(key, '=');
+			if (!matrix || !matrix[0])
+				malloc_failure(shell, "check_duplicated");
+			key = matrix[0];
+		}
+	}
+	else
+	{
+		ft_putstr("minishell: export: '");
+		ft_putstr(key);
+		ft_putendl_fd("': not a valid identifier", 1);
+		return (0);
 	}
 	while (current)
 	{

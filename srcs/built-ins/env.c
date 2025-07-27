@@ -13,7 +13,27 @@
 #include "libft.h"
 #include <minishell.h>
 
-int add_var_envp(t_shell *shell, char *new_var)
+static int	aux_remove(t_shell *shell, int *i, int *size)
+{
+	int		j;
+	char	**new_envp;
+
+	free(shell->envp[*i]);
+	j = *i;
+	while (shell->envp[j + 1])
+	{
+		shell->envp[j] = shell->envp[j + 1];
+		j++;
+	}
+	new_envp = (char **)realloc(shell->envp, sizeof(char *) * *size);
+	if (!new_envp)
+		return (1);
+	shell->envp = new_envp;
+	shell->envp[*size - 1] = NULL;
+	return (0);
+}
+
+int	add_var_envp(t_shell *shell, char *new_var)
 {
 	int		i;
 	char	**new_envp;
@@ -22,7 +42,7 @@ int add_var_envp(t_shell *shell, char *new_var)
 	while (shell->envp[i])
 		i++;
 	new_envp = (char **)realloc(shell->envp, sizeof(char *) * (i + 2));
-    if (!new_envp)
+	if (!new_envp)
 		return (free(new_var), 1);
 	shell->envp = new_envp;
 	shell->envp[i] = new_var;
@@ -30,12 +50,10 @@ int add_var_envp(t_shell *shell, char *new_var)
 	return (0);
 }
 
-int remove_var_envp(t_shell *shell, char *key)
+int	remove_var_envp(t_shell *shell, char *key)
 {
 	int		i;
-	int		j;
 	int		len;
-	char	**new_envp;
 	int		size;
 
 	i = 0;
@@ -46,21 +64,7 @@ int remove_var_envp(t_shell *shell, char *key)
 	while (shell->envp[i])
 	{
 		if (!ft_strncmp(shell->envp[i], key, len) && shell->envp[i][len] == '=')
-		{
-			free(shell->envp[i]);
-			j = i;
-			while (shell->envp[j + 1])
-			{
-				shell->envp[j] = shell->envp[j + 1];
-				j++;
-			}
-			new_envp = (char **)realloc(shell->envp, sizeof(char *) * size);
-			if (!new_envp)
-				return (1);
-			shell->envp = new_envp;
-			shell->envp[size - 1] = NULL;
-			return (0);
-		}
+			aux_remove(shell, &i, &size);
 		i++;
 	}
 	return (0);

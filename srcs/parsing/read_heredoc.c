@@ -12,7 +12,8 @@
 
 #include <minishell.h>
 
-void	read_all_heredocs(void *root);
+static void	aux_aux_read(t_heredoc *heredoc, char *content, char *line);
+
 static int	has_quotes(char *delimiter)
 {
 	int	i;
@@ -47,36 +48,6 @@ static char	*remove_delimiter_quotes(char *delimiter)
 	clean[j] = '\0';
 	return (clean);
 }
-
-/* static void	aux_read_hd(void *root)
-{
-	char		*line;
-	char		*content;
-	char		*tmp;
-	t_heredoc	*heredoc;
-
-	heredoc = (t_heredoc *)root;
-	content = NULL;
-	while (1)
-	{
-		line = readline("> ");
-		if (!line || strcmp(line, heredoc->delimiter) == 0)
-			break ;
-		if (content)
-		{
-			tmp = ft_strjoin(content, line);
-			free(content);
-			content = ft_strjoin(tmp, "\n");
-			free(tmp);
-		}
-		else
-			content = ft_strjoin(line, "\n");
-		free(line);
-	}
-	free(line);
-	heredoc->content = content;
-	read_all_heredocs(heredoc->next);
-} */
 
 static void	aux_read_hd(void *root, t_shell *shell)
 {
@@ -152,30 +123,14 @@ void	read_all_heredocs_with_shell(void *root, t_shell *shell)
 	}
 }
 
+static void	aux_aux_read(t_heredoc *heredoc, char *content, char *line)
+{
+	heredoc->content = content;
+	if (line)
+		free (line);
+}
+
 void	read_all_heredocs(void *root)
 {
 	read_all_heredocs_with_shell(root, NULL);
 }
-
-/* void	read_all_heredocs(void *root)
-{
-	t_outredir	*redir;
-	t_pipe		*pipe;
-
-	if (!root)
-		return ;
-	if (*(int *)root == PIPE)
-	{
-		pipe = (t_pipe *)root;
-		read_all_heredocs(pipe->left);
-		read_all_heredocs(pipe->right);
-	}
-	else if (*(int *)root == HEREDOC)
-		aux_read_hd(root);
-	else if (*(int *)root == OUTREDIR || *(int *)root == INREDIR
-		|| *(int *)root == APPEND)
-	{
-		redir = (t_outredir *)root;
-		read_all_heredocs(redir->next);
-	}
-} */
