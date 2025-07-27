@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:01:48 by mreinald          #+#    #+#             */
-/*   Updated: 2025/04/19 16:25:18 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/07/27 12:26:22 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,25 @@
 #include <stdlib.h>
 
 static void		print_all_var(t_env_v *env_v);
-static t_env_v	*key_and_value(t_shell *shell, t_env_v *env_v, char *arg);
 static t_env_v	*aux_key_value(t_env_v *env_v, t_env_v *new_node, int position);
 
 static void	parse_of_arguments(t_shell *shell, char **arguments)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (arguments[i])
 	{
 		if (!(ft_strchr(arguments[i], '=')))
 		{
+			if (!is_valid_identifier(arguments[i]))
+			{
+				ft_putstr_fd("minishell: export: `", 2);
+				ft_putstr_fd(arguments[i], 2);
+				ft_putendl_fd("': not a valid identifier", 2);
+				i++;
+				continue;
+			}
 			if (check_duplicated(shell->env_v, arguments[i], 0))
 				continue ;
 			else
@@ -35,13 +42,11 @@ static void	parse_of_arguments(t_shell *shell, char **arguments)
 		}
 		else
 		{
-			if (check_duplicated(shell->env_v, arguments[i], 1))
+			if (!validate_and_process_with_equal(shell, arguments[i]))
 			{
-				if (modify_value_env(shell->env_v, arguments[i]))
-					malloc_failure(shell, "parse_of_arguments");
+				i++;
+				continue;
 			}
-			else
-				shell->env_v = key_and_value(shell, shell->env_v, arguments[i]);
 		}
 		++i;
 	}
@@ -63,20 +68,35 @@ static t_env_v	*aux_key_value(t_env_v *env_v, t_env_v *new_node, int position)
 	return (head);
 }
 
-static t_env_v	*key_and_value(t_shell *shell, t_env_v *env_v, char *arg)
+t_env_v	*key_and_value(t_shell *shell, t_env_v *env_v, char *arg)
 {
 	int		position;
 	char	*value;
 	char	**matrix;
+	char	*new_var;
 	t_env_v	*new_node;
 
 	matrix = ft_split(arg, '=');
 	if (!matrix || !matrix[0])
-		return (NULL);
+	{
+		if (matrix)
+			clean_matrix(matrix);
+		return (env_v);
+	}
 	value = ft_strchr(arg, '=');
 	new_node = create_node(matrix[0], value + 1);
 	if (!new_node)
-		return (NULL);
+		return (clean_matrix(matrix), env_v);
+	new_var = ft_strjoin(new_node->key, value);
+	if (!new_var)
+	{
+		free(new_node->key);
+		if (new_node->value)
+			free(new_node->value);
+		free(new_node);
+		clean_matrix(matrix);
+		return (env_v);
+	}
 	clean_matrix(matrix);
 	position = find_position(env_v, new_node->key, linked_env_size(env_v));
 	if (position == 0)

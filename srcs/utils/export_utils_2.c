@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 22:49:39 by mreinald          #+#    #+#             */
-/*   Updated: 2025/04/28 23:25:11 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/07/27 12:11:35 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,28 @@ void	*create_node(char *key_name, char *content)
 		env_v->value = ft_strdup(content);
 	env_v->next = NULL;
 	return (env_v);
+}
+int	validate_and_process_with_equal(t_shell *shell, char *arg)
+{
+	char	**temp_split;
+
+	temp_split = ft_split(arg, '=');
+	if (!temp_split || !temp_split[0] || !is_valid_identifier(temp_split[0]))
+	{
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putendl_fd("': not a valid identifier", 2);
+		if (temp_split)
+			clean_matrix(temp_split);
+		return (0);
+	}
+	clean_matrix(temp_split);
+	if (check_duplicated(shell->env_v, arg, 1))
+	{
+		if (modify_value_env(shell->env_v, arg))
+			malloc_failure(shell, "parse_of_arguments");
+	}
+	else
+		shell->env_v = key_and_value(shell, shell->env_v, arg);
+	return (1);
 }

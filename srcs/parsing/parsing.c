@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/07/27 10:07:59 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/27 11:40:34 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,6 @@ char	**make_process(char **input_split, t_shell *mini)
 		i++;
 	}
 	return (input_split);
-}
-
-t_exec	*find_t_exec(void *root)
-{
-	if (!root)
-		return (NULL);
-	if (*((int *)root) == BT || *((int *)root) == EXEC)
-		return ((t_exec *) root);
-	else
-		return (NULL);
 }
 
 int	parsing(t_shell *mini)

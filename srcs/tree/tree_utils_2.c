@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:54:14 by alberto           #+#    #+#             */
-/*   Updated: 2025/07/21 00:41:49 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/27 13:20:28 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	*create_exec_node(t_token *exec_token, int i)
 	t_exec	*exec;
 	t_token	*cur;
 	int		args_count;
+	char    *cleaned_arg;
+    int     len;
 
 	exec = (t_exec *)ft_calloc(sizeof(t_exec), 1);
 	if (!exec)
@@ -59,11 +61,20 @@ void	*create_exec_node(t_token *exec_token, int i)
 	}
 	cur = exec_token;
 	while (cur)
-	{
-		exec->argv[i] = ft_strdup(cur->token);
-		i++;
-		cur = cur->next;
-	}
+    {
+        len = ft_strlen(cur->token);
+        if (len >= 2 && 
+            ((cur->token[0] == '\'' && cur->token[len - 1] == '\'') ||
+             (cur->token[0] == '"' && cur->token[len - 1] == '"')))
+        {
+            cleaned_arg = ft_substr(cur->token, 1, len - 2);
+            exec->argv[i] = cleaned_arg;
+        }
+        else
+            exec->argv[i] = ft_strdup(cur->token);
+        i++;
+        cur = cur->next;
+    }
 	exec->argv[i] = NULL;
 	return (exec);
 }

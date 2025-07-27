@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 14:07:19 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/03 15:32:59 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/07/27 12:16:48 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ int		find_position(t_env_v *env_v, char *new_key, int linked_size);
 int		check_duplicated(t_env_v *current, char *key, int flag);
 char	**aux_set(char *envp);
 t_env_v	*set_only_key(t_env_v *env_v, char *key);
+int		is_valid_identifier(char *str);
+int	validate_and_process_with_equal(t_shell *shell, char *arg);
+t_env_v	*key_and_value(t_shell *shell, t_env_v *env_v, char *arg);
 
 // ----------env----------
 

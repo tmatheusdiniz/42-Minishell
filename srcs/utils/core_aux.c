@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 14:08:30 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/20 16:53:08 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/27 11:46:13 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,22 @@ void	handle_env_vars(t_shell *shell, char **envp)
 	shell->envp = linked_to_envp(shell);
 	if (!shell->envp)
 		malloc_failure(shell, "handle_env_vars");
+}
+
+int	is_valid_identifier(char *str)
+{
+	int	i;
+
+	if (!str || !str[0])
+		return (0);
+	if (!ft_isalpha(str[0]) && str[0] != '_')
+		return (0);
+	i = 1;
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
 }

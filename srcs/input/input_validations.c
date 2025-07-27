@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:27:54 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/27 10:08:25 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/27 11:49:22 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_metachar(char c)
 	return (c == '|' || c == '<' || c == '>');
 }
 
-vvoid	handle_metachar(const char *input, char *new_str, int *i, int *j)
+void	handle_metachar(const char *input, char *new_str, int *i, int *j)
 {
 	if (*j > 0 && new_str[*j - 1] != ' ')
 		new_str[(*j)++] = ' ';

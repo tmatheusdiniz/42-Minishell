@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:56:50 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/25 19:41:21 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/27 13:25:37 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 int			check_args(int argc, char const **argv, char **envp);
 void		handle_env_vars(t_shell *shell, char **envp);
 t_shell		*init_shell(void);
-t_exec		*find_t_exec(void *root);
 
 // ----------Linked List----------
 int			get_index_env(t_env_v *env_v, char *var);
@@ -53,6 +52,7 @@ bool		expand_check(char *input);
 char		*aux_handle_exit_expand(char *string, int *inc);
 char		*handle_exit_status(int *inc);
 char		*aux_handle_literal_dollar(int *inc, char *input, char *env_var);
+char		**prepare_argv_for_exec(char **argv);
 
 //tree_utils.c
 void		*create_exec_node(t_token *exec_token, int i);
