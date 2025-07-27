@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/07/25 23:49:58 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/27 10:07:59 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ char	**make_process(char **input_split, t_shell *mini)
 				return (NULL);
 			free(input_split[i]);
 			input_split[i] = temp;
-		}
+		}/* 
 		else
-			input_split[i] = clean_quotes(input_split[i], 0, 0);
+			input_split[i] = clean_quotes(input_split[i], 0, 0); */
 		i++;
 	}
 	return (input_split);
@@ -111,7 +111,7 @@ int	parsing(t_shell *mini)
 	if (mini->tokens)
 		mini->root = build_tree(mini->tokens);
 	mini->original_root = mini->root;
-	read_all_heredocs(mini->root);
+	read_all_heredocs_with_shell(mini->root, mini);
 	if (token_data)
 		free_all_collected_tokens(token_data);
 	mini->tokens = NULL;

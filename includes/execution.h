@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:23:56 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/15 20:28:06 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/07/27 10:07:13 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int		exec_inredir(t_shell *shell, void *root);
 int		exec_append(t_shell *shell, void *root);
 int		exec_heredoc(t_shell *shell, void *root);
 void	read_all_heredocs(void *root);
+void	read_all_heredocs_with_shell(void *root, t_shell *shell);
 
 // ----------Utils Execute----------
 void	aux_execute(t_shell *shell);
