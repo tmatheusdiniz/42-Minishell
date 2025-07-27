@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errors.h"
 #include <minishell.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -45,6 +46,7 @@ void	ft_execution(t_shell *shell)
 
 	i = 0;
 	last_exit_code = 0;
+	frk = NULL;
 	if (*(int *)shell->root == PIPE)
 	{
 		frk = handle_pipe(shell, shell->root);
@@ -60,7 +62,7 @@ void	ft_execution(t_shell *shell)
 		cleanup_fork_fds(frk);
 	}
 	else
-		aux_execution(shell, shell->root);
+		execute_one_command(shell);
 }
 
 void	ft_execute_cmmd(t_shell *shell, void *root, t_fork *frk, int pipe_index)
@@ -77,7 +79,7 @@ void	ft_execute_cmmd(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 		{
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(((t_exec *)root)->argv[0], 2);
-			ft_putendl_fd(": No such file or directory", 2);
+			ft_putendl_fd(": command not found", 2);
 			exit(127);
 		}
 		else
@@ -109,12 +111,5 @@ void	execute_tree_recur(t_shell *shell, void *root,
 		ft_execute_cmmd(shell, root, frk, pipe_index);
 	else if (*(int *)root == OUTREDIR || *(int *)root == INREDIR
 		|| *(int *)root == APPEND || *(int *)root == HEREDOC)
-	{
-		handle_fork(shell, frk, pipe_index);
-		if (frk->pid[pipe_index] == 0)
-		{
-			aux_execution(shell, root);
-			exit(0);
-		}
-	}
+			aux_execution(shell, root, frk, pipe_index);
 }

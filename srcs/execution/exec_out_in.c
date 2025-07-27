@@ -16,7 +16,7 @@ static void	check_errors(char *file, int fd);
 static void	check_other_e(char *file);
 static void	check_last_e(char *file);
 
-int	exec_outredir(t_shell *shell, void *root)
+int	exec_outredir(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 {
 	int			fd;
 	int			save_fdout;
@@ -38,13 +38,13 @@ int	exec_outredir(t_shell *shell, void *root)
 	if (current)
 	{
 		shell->root = current;
-		aux_execution(shell, current);
+		aux_execution(shell, current, frk, pipe_index);
 	}	
 	dup2(save_fdout, STDOUT_FILENO);
 	return (close (save_fdout), 0);
 }
 
-int	exec_inredir(t_shell *shell, void *root)
+int	exec_inredir(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 {
 	int			fd;
 	int			save_fdin;
@@ -66,7 +66,7 @@ int	exec_inredir(t_shell *shell, void *root)
 	if (current)
 	{
 		shell->root = current;
-		aux_execution(shell, current);
+		aux_execution(shell, current, frk, pipe_index);
 	}
 	dup2(save_fdin, STDIN_FILENO);
 	return (close (save_fdin), 0);

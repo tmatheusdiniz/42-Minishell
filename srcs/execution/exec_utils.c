@@ -15,23 +15,21 @@
 static void	aux_checkbt(t_shell *shell, t_exec *exec_node);
 static void	aux_fork(pid_t pid, int status);
 
-void	aux_execution(t_shell *shell, void *root)
+void	aux_execution(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 {
-	if (*(int *)root == BT)
-		check_bt(shell, (t_exec *)shell->root);
-	else if (*(int *)root == EXEC)
-		aux_execute(shell);
+	if (*(int *)root == BT || *(int *)root == EXEC)
+		ft_execute_cmmd(shell, root, frk, pipe_index);
 	else if (*(int *)root == OUTREDIR)
-		exec_outredir(shell, shell->root);
+		exec_outredir(shell, shell->root, frk, pipe_index);
 	else if (*(int *)root == INREDIR)
-		exec_inredir(shell, shell->root);
+		exec_inredir(shell, shell->root, frk, pipe_index);
 	else if (*(int *)root == APPEND)
-		exec_append(shell, root);
+		exec_append(shell, root, frk, pipe_index);
 	else if (*(int *)root == HEREDOC)
-		exec_heredoc(shell, root);
+		exec_heredoc(shell, root, frk, pipe_index);
 }
 
-void	aux_execute(t_shell *shell)
+void	execute_one_command(t_shell *shell)
 {
 	pid_t	pid;
 	int		status;

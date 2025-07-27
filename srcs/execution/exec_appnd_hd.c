@@ -21,7 +21,7 @@ static void	check_append_errors(char *file, int fd)
 	check_outredir_errors(file, fd);
 }
 
-int	exec_append(t_shell *shell, void *root)
+int	exec_append(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 {
 	int			fd;
 	int			save_fdout;
@@ -43,13 +43,13 @@ int	exec_append(t_shell *shell, void *root)
 	if (current)
 	{
 		shell->root = current;
-		aux_execution(shell, current);
+		aux_execution(shell, current, frk, pipe_index);
 	}
 	dup2(save_fdout, STDOUT_FILENO);
 	return (close (save_fdout), 0);
 }
 
-int	exec_heredoc(t_shell *shell, void *root)
+int	exec_heredoc(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 {
 	int			fd[2];
 	int			save_fdhere;
@@ -73,9 +73,10 @@ int	exec_heredoc(t_shell *shell, void *root)
 	if (current)
 	{
 		shell->root = current;
-		aux_execution(shell, current);
+		aux_execution(shell, current, frk, pipe_index);
 	}
-	return (dup2(save_fdhere, STDIN_FILENO), close(save_fdhere), 0);
+	dup2(save_fdhere, STDIN_FILENO);
+	return (close(save_fdhere), 0);
 }
 
 static int	check_heredoc_errors(int save_fd)

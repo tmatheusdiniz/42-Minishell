@@ -69,11 +69,11 @@ void	check_lastcmd(t_shell *shell, void *root,
 	if (*(int *)root == BT || *(int *)root == EXEC)
 		ft_execute_cmmd(shell, root, frk, pipe_index);
 	else if (*(int *)root == OUTREDIR)
-		exec_outredir(shell, shell->root);
+		exec_outredir(shell, shell->root, frk, pipe_index);
 	else if (*(int *)root == INREDIR)
-		exec_inredir(shell, shell->root);
+		exec_inredir(shell, shell->root, frk, pipe_index);
 	else if (*(int *)root == APPEND)
-		exec_append(shell, root);
+		exec_append(shell, root, frk, pipe_index);
 	else if (*(int *)root == HEREDOC)
-		exec_heredoc(shell, root);
+		exec_heredoc(shell, root, frk, pipe_index);
 }
