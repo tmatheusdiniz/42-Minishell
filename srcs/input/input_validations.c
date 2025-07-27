@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_validations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:27:54 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/24 20:28:26 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/07/27 10:08:25 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	handle_metachar(const char *input, char *new_str, int *i, int *j)
 	if (input[*i + 1] && input[*i + 1] != ' ')
 	{
 		new_str[(*j)++] = ' ';
-		(*i) ++;
+		(*i)++;
 	}
 }
 
