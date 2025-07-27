@@ -12,6 +12,8 @@
 
 #include <minishell.h>
 
+static void	aux_aux_read(t_heredoc *heredoc, char *content, char *line);
+
 static void	aux_read_hd(void *root)
 {
 	char		*line;
@@ -37,9 +39,15 @@ static void	aux_read_hd(void *root)
 			content = ft_strjoin(line, "\n");
 		free(line);
 	}
-	free(line);
-	heredoc->content = content;
+	aux_aux_read(heredoc, content, line);
 	read_all_heredocs(heredoc->next);
+}
+
+static void	aux_aux_read(t_heredoc *heredoc, char *content, char *line)
+{
+	heredoc->content = content;
+	if (line)
+		free (line);
 }
 
 void	read_all_heredocs(void *root)

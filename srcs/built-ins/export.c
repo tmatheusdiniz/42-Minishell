@@ -28,14 +28,14 @@ static void	parse_of_arguments(t_shell *shell, char **arguments)
 	{
 		if (!(ft_strchr(arguments[i], '=')))
 		{
-			if (check_duplicated(shell->env_v, arguments[i], 0))
+			if (check_duplicated(shell, shell->env_v, arguments[i], 0))
 				continue ;
 			else
 				shell->env_v = set_only_key(shell->env_v, arguments[i]);
 		}
 		else
 		{
-			if (check_duplicated(shell->env_v, arguments[i], 1))
+			if (check_duplicated(shell, shell->env_v, arguments[i], 1))
 			{
 				if (modify_value_env(shell->env_v, arguments[i]))
 					malloc_failure(shell, "parse_of_arguments");

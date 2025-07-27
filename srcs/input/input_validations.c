@@ -28,7 +28,10 @@ void	handle_metachar(const char *input, char *new_str, int *i, int *j)
 		new_str[(*j)++] = input[*i];
 	}
 	if (input[*i + 1] && input[*i + 1] != ' ')
+	{
 		new_str[(*j)++] = ' ';
+		(*i) ++;
+	}
 }
 
 char	*add_spaces_around_metachars(const char *input)

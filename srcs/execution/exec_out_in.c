@@ -39,7 +39,7 @@ int	exec_outredir(t_shell *shell, void *root)
 	{
 		shell->root = current;
 		aux_execution(shell, current);
-	}	
+	}
 	dup2(save_fdout, STDOUT_FILENO);
 	return (close (save_fdout), 0);
 }
