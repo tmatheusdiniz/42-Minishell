@@ -18,7 +18,7 @@ int	is_metachar(char c)
 	return (c == '|' || c == '<' || c == '>');
 }
 
-vvoid	handle_metachar(const char *input, char *new_str, int *i, int *j)
+void	handle_metachar(const char *input, char *new_str, int *i, int *j)
 {
 	if (*j > 0 && new_str[*j - 1] != ' ')
 		new_str[(*j)++] = ' ';
