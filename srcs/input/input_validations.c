@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_validations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:27:54 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/27 10:08:25 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/27 18:26:10 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,29 @@ char	*add_spaces_around_metachars(const char *input)
 	return (new_str);
 }
 
+bool	valid_arguments(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input && input[i])
+	{
+		if (input[i] == '>' || input[i] == '<')
+		{
+			if ((input[i] == '>' || input[i] == '<') && input[i + 1] == input[i])
+			{
+				i++;
+				if (input[i] && input[i + 1] == 0)
+					return (false);				
+			}
+			if (input[i] && input[i + 1] == 0)
+				return (false);
+		}
+		i++;
+	}
+	return (true);
+}
+
 bool	input_validation(t_shell *shell)
 {
 	char	*trimmed_input;
@@ -70,6 +93,11 @@ bool	input_validation(t_shell *shell)
 	if (!shell->input || !shell->input[0])
 		return (true);
 	trimmed_input = ft_strtrim(shell->input, "\t ");
+	if (!valid_arguments(trimmed_input))
+	{
+		print_error(NAME_SHELL,": syntax error near unexpected token `newline'", NULL, NULL);
+		return (free(trimmed_input), true);
+	}
 	free(shell->input);
 	spaced_input = add_spaces_around_metachars(trimmed_input);
 	free(trimmed_input);
