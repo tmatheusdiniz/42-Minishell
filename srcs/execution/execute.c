@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 19:49:38 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/27 13:34:08 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/29 22:21:43 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void	ft_execute_cmmd(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 	else if (*(int *)root == BT)
 	{
 		check_bt(shell, exec_node);
-		exit (0);
+		//exit (0);
+		exit(exit_code(-1));
 	}
 }
 

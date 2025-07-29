@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 14:02:49 by mreinald          #+#    #+#             */
-/*   Updated: 2025/05/13 14:20:26 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/07/29 22:41:52 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	not_is_numeric(t_shell *shell, char *str)
 	ft_putstr_fd(str, 2);
 	ft_putendl_fd(": numeric argument required", 2);
 	free_shell_final(shell);
-	exit_code(2);
+	//exit_code(2);
 	exit(2);
 }
 
@@ -69,7 +69,7 @@ static void	exit_sucess(t_shell *shell, t_exec *exec_node)
 	if (exec_node->argv[2])
 	{
 		ft_putstr_fd("minishell : exit: too many arguments\n", 2);
-		free_shell_final(shell);
+	//	free_shell_final(shell);
 		exit_code(1);
 		return ;
 	}
@@ -79,11 +79,13 @@ static void	exit_sucess(t_shell *shell, t_exec *exec_node)
 
 void	ft_exit(t_shell *shell, t_exec *exec_node)
 {
-	if (ft_is_numeric(exec_node->argv[1]))
+	if (!exec_node->argv[1])
 	{
-		exit_sucess(shell, exec_node);
-		return ;
+		free_shell_final(shell);
+		exit(exit_code(-1));
 	}
-	if (!ft_is_numeric(exec_node->argv[1]))
+	if (ft_is_numeric(exec_node->argv[1]))
+		exit_sucess(shell, exec_node);
+	else
 		not_is_numeric(shell, exec_node->argv[1]);
 }
