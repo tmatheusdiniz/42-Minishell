@@ -6,13 +6,13 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 21:49:42 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/27 10:08:52 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/29 18:54:07 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void	aux_aux_read(t_heredoc *heredoc, char *content, char *line);
+void	read_all_heredocs(void *root);
 
 static int	has_quotes(char *delimiter)
 {
@@ -26,7 +26,7 @@ static int	has_quotes(char *delimiter)
 		i++;
 	}
 	return (0);
-}	
+}
 
 static char	*remove_delimiter_quotes(char *delimiter)
 {
@@ -78,7 +78,6 @@ static void	aux_read_hd(void *root, t_shell *shell)
 		}
 		else
 			expanded_line = line;
-		
 		if (content)
 		{
 			tmp = ft_strjoin(content, expanded_line);
@@ -121,13 +120,6 @@ void	read_all_heredocs_with_shell(void *root, t_shell *shell)
 		redir = (t_outredir *)root;
 		read_all_heredocs_with_shell(redir->next, shell);
 	}
-}
-
-static void	aux_aux_read(t_heredoc *heredoc, char *content, char *line)
-{
-	heredoc->content = content;
-	if (line)
-		free (line);
 }
 
 void	read_all_heredocs(void *root)

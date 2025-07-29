@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:01:48 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/27 13:50:22 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/28 21:03:12 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	parse_of_arguments(t_shell *shell, char **arguments)
 				i++;
 				continue;
 			}
-			if (check_duplicated(shell->env_v, arguments[i], 0))
+			if (check_duplicated(shell, shell->env_v, arguments[i], 0))
 				continue ;
 			else
 				shell->env_v = set_only_key(shell->env_v, arguments[i]);

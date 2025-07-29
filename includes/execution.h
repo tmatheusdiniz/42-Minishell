@@ -21,16 +21,16 @@ void	ft_execute_cmmd(t_shell *shell, void *root,
 			t_fork *frk, int pipe_index);
 
 // ----------Execute Redir----------
-int		exec_outredir(t_shell *shell, void *root);
-int		exec_inredir(t_shell *shell, void *root);
-int		exec_append(t_shell *shell, void *root);
-int		exec_heredoc(t_shell *shell, void *root);
+int		exec_outredir(t_shell *shell, void *root, t_fork *frk, int pipe_index);
+int		exec_inredir(t_shell *shell, void *root, t_fork *frk, int pipe_index);
+int		exec_append(t_shell *shell, void *root, t_fork *frk, int pipe_index);
+int		exec_heredoc(t_shell *shell, void *root, t_fork *frk, int pipe_index);
 void	read_all_heredocs(void *root);
 void	read_all_heredocs_with_shell(void *root, t_shell *shell);
 
 // ----------Utils Execute----------
-void	aux_execute(t_shell *shell);
-void	aux_execution(t_shell *shell, void *root);
+void	aux_execution(t_shell *shell, void *root, t_fork *frk, int pipe_index);
+void	execute_one_command(t_shell *shell);
 
 // ----------Utils Pipe----------
 t_fork	*handle_pipe(t_shell *shell, void *root);

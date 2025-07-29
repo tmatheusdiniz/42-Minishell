@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 22:49:39 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/27 12:11:35 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/28 21:04:52 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	validate_and_process_with_equal(t_shell *shell, char *arg)
 		return (0);
 	}
 	clean_matrix(temp_split);
-	if (check_duplicated(shell->env_v, arg, 1))
+	if (check_duplicated(shell, shell->env_v, arg, 1))
 	{
 		if (modify_value_env(shell->env_v, arg))
 			malloc_failure(shell, "parse_of_arguments");
