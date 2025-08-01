@@ -12,10 +12,57 @@
 
 #include "errors.h"
 #include "libft.h"
-#include "utils.h"
 #include <minishell.h>
 
-int	modify_value_env(t_env_v *env_v, char *argument)
+void	update_envp_append(t_shell *shell, char *key, char *append)
+{
+	int		i;
+
+	i = 0;
+	while (shell->envp[i])
+	{
+		if (!ft_strncmp(shell->envp[i], key, ft_strlen(key)))
+		{
+			shell->envp[i] = ft_strjoin(shell->envp[i], append);
+			if (!shell->envp[i])
+				malloc_failure(shell, "update_envp_append");
+			if (!shell->envp[i])
+				malloc_failure(shell, "key");
+			if (append)
+				free (append);
+			if (key)
+				free (key);
+			break ;
+		}
+		i++;
+	}
+}
+
+static void	update_envp(t_shell *shell, char *key)
+{
+	int	i;
+	int	flag;
+
+	i = 0;
+	flag = 0;
+	while (shell->envp[i])
+	{
+		if (!ft_strncmp(shell->envp[i], key, ft_strlen(key))
+			&& key[ft_strlen(key)] == '=')
+		{
+			free(shell->envp[i]);
+			shell->envp[i] = ft_strdup(key);
+			if (!shell->envp[i])
+				malloc_failure(shell, "key");
+			flag = 1;
+		}
+		i++;
+	}
+	if (!flag)
+		add_var_envp(shell, key);
+}
+
+int	update_value(t_shell *shell, t_env_v *env_v, char *argument)
 {
 	char	**splt;
 
@@ -38,6 +85,8 @@ int	modify_value_env(t_env_v *env_v, char *argument)
 		}
 		env_v = env_v->next;
 	}
+	if (argument)
+		update_envp(shell, argument);
 	return (clean_matrix(splt), 0);
 }
 
@@ -60,7 +109,7 @@ int	find_position(t_env_v *env_v, char *new_key, int linked_size)
 	return (count);
 }
 
-int	check_duplicated(t_env_v *current, char *key, int flag)
+int	check_duplicated(t_shell *shell, t_env_v *current, char *key, int flag)
 {
 	char	**matrix;
 
@@ -69,7 +118,7 @@ int	check_duplicated(t_env_v *current, char *key, int flag)
 	{
 		matrix = ft_split(key, '=');
 		if (!matrix || !matrix[0])
-			return (-1); //modify
+			malloc_failure(shell, "check_duplicated");
 		key = matrix[0];
 	}
 	while (current)
@@ -83,22 +132,21 @@ int	check_duplicated(t_env_v *current, char *key, int flag)
 	return (0);
 }
 
-void	*create_node(char *key_name, char *content)
+int	check_append(char *key)
 {
-	t_env_v	*env_v;
+	int		i;
 
-	if (!key_name)
-		return (NULL);
-	env_v = (t_env_v *)malloc(sizeof(t_env_v));
-	if (!env_v)
-		return (NULL);
-	env_v->key = ft_strdup(key_name);
-	if (!env_v->key)
-		return (free(env_v), NULL);
-	if (!content)
-		env_v->value = NULL;
-	else
-		env_v->value = ft_strdup(content);
-	env_v->next = NULL;
-	return (env_v);
+	i = 0;
+	while (key[i])
+	{
+		if (key[i] && key[i] == '=')
+		{
+			if (key[i - 1] == '+')
+				return (1);
+			else
+				break ;
+		}
+		i++;
+	}
+	return (0);
 }

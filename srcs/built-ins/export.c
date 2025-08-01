@@ -16,7 +16,6 @@
 #include <stdlib.h>
 
 static void		print_all_var(t_env_v *env_v);
-static t_env_v	*key_and_value(t_shell *shell, t_env_v *env_v, char *arg);
 static t_env_v	*aux_key_value(t_env_v *env_v, t_env_v *new_node, int position);
 
 static void	parse_of_arguments(t_shell *shell, char **arguments)
@@ -28,16 +27,16 @@ static void	parse_of_arguments(t_shell *shell, char **arguments)
 	{
 		if (!(ft_strchr(arguments[i], '=')))
 		{
-			if (check_duplicated(shell->env_v, arguments[i], 0))
+			if (check_duplicated(shell, shell->env_v, arguments[i], 0))
 				continue ;
 			else
 				shell->env_v = set_only_key(shell->env_v, arguments[i]);
 		}
 		else
 		{
-			if (check_duplicated(shell->env_v, arguments[i], 1))
+			if (check_duplicated(shell, shell->env_v, arguments[i], 1))
 			{
-				if (modify_value_env(shell->env_v, arguments[i]))
+				if (update_value(shell, shell->env_v, arguments[i]))
 					malloc_failure(shell, "parse_of_arguments");
 			}
 			else
@@ -63,7 +62,7 @@ static t_env_v	*aux_key_value(t_env_v *env_v, t_env_v *new_node, int position)
 	return (head);
 }
 
-static t_env_v	*key_and_value(t_shell *shell, t_env_v *env_v, char *arg)
+t_env_v	*key_and_value(t_shell *shell, t_env_v *env_v, char *arg)
 {
 	int		position;
 	char	*value;
@@ -82,7 +81,7 @@ static t_env_v	*key_and_value(t_shell *shell, t_env_v *env_v, char *arg)
 	if (position == 0)
 		return (new_node->next = env_v, new_node);
 	env_v = aux_key_value(env_v, new_node, position);
-	add_var_envp(shell, ft_strjoin(new_node->key, value));
+	add_var_envp(shell, arg);
 	return (env_v);
 }
 
@@ -104,5 +103,10 @@ void	ft_export(t_shell *shell, char **argv)
 	if (!argv[1])
 		print_all_var(shell->env_v);
 	else
-		parse_of_arguments(shell, argv + 1);
+	{
+		if (check_append(argv[1]))
+			set_with_append(shell, shell->env_v, argv[1]);
+		else
+			parse_of_arguments(shell, argv + 1);
+	}
 }

@@ -29,7 +29,26 @@ void	aux_execution(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 		exec_heredoc(shell, root, frk, pipe_index);
 }
 
-void	execute_one_command(t_shell *shell)
+void	aux_no_pipe(t_shell *shell, t_fork *frk, void *root)
+{
+	if (!frk )
+		frk = handle_pipe(shell, shell->root);
+
+	if (*(int *)shell->root == EXEC)
+		execute_no_pipe(shell);
+	else if(*(int *)shell->root == BT)
+		check_bt(shell, root);
+	else if (*(int *)shell->root == OUTREDIR)
+		exec_outredir(shell, root, frk, -4);
+	else if (*(int *)shell->root == INREDIR)
+		exec_inredir(shell, root, frk, -4);
+	else if (*(int *)shell->root == APPEND)
+		exec_append(shell, root, frk, -4);
+	else if (*(int *)root == HEREDOC)
+		exec_heredoc(shell, root, frk, -4);
+}
+
+void	execute_no_pipe(t_shell *shell)
 {
 	pid_t	pid;
 	int		status;

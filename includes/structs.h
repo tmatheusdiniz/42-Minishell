@@ -93,6 +93,7 @@ typedef struct s_fork
 	int		fd_in;
 	int		fd_out;
 	int		nbr_cmds;
+	void	*root;
 	int		**pipe;
 	pid_t	*pid;
 }				t_fork;

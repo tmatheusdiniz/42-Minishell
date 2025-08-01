@@ -14,7 +14,6 @@
 
 void	handle_fork(t_shell *shell, t_fork *frk, int pipe_index)
 {
-	(void)shell;
 	frk->pid[pipe_index] = fork();
 	if (frk->pid[pipe_index] == 0)
 		set_pipe(frk, pipe_index);

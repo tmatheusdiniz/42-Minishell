@@ -38,7 +38,10 @@ int	exec_outredir(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 	if (current)
 	{
 		shell->root = current;
-		aux_execution(shell, current, frk, pipe_index);
+		if (pipe_index != -4)
+			aux_execution(shell, current, frk, pipe_index);
+		else
+			aux_no_pipe(shell, frk, current);
 	}	
 	dup2(save_fdout, STDOUT_FILENO);
 	return (close (save_fdout), 0);
@@ -66,7 +69,10 @@ int	exec_inredir(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 	if (current)
 	{
 		shell->root = current;
-		aux_execution(shell, current, frk, pipe_index);
+		if (pipe_index != -4)
+			aux_execution(shell, current, frk, pipe_index);
+		else
+			aux_no_pipe(shell, frk, current);
 	}
 	dup2(save_fdin, STDIN_FILENO);
 	return (close (save_fdin), 0);

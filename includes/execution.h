@@ -30,7 +30,8 @@ void	read_all_heredocs_with_shell(void *root, t_shell *shell);
 
 // ----------Utils Execute----------
 void	aux_execution(t_shell *shell, void *root, t_fork *frk, int pipe_index);
-void	execute_one_command(t_shell *shell);
+void	execute_no_pipe(t_shell *shell);
+void	aux_no_pipe(t_shell *shell, t_fork *frk, void *root);
 
 // ----------Utils Pipe----------
 t_fork	*handle_pipe(t_shell *shell, void *root);

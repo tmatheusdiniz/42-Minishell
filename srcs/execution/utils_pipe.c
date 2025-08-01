@@ -14,6 +14,29 @@
 
 #include <minishell.h>
 
+static bool	tree_has_redirections(void *root)
+{
+	t_pipe		*pipe_node;
+
+	if (!root)
+		return (false);
+	if (*(int *)root == PIPE)
+	{
+		pipe_node = (t_pipe *)root;
+		return (tree_has_redirections(pipe_node->left)
+			|| tree_has_redirections(pipe_node->right));
+	}
+	else if (*(int *)root == OUTREDIR)
+		return (true);
+	else if (*(int *)root == INREDIR)
+		return (true);
+	else if (*(int *)root == APPEND)
+		return (true);
+	else if (*(int *)root == HEREDOC)
+		return (true);
+	return (false);
+}
+
 void	set_pipe(t_fork *frk, int pipe_index)
 {
 	int	i;
@@ -29,15 +52,21 @@ void	set_pipe(t_fork *frk, int pipe_index)
 	}
 	if (pipe_index > 0)
 	{
-		dup2(frk->pipe[pipe_index - 1][0], STDIN_FILENO);
-		close(frk->pipe[pipe_index - 1][0]);
+		if (!tree_has_redirections(frk->root))
+		{
+			dup2(frk->pipe[pipe_index - 1][0], STDIN_FILENO);
+			close(frk->pipe[pipe_index - 1][0]);
+		}
 		close(frk->pipe[pipe_index - 1][1]);
 	}
 	if (pipe_index < frk->nbr_cmds - 1)
 	{
-		dup2(frk->pipe[pipe_index][1], STDOUT_FILENO);
-		close(frk->pipe[pipe_index][1]);
-		close(frk->pipe[pipe_index][1]);
+		if (!tree_has_redirections(frk->root))
+		{
+			dup2(frk->pipe[pipe_index][1], STDOUT_FILENO);
+			close(frk->pipe[pipe_index][1]);
+		}
+		close(frk->pipe[pipe_index][0]);
 	}
 }
 

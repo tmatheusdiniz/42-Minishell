@@ -10,7 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "builtins.h"
+#include "errors.h"
 #include <minishell.h>
+#include <stdlib.h>
 
 static void	aux_sort_linked_l(t_env_v *env_v,
 		int *j, int *flag, int linked_size)
@@ -117,31 +120,31 @@ char	**aux_set(char *envp)
 	return (save);
 }
 
-t_env_v	*envp_to_linked_l(char **envp)
+void	set_with_append(t_shell *shell, t_env_v *current, char *key)
 {
-	int		i;
-	t_env_v	*head;
-	t_env_v	*current;
-	t_env_v	*new_node;
-	char	**save;
+	char	**splt;
+	char	*old_value;
 
-	i = 0;
-	head = NULL;
-	current = NULL;
-	while (envp[i])
+	splt = ft_split(key, '+');
+	if (check_duplicated(shell, shell->env_v, splt[0], 0))
 	{
-		save = aux_set(envp[i++]);
-		if (!save)
-			return (NULL);
-		new_node = create_node(save[0], save[1]);
-		clean_matrix(save);
-		if (!new_node)
-			return (NULL);
-		if (!head)
-			head = new_node;
-		else
-			current->next = new_node;
-		current = new_node;
+		while (current)
+		{
+			if (current->key && ft_strcmp(current->key, splt[0]) == 0)
+			{
+				(splt[1])++;
+				old_value = ft_strdup(current->value);
+				current->value = ft_strjoin(current->value, splt[1]);
+				if (!old_value || !current->value)
+					malloc_failure(shell, "set_with_append");
+				update_envp_append(shell, ft_strjoin(splt[0],
+						ft_strjoin("=", old_value)), splt[1]);
+			}
+			current = current->next;
+		}
 	}
-	return (head);
+	else
+		key_and_value(shell, shell->env_v, ft_strjoin(splt[0], splt[1]));
+	if (splt && splt[0])
+		clean_matrix(splt);
 }

@@ -25,7 +25,7 @@ int add_var_envp(t_shell *shell, char *new_var)
     if (!new_envp)
 		return (free(new_var), 1);
 	shell->envp = new_envp;
-	shell->envp[i] = new_var;
+	shell->envp[i] = ft_strdup(new_var);
 	shell->envp[i + 1] = NULL;
 	return (0);
 }

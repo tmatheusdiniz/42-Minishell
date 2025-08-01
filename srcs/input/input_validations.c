@@ -26,12 +26,10 @@ void	handle_metachar(const char *input, char *new_str, int *i, int *j)
 	if ((input[*i] == '>' || input[*i] == '<') && input[*i + 1] == input[*i])
 	{
 		new_str[(*j)++] = input[*i];
-	}
-	if (input[*i + 1] && input[*i + 1] != ' ')
-	{	
-		new_str[(*j)++] = ' ';
 		(*i)++;
 	}
+	if (input[*i + 1] && input[*i + 1] != ' ')
+		new_str[(*j)++] = ' ';
 }
 
 char	*add_spaces_around_metachars(const char *input)
@@ -71,11 +69,12 @@ bool	valid_arguments(char *input)
 	{
 		if (input[i] == '>' || input[i] == '<')
 		{
-			if ((input[i] == '>' || input[i] == '<') && input[i + 1] == input[i])
+			if ((input[i] == '>' || input[i] == '<')
+				&& input[i + 1] == input[i])
 			{
 				i++;
 				if (input[i] && input[i + 1] == 0)
-					return (false);				
+					return (false);
 			}
 			if (input[i] && input[i + 1] == 0)
 				return (false);

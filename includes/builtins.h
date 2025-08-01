@@ -28,10 +28,14 @@ char	*get_target(t_env_v *env_v, char *input);
 void	ft_export(t_shell *shell, char **argv);
 void	ft_sort_linked(t_env_v *env_v);
 void	*create_node(char *key_name, char *content);
-int		modify_value_env(t_env_v *env_v, char *argument);
+int		update_value(t_shell *shell, t_env_v *env_v, char *argument);
+void	update_envp_append(t_shell *shell, char *key, char *append);
 int		find_position(t_env_v *env_v, char *new_key, int linked_size);
-int		check_duplicated(t_env_v *current, char *key, int flag);
+void	set_with_append(t_shell *shell, t_env_v *current, char *key);
+int		check_duplicated(t_shell *shell, t_env_v *current, char *key, int flag);
+int		check_append(char *key);
 char	**aux_set(char *envp);
+t_env_v	*key_and_value(t_shell *shell, t_env_v *env_v, char *arg);
 t_env_v	*set_only_key(t_env_v *env_v, char *key);
 
 // ----------env----------

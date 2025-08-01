@@ -96,5 +96,6 @@ t_fork	*handle_pipe(t_shell *shell, void *root)
 		malloc_failure(shell, "handle_pipe");
 	if (create_pipe(frk))
 		malloc_failure(shell, "handle_pipe");
+	frk->root = shell->root;
 	return (frk);
 }
