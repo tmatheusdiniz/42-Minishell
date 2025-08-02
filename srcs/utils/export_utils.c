@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_util.c                                      :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 20:40:34 by mreinald          #+#    #+#             */
-/*   Updated: 2025/04/26 21:27:30 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/07/27 12:11:07 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,6 @@ t_env_v	*set_only_key(t_env_v *env_v, char *key)
 	return (head);
 }
 
-// I had to create this function for
-// case which the var has a value with "=" inside.
-// e.g.: TEST="xx=1 , yy=1"
-
 char	**aux_set(char *envp)
 {
 	char	**save;
@@ -126,7 +122,7 @@ void	set_with_append(t_shell *shell, t_env_v *current, char *key)
 	char	*old_value;
 
 	splt = ft_split(key, '+');
-	if (check_duplicated(shell, shell->env_v, splt[0], 0))
+	if (check_duplicated(shell, shell->env_v, splt[0]))
 	{
 		while (current)
 		{

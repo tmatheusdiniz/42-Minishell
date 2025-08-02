@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:22:19 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/10 00:24:45 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/27 11:41:47 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	ft_unset(t_shell *shell, char **argv)
 	while (argv[i])
 	{
 		aux = get_node_envp(shell->env_v, argv[i]);
-		if (aux->value)
+		if (aux && aux->value)
 			remove_var_envp(shell, argv[i]);
 		if (aux)
 			shell->env_v = remove_env_var(shell->env_v, aux->key);

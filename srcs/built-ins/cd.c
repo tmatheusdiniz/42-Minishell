@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:13 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/07/23 11:26:59 by alberto          ###   ########.fr       */
+/*   Updated: 2025/07/27 11:54:12 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,10 @@ void	ft_cd(t_shell *shell, t_exec *exec_node)
 	{
 		if (!exec_node->argv[1])
 		{
-			if (!(home->value))
+			if (!home || !home->value)
 			{
 				ft_putendl_fd("minishell: cd: HOME not set", 2);
+				exit_code(1);
 				return ;
 			}
 			else

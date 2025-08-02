@@ -3,40 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 22:49:39 by mreinald          #+#    #+#             */
-/*   Updated: 2025/04/28 23:25:11 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/07/28 21:04:52 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
 #include "libft.h"
 #include <minishell.h>
-
-void	update_envp_append(t_shell *shell, char *key, char *append)
-{
-	int		i;
-
-	i = 0;
-	while (shell->envp[i])
-	{
-		if (!ft_strncmp(shell->envp[i], key, ft_strlen(key)))
-		{
-			shell->envp[i] = ft_strjoin(shell->envp[i], append);
-			if (!shell->envp[i])
-				malloc_failure(shell, "update_envp_append");
-			if (!shell->envp[i])
-				malloc_failure(shell, "key");
-			if (append)
-				free (append);
-			if (key)
-				free (key);
-			break ;
-		}
-		i++;
-	}
-}
 
 static void	update_envp(t_shell *shell, char *key)
 {
@@ -109,12 +85,14 @@ int	find_position(t_env_v *env_v, char *new_key, int linked_size)
 	return (count);
 }
 
-int	check_duplicated(t_shell *shell, t_env_v *current, char *key, int flag)
+int	check_duplicated(t_shell *shell, t_env_v *current, char *key)
 {
 	char	**matrix;
+	char	*equal_sign;
 
+	equal_sign = ft_strchr(key, '=');
 	matrix = NULL;
-	if (flag)
+	if (equal_sign && equal_sign != key)
 	{
 		matrix = ft_split(key, '=');
 		if (!matrix || !matrix[0])

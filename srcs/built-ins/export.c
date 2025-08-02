@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 16:01:48 by mreinald          #+#    #+#             */
-/*   Updated: 2025/04/19 16:25:18 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/07/28 21:03:12 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
 #include "libft.h"
 #include <minishell.h>
 #include <stdlib.h>
@@ -18,29 +17,32 @@
 static void		print_all_var(t_env_v *env_v);
 static t_env_v	*aux_key_value(t_env_v *env_v, t_env_v *new_node, int position);
 
-static void	parse_of_arguments(t_shell *shell, char **arguments)
+static void	parse_of_argv(t_shell *shell, char **argv)
 {
-	int	i;
+	int		i;
 
 	i = 0;
-	while (arguments[i])
+	while (argv[i])
 	{
-		if (!(ft_strchr(arguments[i], '=')))
+		if (check_identifier(argv[i]))
 		{
-			if (check_duplicated(shell, shell->env_v, arguments[i], 0))
-				continue ;
-			else
-				shell->env_v = set_only_key(shell->env_v, arguments[i]);
-		}
-		else
-		{
-			if (check_duplicated(shell, shell->env_v, arguments[i], 1))
+			if (!(ft_strchr(argv[i], '=')))
 			{
-				if (update_value(shell, shell->env_v, arguments[i]))
-					malloc_failure(shell, "parse_of_arguments");
+				if (check_duplicated(shell, shell->env_v, argv[i]))
+					continue ;
+				else
+					shell->env_v = set_only_key(shell->env_v, argv[i]);
 			}
 			else
-				shell->env_v = key_and_value(shell, shell->env_v, arguments[i]);
+			{
+				if (check_duplicated(shell, shell->env_v, argv[i]))
+				{
+					if (update_value(shell, shell->env_v, argv[i]))
+						malloc_failure(shell, "parse_of_argv");
+				}
+				else
+					shell->env_v = key_and_value(shell, shell->env_v, argv[i]);
+			}
 		}
 		++i;
 	}
@@ -67,15 +69,30 @@ t_env_v	*key_and_value(t_shell *shell, t_env_v *env_v, char *arg)
 	int		position;
 	char	*value;
 	char	**matrix;
+	char	*new_var;
 	t_env_v	*new_node;
 
 	matrix = ft_split(arg, '=');
 	if (!matrix || !matrix[0])
-		return (NULL);
+	{
+		if (matrix)
+			clean_matrix(matrix);
+		return (env_v);
+	}
 	value = ft_strchr(arg, '=');
 	new_node = create_node(matrix[0], value + 1);
 	if (!new_node)
-		return (NULL);
+		return (clean_matrix(matrix), env_v);
+	new_var = ft_strjoin(new_node->key, value);
+	if (!new_var)
+	{
+		free(new_node->key);
+		if (new_node->value)
+			free(new_node->value);
+		free(new_node);
+		clean_matrix(matrix);
+		return (env_v);
+	}
 	clean_matrix(matrix);
 	position = find_position(env_v, new_node->key, linked_env_size(env_v));
 	if (position == 0)
@@ -107,6 +124,6 @@ void	ft_export(t_shell *shell, char **argv)
 		if (check_append(argv[1]))
 			set_with_append(shell, shell->env_v, argv[1]);
 		else
-			parse_of_arguments(shell, argv + 1);
+			parse_of_argv(shell, argv + 1);
 	}
 }
