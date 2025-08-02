@@ -26,11 +26,34 @@ static int	aux_remove(t_shell *shell, int *i, int *size)
 		shell->envp[j] = shell->envp[j + 1];
 		j++;
 	}
-	new_envp = (char **)realloc(shell->envp, sizeof(char *) * *size);
+	new_envp = (char **)realloc(shell->envp, sizeof(char *) * (*size));
 	if (!new_envp)
 		return (1);
 	shell->envp = new_envp;
 	shell->envp[*size - 1] = NULL;
+	return (0);
+}
+
+int	remove_var_envp(t_shell *shell, char *key)
+{
+	int		i;
+	int		len;
+	int		size;
+
+	i = 0;
+	len = ft_strlen(key);
+	size = 0;
+	while (shell->envp[size])
+		size++;
+	while (shell->envp[i])
+	{
+		if (!ft_strncmp(shell->envp[i], key, len) && shell->envp[i][len] == '=')
+		{
+			aux_remove(shell, &i, &size);
+			break ;
+		}
+		i++;
+	}
 	return (0);
 }
 
@@ -52,26 +75,6 @@ int	add_var_envp(t_shell *shell, char *key, char *value)
 	shell->envp = new_envp;
 	shell->envp[i] = str;
 	shell->envp[i + 1] = NULL;
-	return (0);
-}
-
-int	remove_var_envp(t_shell *shell, char *key)
-{
-	int		i;
-	int		len;
-	int		size;
-
-	i = 0;
-	len = ft_strlen(key);
-	size = 0;
-	while (shell->envp[size])
-		size++;
-	while (shell->envp[i])
-	{
-		if (!ft_strncmp(shell->envp[i], key, len) && shell->envp[i][len] == '=')
-			aux_remove(shell, &i, &size);
-		i++;
-	}
 	return (0);
 }
 
