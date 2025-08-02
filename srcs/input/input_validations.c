@@ -94,7 +94,8 @@ bool	input_validation(t_shell *shell)
 	trimmed_input = ft_strtrim(shell->input, "\t ");
 	if (!valid_arguments(trimmed_input))
 	{
-		print_error(NAME_SHELL,": syntax error near unexpected token `newline'", NULL, NULL);
+		print_error(NAME_SHELL,
+			": syntax error near unexpected token `newline'", NULL, NULL);
 		return (free(trimmed_input), true);
 	}
 	free(shell->input);
@@ -105,10 +106,7 @@ bool	input_validation(t_shell *shell)
 		return (exit_code(2));
 	if (check_quotes(shell->input, '"')
 		|| check_quotes(shell->input, '\''))
-	{
-		print_error(NAME_SHELL,
-			" syntax error - unclosed quotes", NULL, NULL);
-		return (exit_code(2));
-	}
+		return (print_error(NAME_SHELL,
+				"syntax error - unclosed quotes", NULL, NULL), exit_code(2));
 	return (false);
 }

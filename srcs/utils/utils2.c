@@ -14,11 +14,13 @@
 
 char	**prepare_argv_for_exec(char **argv)
 {
-	char **clean_argv;
-	int i = 0;
-	int count = 0;
-	int len;
+	char	**clean_argv;
+	int		i;
+	int		count;
+	int		len;
 
+	i = 0;
+	count = 0;
 	while (argv[count])
 		count++;
 	clean_argv = ft_calloc(sizeof(char *), count + 1);
@@ -27,9 +29,9 @@ char	**prepare_argv_for_exec(char **argv)
 	while (argv[i])
 	{
 		len = ft_strlen(argv[i]);
-		if (len >= 2 &&
-			((argv[i][0] == '\'' && argv[i][len - 1] == '\'') ||
-			(argv[i][0] == '"' && argv[i][len - 1] == '"')))
+		if (len >= 2
+			&& ((argv[i][0] == '\'' && argv[i][len - 1] == '\'')
+				|| (argv[i][0] == '"' && argv[i][len - 1] == '"')))
 			clean_argv[i] = ft_substr(argv[i], 1, len - 2);
 		else
 			clean_argv[i] = ft_strdup(argv[i]);

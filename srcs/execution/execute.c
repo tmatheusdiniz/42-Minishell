@@ -78,9 +78,7 @@ void	ft_execute_cmmd(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 		exec_node->argv = prepare_argv_for_exec(exec_node->argv);
 		if (find_executable(shell, (t_exec *)root, ((t_exec *)root)->argv[0]))
 		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(((t_exec *)root)->argv[0], 2);
-			ft_putendl_fd(": command not found", 2);
+			print_command_notf(((t_exec *)root)->argv[0]);
 			exit(127);
 		}
 		else
@@ -90,8 +88,7 @@ void	ft_execute_cmmd(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 	}
 	else if (*(int *)root == BT)
 	{
-		check_bt(shell, exec_node);
-		//exit (0);
+		check_bt(shell, exec_node, frk);
 		exit(exit_code(-1));
 	}
 }
@@ -113,5 +110,5 @@ void	execute_tree_recur(t_shell *shell, void *root,
 		ft_execute_cmmd(shell, root, frk, pipe_index);
 	else if (*(int *)root == OUTREDIR || *(int *)root == INREDIR
 		|| *(int *)root == APPEND || *(int *)root == HEREDOC)
-			aux_execution(shell, root, frk, pipe_index);
+		aux_execution(shell, root, frk, pipe_index);
 }

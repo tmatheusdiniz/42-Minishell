@@ -1,84 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_out_in.c                                      :+:      :+:    :+:   */
+/*   bultins_e.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 14:27:51 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/29 18:53:39 by alberto          ###   ########.fr       */
+/*   Created: 2025/08/02 13:15:55 by mreinald          #+#    #+#             */
+/*   Updated: 2025/08/02 13:17:07 by mreinald         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void	check_errors(char *file, int fd);
 static void	check_other_e(char *file);
 static void	check_last_e(char *file);
 
-int	exec_outredir(t_shell *shell, void *root, t_fork *frk, int pipe_index)
+void	print_export_error(char *identifier)
 {
-	int			fd;
-	int			save_fdout;
-	void		*current;
-	t_outredir	*redir;
-
-	current = root;
-	save_fdout = dup(STDOUT_FILENO);
-	while (current && *(int *)current == OUTREDIR)
+	if (identifier && (identifier[0] == '-' || identifier[0] == '+'))
 	{
-		redir = (t_outredir *)current;
-		fd = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-		if (fd == -1)
-			return (check_outredir_errors(redir->file, save_fdout), -1);
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-		current = redir->next;
-	}
-	if (current)
-	{
-		shell->root = current;
-		if (pipe_index != -4)
-			aux_execution(shell, current, frk, pipe_index);
+		if (identifier[1] == '=')
+		{
+			ft_putstr_fd("minishell: export: ", 2);
+			ft_putstr_fd(identifier, 2);
+			ft_putendl_fd(": invalid option", 2);
+			ft_putendl_fd("export: usage: export ", 2);
+			ft_putendl_fd("[-fn] [name[=value] ...] or export -p ", 2);
+		}
 		else
-			aux_no_pipe(shell, frk, current);
-	}	
-	dup2(save_fdout, STDOUT_FILENO);
-	return (close (save_fdout), 0);
+		{
+			ft_putstr_fd("minishell: export: `", 2);
+			ft_putstr_fd(identifier, 2);
+			ft_putendl_fd("': not a valid identifier", 2);
+		}
+	}
+	else
+	{
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(identifier, 2);
+		ft_putendl_fd("': not a valid identifier", 2);
+	}
 }
 
-int	exec_inredir(t_shell *shell, void *root, t_fork *frk, int pipe_index)
+void	print_command_notf(char *str)
 {
-	int			fd;
-	int			save_fdin;
-	void		*current;
-	t_inredir	*redir;
-
-	current = root;
-	save_fdin = dup(STDIN_FILENO);
-	while (current && *(int *)current == INREDIR)
-	{
-		redir = (t_inredir *)current;
-		fd = open(redir->file, O_RDONLY);
-		if (fd == -1)
-			return (check_errors(redir->file, save_fdin), -1);
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-		current = redir->next;
-	}
-	if (current)
-	{
-		shell->root = current;
-		if (pipe_index != -4)
-			aux_execution(shell, current, frk, pipe_index);
-		else
-			aux_no_pipe(shell, frk, current);
-	}
-	dup2(save_fdin, STDIN_FILENO);
-	return (close (save_fdin), 0);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putendl_fd(": command not found", 2);
 }
 
-static void	check_errors(char *file, int fd)
+void	check_errors_inredir(char *file, int fd)
 {
 	close (fd);
 	if (errno == ENOENT)

@@ -14,11 +14,22 @@
 #include <unistd.h>
 
 static int	check_heredoc_errors(int save_fd);
+static void	aux_exec_append(t_shell *shell, void *current,
+				t_fork *frk, int pipe_index);
 
 static void	check_append_errors(char *file, int fd)
 {
 	close(fd);
 	check_outredir_errors(file, fd);
+}
+
+static void	aux_exec_append(t_shell *shell, void *current,
+		t_fork *frk, int pipe_index)
+{
+	if (pipe_index != -4)
+		aux_execution(shell, current, frk, pipe_index);
+	else
+		aux_no_pipe(shell, frk, current);
 }
 
 int	exec_append(t_shell *shell, void *root, t_fork *frk, int pipe_index)
@@ -43,13 +54,9 @@ int	exec_append(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 	if (current)
 	{
 		shell->root = current;
-		if (pipe_index != -4)
-			aux_execution(shell, current, frk, pipe_index);
-		else
-			aux_no_pipe(shell, frk, current);
+		aux_exec_append(shell, current, frk, pipe_index);
 	}
-	dup2(save_fdout, STDOUT_FILENO);
-	return (close (save_fdout), 0);
+	return (dup2(save_fdout, STDOUT_FILENO), close (save_fdout), 0);
 }
 
 int	exec_heredoc(t_shell *shell, void *root, t_fork *frk, int pipe_index)
@@ -78,8 +85,7 @@ int	exec_heredoc(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 		shell->root = current;
 		aux_execution(shell, current, frk, pipe_index);
 	}
-	dup2(save_fdhere, STDIN_FILENO);
-	return (close(save_fdhere), 0);
+	return (dup2(save_fdhere, STDIN_FILENO), close(save_fdhere), 0);
 }
 
 static int	check_heredoc_errors(int save_fd)

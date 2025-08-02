@@ -76,9 +76,7 @@ char	**make_process(char **input_split, t_shell *mini)
 				return (NULL);
 			free(input_split[i]);
 			input_split[i] = temp;
-		}/* 
-		else
-			input_split[i] = clean_quotes(input_split[i], 0, 0); */
+		}
 		i++;
 	}
 	return (input_split);

@@ -61,6 +61,6 @@ void	ft_unset(t_shell *shell, char **args);
 
 // ----------exit----------
 
-void	ft_exit(t_shell *shell, t_exec *exec_node);
+void	ft_exit(t_shell *shell, t_exec *exec_node, t_fork *frk);
 
 #endif

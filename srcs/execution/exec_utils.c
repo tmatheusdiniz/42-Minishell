@@ -12,7 +12,21 @@
 
 #include <minishell.h>
 
-static void	aux_checkbt(t_shell *shell, t_exec *exec_node);
+static void	aux_checkbt(t_shell *shell, t_exec *exec_node, t_fork *frk)
+{
+	if (!(ft_strncmp(exec_node->argv[0], "export",
+				ft_strlen(exec_node->argv[0]))))
+		ft_export(shell, exec_node->argv);
+	else if (!(ft_strncmp(exec_node->argv[0], "exit",
+				ft_strlen(exec_node->argv[0]))))
+		ft_exit(shell, exec_node, frk);
+	else
+	{
+		ft_putstr_fd(exec_node->argv[0], 2);
+		ft_putendl_fd(": command not found", 2);
+		exit_code(127);
+	}
+}
 
 void	aux_execution(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 {
@@ -30,15 +44,15 @@ void	aux_execution(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 
 void	aux_no_pipe(t_shell *shell, t_fork *frk, void *root)
 {
-	t_fork *local_frk;
+	t_fork	*local_frk;
 
 	local_frk = frk;
-	if (!frk )
+	if (!frk)
 		local_frk = handle_pipe(shell, shell->root);
 	if (*(int *)shell->root == EXEC)
 		execute_no_pipe(shell);
-	else if(*(int *)shell->root == BT)
-		check_bt(shell, root);
+	else if (*(int *)shell->root == BT)
+		check_bt(shell, root, local_frk);
 	else if (*(int *)shell->root == OUTREDIR)
 		exec_outredir(shell, root, local_frk, -4);
 	else if (*(int *)shell->root == INREDIR)
@@ -51,7 +65,7 @@ void	aux_no_pipe(t_shell *shell, t_fork *frk, void *root)
 		cleanup_fork_fds(local_frk);
 }
 
-void	check_bt(t_shell *shell, t_exec *exec_node)
+void	check_bt(t_shell *shell, t_exec *exec_node, t_fork *frk)
 {
 	if (!exec_node)
 		malloc_failure(shell, "check_bt");
@@ -71,21 +85,5 @@ void	check_bt(t_shell *shell, t_exec *exec_node)
 			ft_strlen(exec_node->argv[0])))
 		ft_unset(shell, exec_node->argv + 1);
 	else
-		aux_checkbt(shell, exec_node);
-}
-
-static void	aux_checkbt(t_shell *shell, t_exec *exec_node)
-{
-	if (!(ft_strncmp(exec_node->argv[0], "export",
-				ft_strlen(exec_node->argv[0]))))
-		ft_export(shell, exec_node->argv);
-	else if (!(ft_strncmp(exec_node->argv[0], "exit",
-				ft_strlen(exec_node->argv[0]))))
-		ft_exit(shell, exec_node);
-	else
-	{
-		ft_putstr_fd(exec_node->argv[0], 2);
-		ft_putendl_fd(": command not found", 2);
-		exit_code(127);
-	}
+		aux_checkbt(shell, exec_node, frk);
 }

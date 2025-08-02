@@ -12,9 +12,7 @@
 
 #include <minishell.h>
 
-void	read_all_heredocs(void *root);
-
-static int	has_quotes(char *delimiter)
+int	has_quotes(char *delimiter)
 {
 	int	i;
 
@@ -28,7 +26,7 @@ static int	has_quotes(char *delimiter)
 	return (0);
 }
 
-static char	*remove_delimiter_quotes(char *delimiter)
+char	*remove_delimiter_quotes(char *delimiter)
 {
 	char	*clean;
 	int		i;
@@ -47,56 +45,6 @@ static char	*remove_delimiter_quotes(char *delimiter)
 	}
 	clean[j] = '\0';
 	return (clean);
-}
-
-static void	aux_read_hd(void *root, t_shell *shell)
-{
-	char		*line;
-	char		*content;
-	char		*tmp;
-	char		*expanded_line;
-	t_heredoc	*heredoc;
-	char		*clean_delimiter;
-	int			should_expand;
-
-	heredoc = (t_heredoc *)root;
-	content = NULL;
-	should_expand = !has_quotes(heredoc->delimiter);
-	clean_delimiter = remove_delimiter_quotes(heredoc->delimiter);
-	if (!clean_delimiter)
-		clean_delimiter = heredoc->delimiter;
-	while (1)
-	{
-		line = readline("> ");
-		if (!line || strcmp(line, clean_delimiter) == 0)
-			break ;
-		if (should_expand && shell)
-		{
-			expanded_line = expand(line, shell);
-			if (!expanded_line)
-				expanded_line = line;
-		}
-		else
-			expanded_line = line;
-		if (content)
-		{
-			tmp = ft_strjoin(content, expanded_line);
-			free(content);
-			content = ft_strjoin(tmp, "\n");
-			free(tmp);
-		}
-		else
-			content = ft_strjoin(expanded_line, "\n");
-		if (expanded_line != line)
-			free(expanded_line);
-		free(line);
-	}
-	if (line)
-		free(line);
-	if (clean_delimiter != heredoc->delimiter)
-		free(clean_delimiter);
-	heredoc->content = content;
-	read_all_heredocs_with_shell(heredoc->next, shell);
 }
 
 void	read_all_heredocs_with_shell(void *root, t_shell *shell)

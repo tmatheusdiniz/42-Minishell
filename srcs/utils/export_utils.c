@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
-#include "errors.h"
-#include "libft.h"
 #include <minishell.h>
-#include <stdlib.h>
 
 static void	aux_sort_linked_l(t_env_v *env_v,
 		int *j, int *flag, int linked_size)
@@ -126,31 +122,7 @@ void	set_with_append(t_shell *shell, t_env_v *current, char *key)
 	splt = ft_split(key, '+');
 	old_value = NULL;
 	if (check_duplicated(shell, shell->env_v, splt[0]))
-	{
-		while (current)
-		{
-			if (current->key && ft_strcmp(current->key, splt[0]) == 0)
-			{
-				(splt[1])++;
-				if (current->value)
-				{
-					old_value = ft_strdup(current->value);
-					free (current->value);
-				}
-				if (!old_value)
-					current->value = ft_strdup(splt[1]);
-				else
-					current->value = ft_strjoin(old_value, splt[1]);
-				if (!current->value)
-					malloc_failure(shell, "set_with_append");
-				if (!old_value)
-					add_var_envp(shell, splt[0], ft_strchr(key, '='));
-				else
-					update_envp_append(shell, splt[0], splt[1]);
-			}
-			current = current->next;
-		}
-	}
+		old_value = aux_set_with_append(shell, current, splt, key);
 	else
 	{
 		str = ft_strjoin(splt[0], splt[1]);

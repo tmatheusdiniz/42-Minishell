@@ -14,9 +14,9 @@
 #include "utils.h"
 #include <minishell.h>
 
-static void	exit_sucess(t_shell *shell, t_exec *exec_node);
-static int	ft_is_numeric(char *str);
-static void	not_is_numeric(t_shell *shell, char *str);
+static void	exit_sucess(t_shell *shell, t_exec *exec_node, t_fork *frk);
+static int	is_numeric(char *str);
+static void	not_is_numeric(t_shell *shell, char *str, t_fork *frk);
 
 static int	check_limits(char *str, long long number)
 {
@@ -29,18 +29,20 @@ static int	check_limits(char *str, long long number)
 	return (1);
 }
 
-static int	ft_is_numeric(char *str)
+static int	is_numeric(char *str)
 {
-	int	i;
-	int	number;
+	int			i;
+	long long	number;
 
 	i = 0;
+	if (!str)
+		return (0);
 	number = ft_atoll(str);
 	if (!check_limits(str, number))
 		return (0);
 	while (str[i] == ' ')
 		i ++;
-	if (str[i] == '+' || str[i] == '-')
+	if (str[i] && (str[i] == '+' || str[i] == '-'))
 		i ++;
 	while (str[i])
 	{
@@ -51,17 +53,18 @@ static int	ft_is_numeric(char *str)
 	return (1);
 }
 
-static void	not_is_numeric(t_shell *shell, char *str)
+static void	not_is_numeric(t_shell *shell, char *str, t_fork *frk)
 {
 	ft_putstr_fd("minishell : exit: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putendl_fd(": numeric argument required", 2);
+	cleanup_fork_fds(frk);
 	free_shell_final(shell);
-	//exit_code(2);
+	exit_code(2);
 	exit(2);
 }
 
-static void	exit_sucess(t_shell *shell, t_exec *exec_node)
+static void	exit_sucess(t_shell *shell, t_exec *exec_node, t_fork *frk)
 {
 	long long	exit_cd;
 
@@ -69,23 +72,23 @@ static void	exit_sucess(t_shell *shell, t_exec *exec_node)
 	if (exec_node->argv[2])
 	{
 		ft_putstr_fd("minishell : exit: too many arguments\n", 2);
-	//	free_shell_final(shell);
+		cleanup_fork_fds(frk);
+		free_shell_final(shell);
 		exit_code(1);
-		return ;
+		exit (1);
 	}
+	print_exit();
+	cleanup_fork_fds(frk);
 	free_shell_final(shell);
 	exit ((unsigned char)exit_cd);
 }
 
-void	ft_exit(t_shell *shell, t_exec *exec_node)
+void	ft_exit(t_shell *shell, t_exec *exec_node, t_fork *frk)
 {
 	if (!exec_node->argv[1])
-	{
-		free_shell_final(shell);
-		exit(exit_code(-1));
-	}
-	if (ft_is_numeric(exec_node->argv[1]))
-		exit_sucess(shell, exec_node);
+		return ;
+	if (is_numeric(exec_node->argv[1]))
+		exit_sucess(shell, exec_node, frk);
 	else
-		not_is_numeric(shell, exec_node->argv[1]);
+		not_is_numeric(shell, exec_node->argv[1], frk);
 }

@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errors.h"
 #include <minishell.h>
 
 bool	check_flag(char *str)
@@ -48,4 +49,5 @@ void	ft_echo(char **arguments)
 	}
 	if (printline)
 		write(1, "\n", 1);
+	exit_code(0);
 }

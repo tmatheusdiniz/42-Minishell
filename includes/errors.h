@@ -28,7 +28,9 @@ void	check_outredir_errors(char *file, int fd);
 int		exit_code(int value);
 void	malloc_failure(t_shell *shell, char *function);
 
-// ----------BT----------
+// ----------Execution----------
+void	check_errors_inredir(char *file, int fd);
 void	print_export_error(char *identifier);
+void	print_command_notf(char *str);
 
 #endif

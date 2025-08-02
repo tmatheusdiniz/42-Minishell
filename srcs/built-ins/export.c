@@ -15,34 +15,27 @@
 static void		print_all_var(t_env_v *env_v);
 static t_env_v	*aux_key_value(t_env_v *env_v, t_env_v *new_node, int position);
 
-static void	parse_of_argv(t_shell *shell, char **argv)
+static void	parse_of_argv(t_shell *shell, char *argv)
 {
-	int		i;
-
-	i = 0;
-	while (argv[i])
+	if (check_identifier(argv))
 	{
-		if (check_identifier(argv[i]))
+		if (!(ft_strchr(argv, '=')))
 		{
-			if (!(ft_strchr(argv[i], '=')))
+			if (check_duplicated(shell, shell->env_v, argv))
+				;
+			else
+				shell->env_v = set_only_key(shell->env_v, argv);
+		}
+		else
+		{
+			if (check_duplicated(shell, shell->env_v, argv))
 			{
-				if (check_duplicated(shell, shell->env_v, argv[i]))
-					continue ;
-				else
-					shell->env_v = set_only_key(shell->env_v, argv[i]);
+				if (update_value(shell, shell->env_v, argv))
+					malloc_failure(shell, "parse_of_argv");
 			}
 			else
-			{
-				if (check_duplicated(shell, shell->env_v, argv[i]))
-				{
-					if (update_value(shell, shell->env_v, argv[i]))
-						malloc_failure(shell, "parse_of_argv");
-				}
-				else
-					shell->env_v = key_and_value(shell, shell->env_v, argv[i]);
-			}
+				shell->env_v = key_and_value(shell, shell->env_v, argv);
 		}
-		++i;
 	}
 }
 
@@ -103,6 +96,9 @@ static void	print_all_var(t_env_v *env_v)
 
 void	ft_export(t_shell *shell, char **argv)
 {
+	int	i;
+
+	i = 0;
 	ft_sort_linked(shell->env_v);
 	if (!argv[1])
 		print_all_var(shell->env_v);
@@ -111,6 +107,13 @@ void	ft_export(t_shell *shell, char **argv)
 		if (check_append(argv[1]))
 			set_with_append(shell, shell->env_v, argv[1]);
 		else
-			parse_of_argv(shell, argv + 1);
+		{
+			argv += 1;
+			while (argv[i])
+			{
+				parse_of_argv(shell, argv[i]);
+				i ++;
+			}
+		}
 	}
 }

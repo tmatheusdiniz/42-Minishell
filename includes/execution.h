@@ -27,11 +27,16 @@ int		exec_append(t_shell *shell, void *root, t_fork *frk, int pipe_index);
 int		exec_heredoc(t_shell *shell, void *root, t_fork *frk, int pipe_index);
 void	read_all_heredocs(void *root);
 void	read_all_heredocs_with_shell(void *root, t_shell *shell);
+void	aux_read_hd(void *root, t_shell *shell);
+int		has_quotes(char *delimiter);
+char	*remove_delimiter_quotes(char *delimiter);
 
 // ----------Utils Execute----------
 void	aux_execution(t_shell *shell, void *root, t_fork *frk, int pipe_index);
 void	execute_no_pipe(t_shell *shell);
 void	aux_no_pipe(t_shell *shell, t_fork *frk, void *root);
+char	*aux_set_with_append(t_shell *shell, t_env_v *current,
+			char **splt, char *key);
 
 // ----------Utils Pipe----------
 t_fork	*handle_pipe(t_shell *shell, void *root);
@@ -47,5 +52,5 @@ void	check_lastcmd(t_shell *shell, void *root,
 void	handle_fork(t_shell *shell, t_fork *frk, int pipe_index);
 
 // ----------Checks----------
-void	check_bt(t_shell *shell, t_exec *exec_node);
+void	check_bt(t_shell *shell, t_exec *exec_node, t_fork *frk);
 int		find_executable(t_shell *shell, t_exec *exec_node, char *command);

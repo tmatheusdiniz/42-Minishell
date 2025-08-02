@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errors.h"
 #include "libft.h"
 #include <minishell.h>
 
@@ -20,5 +21,8 @@ void	ft_pwd(void)
 	if (getcwd(directory, sizeof(directory)) != NULL)
 		ft_putendl_fd(directory, 1);
 	else
+	{
 		perror("pwd error:");
+		exit_code(1);
+	}
 }
