@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errors.h"
 #include "libft.h"
 #include <minishell.h>
 
@@ -33,19 +34,23 @@ static int	aux_remove(t_shell *shell, int *i, int *size)
 	return (0);
 }
 
-int	add_var_envp(t_shell *shell, char *new_var)
+int	add_var_envp(t_shell *shell, char *key, char *value)
 {
 	int		i;
+	char	*str;
 	char	**new_envp;
 
 	i = 0;
+	str = ft_strjoin(key, value);
+	if (!str)
+		malloc_failure(shell, "add_var_envp");
 	while (shell->envp[i])
 		i++;
 	new_envp = (char **)realloc(shell->envp, sizeof(char *) * (i + 2));
 	if (!new_envp)
-		return (free(new_var), 1);
+		return (1);
 	shell->envp = new_envp;
-	shell->envp[i] = ft_strdup(new_var);
+	shell->envp[i] = str;
 	shell->envp[i + 1] = NULL;
 	return (0);
 }

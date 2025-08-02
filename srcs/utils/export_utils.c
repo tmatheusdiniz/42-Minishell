@@ -12,6 +12,7 @@
 
 #include "builtins.h"
 #include "errors.h"
+#include "libft.h"
 #include <minishell.h>
 #include <stdlib.h>
 
@@ -120,8 +121,10 @@ void	set_with_append(t_shell *shell, t_env_v *current, char *key)
 {
 	char	**splt;
 	char	*old_value;
+	char	*str;
 
 	splt = ft_split(key, '+');
+	old_value = NULL;
 	if (check_duplicated(shell, shell->env_v, splt[0]))
 	{
 		while (current)
@@ -129,18 +132,37 @@ void	set_with_append(t_shell *shell, t_env_v *current, char *key)
 			if (current->key && ft_strcmp(current->key, splt[0]) == 0)
 			{
 				(splt[1])++;
-				old_value = ft_strdup(current->value);
-				current->value = ft_strjoin(current->value, splt[1]);
-				if (!old_value || !current->value)
+				if (current->value)
+				{
+					old_value = ft_strdup(current->value);
+					free (current->value);
+				}
+				if (!old_value)
+					current->value = ft_strdup(splt[1]);
+				else
+					current->value = ft_strjoin(old_value, splt[1]);
+				if (!current->value)
 					malloc_failure(shell, "set_with_append");
-				update_envp_append(shell, ft_strjoin(splt[0],
-						ft_strjoin("=", old_value)), splt[1]);
+				if (!old_value)
+					add_var_envp(shell, splt[0], ft_strchr(key, '='));
+				else
+					update_envp_append(shell, splt[0], splt[1]);
 			}
 			current = current->next;
 		}
 	}
 	else
-		key_and_value(shell, shell->env_v, ft_strjoin(splt[0], splt[1]));
-	if (splt && splt[0])
+	{
+		str = ft_strjoin(splt[0], splt[1]);
+		if (!str)
+			malloc_failure(shell, "set_with_append");
+		key_and_value(shell, shell->env_v, str);
+		free (str);
+	}
+	if (splt[1][0] != '=')
+		(splt[1])--;
+	if (splt)
 		clean_matrix(splt);
+	if (old_value)
+		free (old_value);
 }

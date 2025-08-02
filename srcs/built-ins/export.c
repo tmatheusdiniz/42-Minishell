@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <minishell.h>
-#include <stdlib.h>
 
 static void		print_all_var(t_env_v *env_v);
 static t_env_v	*aux_key_value(t_env_v *env_v, t_env_v *new_node, int position);
@@ -69,7 +67,6 @@ t_env_v	*key_and_value(t_shell *shell, t_env_v *env_v, char *arg)
 	int		position;
 	char	*value;
 	char	**matrix;
-	char	*new_var;
 	t_env_v	*new_node;
 
 	matrix = ft_split(arg, '=');
@@ -83,22 +80,12 @@ t_env_v	*key_and_value(t_shell *shell, t_env_v *env_v, char *arg)
 	new_node = create_node(matrix[0], value + 1);
 	if (!new_node)
 		return (clean_matrix(matrix), env_v);
-	new_var = ft_strjoin(new_node->key, value);
-	if (!new_var)
-	{
-		free(new_node->key);
-		if (new_node->value)
-			free(new_node->value);
-		free(new_node);
-		clean_matrix(matrix);
-		return (env_v);
-	}
-	clean_matrix(matrix);
 	position = find_position(env_v, new_node->key, linked_env_size(env_v));
 	if (position == 0)
 		return (new_node->next = env_v, new_node);
 	env_v = aux_key_value(env_v, new_node, position);
-	add_var_envp(shell, arg);
+	add_var_envp(shell, matrix[0], value);
+	clean_matrix(matrix);
 	return (env_v);
 }
 

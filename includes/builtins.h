@@ -44,7 +44,7 @@ t_env_v	*key_and_value(t_shell *shell, t_env_v *env_v, char *arg);
 // ----------env----------
 
 void	ft_env(char **envp, char **arguments);
-int		add_var_envp(t_shell *shell, char *new_var);
+int		add_var_envp(t_shell *shell, char *key, char *value);
 int		remove_var_envp(t_shell *shell, char *key);
 
 // ----------pwd----------

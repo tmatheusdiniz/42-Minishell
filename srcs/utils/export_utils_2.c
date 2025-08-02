@@ -16,11 +16,15 @@
 
 static void	update_envp(t_shell *shell, char *key)
 {
-	int	i;
-	int	flag;
+	int		i;
+	int		flag;
+	char	**splt;
 
 	i = 0;
 	flag = 0;
+	splt = ft_split(key, '=');
+	if (!splt)
+		malloc_failure(shell, "update_envp");
 	while (shell->envp[i])
 	{
 		if (!ft_strncmp(shell->envp[i], key, ft_strlen(key))
@@ -35,7 +39,8 @@ static void	update_envp(t_shell *shell, char *key)
 		i++;
 	}
 	if (!flag)
-		add_var_envp(shell, key);
+		add_var_envp(shell, splt[0], ft_strchr(key, '='));
+	clean_matrix(splt);
 }
 
 int	update_value(t_shell *shell, t_env_v *env_v, char *argument)
@@ -102,7 +107,11 @@ int	check_duplicated(t_shell *shell, t_env_v *current, char *key)
 	while (current)
 	{
 		if (current->key && ft_strcmp(current->key, key) == 0)
+		{
+			if (matrix)
+				clean_matrix(matrix);
 			return (1);
+		}
 		current = current->next;
 	}
 	if (matrix)

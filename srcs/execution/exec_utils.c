@@ -13,7 +13,6 @@
 #include <minishell.h>
 
 static void	aux_checkbt(t_shell *shell, t_exec *exec_node);
-static void	aux_fork(pid_t pid, int status);
 
 void	aux_execution(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 {
@@ -31,56 +30,25 @@ void	aux_execution(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 
 void	aux_no_pipe(t_shell *shell, t_fork *frk, void *root)
 {
-	if (!frk )
-		frk = handle_pipe(shell, shell->root);
+	t_fork *local_frk;
 
+	local_frk = frk;
+	if (!frk )
+		local_frk = handle_pipe(shell, shell->root);
 	if (*(int *)shell->root == EXEC)
 		execute_no_pipe(shell);
 	else if(*(int *)shell->root == BT)
 		check_bt(shell, root);
 	else if (*(int *)shell->root == OUTREDIR)
-		exec_outredir(shell, root, frk, -4);
+		exec_outredir(shell, root, local_frk, -4);
 	else if (*(int *)shell->root == INREDIR)
-		exec_inredir(shell, root, frk, -4);
+		exec_inredir(shell, root, local_frk, -4);
 	else if (*(int *)shell->root == APPEND)
-		exec_append(shell, root, frk, -4);
+		exec_append(shell, root, local_frk, -4);
 	else if (*(int *)root == HEREDOC)
-		exec_heredoc(shell, root, frk, -4);
-}
-
-void	execute_no_pipe(t_shell *shell)
-{
-	pid_t	pid;
-	int		status;
-
-	pid = fork();
-	status = 0;
-	if (pid == 0)
-	{
-		if (find_executable(shell, (t_exec *)shell->root,
-				((t_exec *)shell->root)->argv[0]) == 0)
-			execve(((t_exec *)shell->root)->cmd_path,
-				((t_exec *)shell->root)->argv, shell->envp);
-		else
-		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(((t_exec *)shell->root)->argv[0], 2);
-			ft_putendl_fd(": command not found", 2);
-			free_shell_final(shell);
-			exit(127);
-		}
-	}
-	else if (pid > 0)
-		aux_fork(pid, status);
-}
-
-static void	aux_fork(pid_t pid, int status)
-{
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		exit_code(WEXITSTATUS(status));
-	else if (WIFSIGNALED(status))
-		exit_code(128 + WTERMSIG(status));
+		exec_heredoc(shell, root, local_frk, -4);
+	if (!frk && local_frk)
+		cleanup_fork_fds(local_frk);
 }
 
 void	check_bt(t_shell *shell, t_exec *exec_node)
