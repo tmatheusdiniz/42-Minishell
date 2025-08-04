@@ -20,7 +20,7 @@ void	free_env_v(t_env_v *env_v);
 void	free_shell_part(t_shell *shell);
 void	free_tokens(t_token **tokens);
 void	free_tree(void *root);
-void	cleanup_fork_fds(t_fork *frk);
+void	cleanup_fork(t_fork *frk);
 void	free_redir(void *root);
 void	free_exec(void *root);
 

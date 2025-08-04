@@ -59,7 +59,7 @@ void	ft_execution(t_shell *shell)
 		}
 		last_exit_code = complete_execution(frk);
 		exit_code(last_exit_code);
-		cleanup_fork_fds(frk);
+		cleanup_fork(frk);
 	}
 	else
 		aux_no_pipe(shell, frk, shell->root);
@@ -79,18 +79,47 @@ void	ft_execute_cmmd(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 		if (find_executable(shell, (t_exec *)root, ((t_exec *)root)->argv[0]))
 		{
 			print_command_notf(((t_exec *)root)->argv[0]);
+			cleanup_fork(frk);
+			free_shell_final(shell);
 			exit(127);
 		}
 		else
 			execve(exec_node->cmd_path, exec_node->argv, shell->envp);
-		error_message("EXECV", 0);
+		handle_errors(shell, "EXECV ERROR", 0);
 		exit(126);
 	}
 	else if (*(int *)root == BT)
-	{
 		check_bt(shell, exec_node, frk);
-		exit(exit_code(-1));
+	exit(exit_code(-1));
+}
+
+void	execute_no_pipe(t_shell *shell, t_fork *frk)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		if (find_executable(shell, (t_exec *)shell->root,
+				((t_exec *)shell->root)->argv[0]) == 0)
+		{
+			execve(((t_exec *)shell->root)->cmd_path,
+				((t_exec *)shell->root)->argv, shell->envp);
+			handle_errors(shell, "EXECV ERROR", 0);
+			exit(126);
+		}
+		else
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(((t_exec *)shell->root)->argv[0], 2);
+			ft_putendl_fd(": command not found", 2);
+			cleanup_fork(frk);
+			free_shell_final(shell);
+			exit(127);
+		}
 	}
+	else if (pid > 0)
+		aux_fork(pid);
 }
 
 void	execute_tree_recur(t_shell *shell, void *root,

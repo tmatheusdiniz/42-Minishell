@@ -33,7 +33,7 @@ char	*remove_delimiter_quotes(char *delimiter);
 
 // ----------Utils Execute----------
 void	aux_execution(t_shell *shell, void *root, t_fork *frk, int pipe_index);
-void	execute_no_pipe(t_shell *shell);
+void	execute_no_pipe(t_shell *shell, t_fork *frk);
 void	aux_no_pipe(t_shell *shell, t_fork *frk, void *root);
 char	*aux_set_with_append(t_shell *shell, t_env_v *current,
 			char **splt, char *key);
@@ -50,6 +50,7 @@ void	check_lastcmd(t_shell *shell, void *root,
 
 // ----------Fork----------
 void	handle_fork(t_shell *shell, t_fork *frk, int pipe_index);
+void	aux_fork(pid_t pid);
 
 // ----------Checks----------
 void	check_bt(t_shell *shell, t_exec *exec_node, t_fork *frk);

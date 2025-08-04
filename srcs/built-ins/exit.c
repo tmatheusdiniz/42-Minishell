@@ -58,7 +58,7 @@ static void	not_is_numeric(t_shell *shell, char *str, t_fork *frk)
 	ft_putstr_fd("minishell : exit: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putendl_fd(": numeric argument required", 2);
-	cleanup_fork_fds(frk);
+	cleanup_fork(frk);
 	free_shell_final(shell);
 	exit_code(2);
 	exit(2);
@@ -72,13 +72,13 @@ static void	exit_sucess(t_shell *shell, t_exec *exec_node, t_fork *frk)
 	if (exec_node->argv[2])
 	{
 		ft_putstr_fd("minishell : exit: too many arguments\n", 2);
-		cleanup_fork_fds(frk);
+		cleanup_fork(frk);
 		free_shell_final(shell);
 		exit_code(1);
 		exit (1);
 	}
 	print_exit();
-	cleanup_fork_fds(frk);
+	cleanup_fork(frk);
 	free_shell_final(shell);
 	exit ((unsigned char)exit_cd);
 }

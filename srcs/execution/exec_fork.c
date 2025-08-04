@@ -12,8 +12,11 @@
 
 #include <minishell.h>
 
-static void	aux_fork(pid_t pid, int status)
+void	aux_fork(pid_t pid)
 {
+	int	status;
+
+	status = 0;
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		exit_code(WEXITSTATUS(status));
@@ -30,30 +33,4 @@ void	handle_fork(t_shell *shell, t_fork *frk, int pipe_index)
 		return ;
 	else
 		handle_errors(shell, "fork failed!", errno);
-}
-
-void	execute_no_pipe(t_shell *shell)
-{
-	pid_t	pid;
-	int		status;
-
-	pid = fork();
-	status = 0;
-	if (pid == 0)
-	{
-		if (find_executable(shell, (t_exec *)shell->root,
-				((t_exec *)shell->root)->argv[0]) == 0)
-			execve(((t_exec *)shell->root)->cmd_path,
-				((t_exec *)shell->root)->argv, shell->envp);
-		else
-		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(((t_exec *)shell->root)->argv[0], 2);
-			ft_putendl_fd(": command not found", 2);
-			free_shell_final(shell);
-			exit(127);
-		}
-	}
-	else if (pid > 0)
-		aux_fork(pid, status);
 }

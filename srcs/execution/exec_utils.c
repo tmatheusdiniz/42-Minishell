@@ -50,7 +50,7 @@ void	aux_no_pipe(t_shell *shell, t_fork *frk, void *root)
 	if (!frk)
 		local_frk = handle_pipe(shell, shell->root);
 	if (*(int *)shell->root == EXEC)
-		execute_no_pipe(shell);
+		execute_no_pipe(shell, local_frk);
 	else if (*(int *)shell->root == BT)
 		check_bt(shell, root, local_frk);
 	else if (*(int *)shell->root == OUTREDIR)
@@ -62,7 +62,7 @@ void	aux_no_pipe(t_shell *shell, t_fork *frk, void *root)
 	else if (*(int *)root == HEREDOC)
 		exec_heredoc(shell, root, local_frk, -4);
 	if (!frk && local_frk)
-		cleanup_fork_fds(local_frk);
+		cleanup_fork(local_frk);
 }
 
 void	check_bt(t_shell *shell, t_exec *exec_node, t_fork *frk)

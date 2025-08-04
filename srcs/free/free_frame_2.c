@@ -38,7 +38,7 @@ void	free_tokens(t_token **tokens)
 	*tokens = NULL;
 }
 
-void	cleanup_fork_fds(t_fork *frk)
+void	cleanup_fork(t_fork *frk)
 {
 	int	i;
 
@@ -73,6 +73,6 @@ void	cleanup_parsing_error(t_shell *shell)
 void	cleanup_execution_error(t_shell *shell, t_fork *frk)
 {
 	if (frk)
-		cleanup_fork_fds(frk);
+		cleanup_fork(frk);
 	free_shell_part(shell);
 }
