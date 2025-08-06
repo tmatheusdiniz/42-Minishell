@@ -25,6 +25,8 @@ int		exec_outredir(t_shell *shell, void *root, t_fork *frk, int pipe_index);
 int		exec_inredir(t_shell *shell, void *root, t_fork *frk, int pipe_index);
 int		exec_append(t_shell *shell, void *root, t_fork *frk, int pipe_index);
 int		exec_heredoc(t_shell *shell, void *root, t_fork *frk, int pipe_index);
+void	aux_exec_redir(t_shell *shell, void *current,
+			t_fork *frk, int pipe_index);
 void	read_all_heredocs(void *root);
 void	read_all_heredocs_with_shell(void *root, t_shell *shell);
 void	aux_read_hd(void *root, t_shell *shell);

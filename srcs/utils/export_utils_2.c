@@ -126,7 +126,7 @@ int	check_append(char *key)
 	i = 0;
 	while (key[i])
 	{
-		if (key[i] && key[i] == '=')
+		if (key[i] && key[i] == '=' && ft_strlen(key) > 1)
 		{
 			if (key[i - 1] == '+')
 				return (1);

@@ -23,6 +23,7 @@ void	error_message(char *message, int errnbr);
 
 // ----------Redir----------
 void	check_outredir_errors(char *file, int fd);
+int		check_heredoc_errors(int save_fd);
 
 // ----------exit_code----------
 int		exit_code(int value);
