@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors_utils.c                                     :+:      :+:    :+:   */
+/*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:23:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/10 13:19:17 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/08/07 13:47:57 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	print_error(char *str1, char *str2, char *str3, char *message)
 	{
 		if (str1 || str2)
 			ft_putstr_fd(": ", 2);
-		ft_putstr_fd("`", 2);
+		ft_putstr_fd("'", 2);
 		ft_putstr_fd(str3, 2);
 		ft_putstr_fd("'", 2);
 	}

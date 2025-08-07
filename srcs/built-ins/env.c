@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:02 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/06 20:25:19 by alberto          ###   ########.fr       */
+/*   Updated: 2025/08/07 13:57:04 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,9 @@ void	ft_env(char **envp, char **arguments)
 
 	if (arguments[1])
 	{
-		ft_putendl_fd("minishell: env: too many arguments", 2);
+		print_error("env",
+			NULL, arguments[1], "No such file or directory");
+		exit_code(1);
 		return ;
 	}
 	i = 0;

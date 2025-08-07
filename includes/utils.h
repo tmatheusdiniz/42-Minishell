@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 13:56:50 by mreinald          #+#    #+#             */
-/*   Updated: 2025/08/06 23:09:33 by alberto          ###   ########.fr       */
+/*   Updated: 2025/08/07 15:36:17 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ char		**prepare_argv_for_exec(char **argv);
 bool		check_closed_quotes(char *input_split, char quotes);
 bool		check_heredoc_signal_on_input(char *input);
 bool		only_pipe_validations(char *input);
+bool		check_especial_caracters(char *input);
 
 //tree_utils.c
 void		*create_exec_node(t_token *exec_token, int i);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 23:07:45 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/07/25 23:48:49 by alberto          ###   ########.fr       */
+/*   Updated: 2025/08/07 16:42:34 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ char	*expand(char *input, t_shell *mini)
 
 	inc[0] = 0;
 	inc[1] = 0;
+	if (check_especial_caracters(input))
+		return (ft_strdup(input));
 	no_expand = expand_check(input);
 	if (!input || !mini)
 		return (NULL);

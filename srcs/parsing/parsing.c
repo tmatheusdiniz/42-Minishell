@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/08/05 23:05:08 by alberto          ###   ########.fr       */
+/*   Updated: 2025/08/07 17:13:16 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool	check_quotes(char *input_split, char quotes)
 	while (input_split[i])
 	{
 		if (input_split[i] == quotes)
-				flag_quotes = true;
+			flag_quotes = true;
 		i++;
 	}
 	return (flag_quotes);
