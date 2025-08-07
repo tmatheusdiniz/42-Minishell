@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/07/27 11:40:34 by alberto          ###   ########.fr       */
+/*   Updated: 2025/08/05 23:05:08 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,7 @@ bool	check_quotes(char *input_split, char quotes)
 	while (input_split[i])
 	{
 		if (input_split[i] == quotes)
-		{
-			if (flag_quotes)
-				flag_quotes = false;
-			else
 				flag_quotes = true;
-		}
 		i++;
 	}
 	return (flag_quotes);
@@ -76,6 +71,11 @@ char	**make_process(char **input_split, t_shell *mini)
 				return (NULL);
 			free(input_split[i]);
 			input_split[i] = temp;
+		}
+		else
+		{
+			if (!check_heredoc_signal_on_input(mini->input))
+				input_split[i] = clean_quotes(input_split[i], 0, 0);
 		}
 		i++;
 	}

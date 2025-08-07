@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:27:54 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/29 18:52:48 by alberto          ###   ########.fr       */
+/*   Updated: 2025/08/06 23:08:13 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,16 @@ bool	input_validation(t_shell *shell)
 			": syntax error near unexpected token `newline'", NULL, NULL);
 		return (free(trimmed_input), true);
 	}
+	if (!only_pipe_validations(trimmed_input))
+		return (free(trimmed_input), true);
 	free(shell->input);
 	spaced_input = add_spaces_around_metachars(trimmed_input);
 	free(trimmed_input);
 	shell->input = spaced_input;
 	if (!shell->input)
 		return (exit_code(2));
-	if (check_quotes(shell->input, '"')
-		|| check_quotes(shell->input, '\''))
+	if (check_closed_quotes(shell->input, '"')
+		|| check_closed_quotes(shell->input, '\''))
 		return (print_error(NAME_SHELL,
 				"syntax error - unclosed quotes", NULL, NULL), exit_code(2));
 	return (false);
