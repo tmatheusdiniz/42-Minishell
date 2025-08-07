@@ -16,6 +16,33 @@ static void	check_outr_other(char *file);
 static void	check_outr_last(char *file);
 static void	aux_check_outr(char *file);
 
+int	check_heredoc_errors(int save_fd)
+{
+	if (save_fd != -1)
+		close(save_fd);
+	if (errno == EMFILE || errno == ENFILE)
+		ft_putstr_fd("minishell: heredoc: too many open files\n", 2);
+	else if (errno == ENOMEM)
+		ft_putstr_fd("minishell: heredoc: out of memory\n", 2);
+	else if (errno == ENOSPC)
+		ft_putstr_fd("minishell: heredoc: no space left on device\n", 2);
+	else if (errno == EIO)
+		ft_putstr_fd("minishell: heredoc: input/output error\n", 2);
+	else if (errno == EFAULT)
+		ft_putstr_fd("minishell: heredoc: bad address\n", 2);
+	else if (errno == EINTR)
+		ft_putstr_fd("minishell: heredoc: interrupted system call\n", 2);
+	else if (errno == EPIPE)
+		ft_putstr_fd("minishell: heredoc: broken pipe\n", 2);
+	else
+	{
+		ft_putstr_fd("minishell: heredoc: error (", 2);
+		ft_putnbr_fd(errno, 2);
+		ft_putstr_fd(")\n", 2);
+	}
+	return (-1);
+}
+
 void	check_outredir_errors(char *file, int fd)
 {
 	close(fd);

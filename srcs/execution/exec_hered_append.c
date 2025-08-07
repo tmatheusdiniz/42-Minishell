@@ -13,23 +13,10 @@
 #include <minishell.h>
 #include <unistd.h>
 
-static int	check_heredoc_errors(int save_fd);
-static void	aux_exec_append(t_shell *shell, void *current,
-				t_fork *frk, int pipe_index);
-
 static void	check_append_errors(char *file, int fd)
 {
 	close(fd);
 	check_outredir_errors(file, fd);
-}
-
-static void	aux_exec_append(t_shell *shell, void *current,
-		t_fork *frk, int pipe_index)
-{
-	if (pipe_index != -4)
-		aux_execution(shell, current, frk, pipe_index);
-	else
-		aux_no_pipe(shell, frk, current);
 }
 
 int	exec_append(t_shell *shell, void *root, t_fork *frk, int pipe_index)
@@ -54,7 +41,7 @@ int	exec_append(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 	if (current)
 	{
 		shell->root = current;
-		aux_exec_append(shell, current, frk, pipe_index);
+		aux_exec_redir(shell, current, frk, pipe_index);
 	}
 	return (dup2(save_fdout, STDOUT_FILENO), close (save_fdout), 0);
 }
@@ -83,34 +70,7 @@ int	exec_heredoc(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 	if (current)
 	{
 		shell->root = current;
-		aux_execution(shell, current, frk, pipe_index);
+		aux_exec_redir(shell, current, frk, pipe_index);
 	}
 	return (dup2(save_fdhere, STDIN_FILENO), close(save_fdhere), 0);
-}
-
-static int	check_heredoc_errors(int save_fd)
-{
-	if (save_fd != -1)
-		close(save_fd);
-	if (errno == EMFILE || errno == ENFILE)
-		ft_putstr_fd("minishell: heredoc: too many open files\n", 2);
-	else if (errno == ENOMEM)
-		ft_putstr_fd("minishell: heredoc: out of memory\n", 2);
-	else if (errno == ENOSPC)
-		ft_putstr_fd("minishell: heredoc: no space left on device\n", 2);
-	else if (errno == EIO)
-		ft_putstr_fd("minishell: heredoc: input/output error\n", 2);
-	else if (errno == EFAULT)
-		ft_putstr_fd("minishell: heredoc: bad address\n", 2);
-	else if (errno == EINTR)
-		ft_putstr_fd("minishell: heredoc: interrupted system call\n", 2);
-	else if (errno == EPIPE)
-		ft_putstr_fd("minishell: heredoc: broken pipe\n", 2);
-	else
-	{
-		ft_putstr_fd("minishell: heredoc: error (", 2);
-		ft_putnbr_fd(errno, 2);
-		ft_putstr_fd(")\n", 2);
-	}
-	return (-1);
 }
