@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_fork.c                                      :+:      :+:    :+:   */
+/*   exec_fork.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mreinald <mreinald@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 19:15:29 by mreinald          #+#    #+#             */
-/*   Updated: 2025/06/24 19:15:35 by mreinald         ###   ########.fr       */
+/*   Updated: 2025/08/08 16:48:05 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,11 @@ void	handle_fork(t_shell *shell, t_fork *frk, int pipe_index)
 		return ;
 	else
 		handle_errors(shell, "fork failed!", errno);
+}
+
+void	child_cleanup(t_shell *shell, t_fork *frk)
+{
+	rl_clear_history();
+	cleanup_fork(frk);
+	free_shell_final(shell);
 }

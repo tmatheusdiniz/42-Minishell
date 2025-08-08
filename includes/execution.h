@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 20:23:56 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/27 10:07:13 by alberto          ###   ########.fr       */
+/*   Updated: 2025/08/08 16:57:26 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ void	set_pipe(t_fork *frk, int pipe_index);
 
 // ----------Utils Execute----------
 void	check_lastcmd(t_shell *shell, void *root,
+			t_fork *frk, int pipe_index);
+void	child_cleanup(t_shell *shell, t_fork *frk);
+void	handle_exec_child(t_shell *shell, t_exec *exec_node, t_fork *frk);
+void	handle_builtin_child(t_shell *shell, t_exec *exec_node, t_fork *frk);
+void	exec_no_pipe_child(t_shell *shell, t_fork *frk);
+void	execute_tree_recur(t_shell *shell, void *root,
 			t_fork *frk, int pipe_index);
 
 // ----------Fork----------

@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:37:06 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/27 18:10:53 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/08/08 16:57:04 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,50 @@ static void	user_output(t_shell *shell)
 		malloc_failure(shell, "user_output");
 }
 
-void	control(t_shell *shell, char **envp)
+static int	handle_input(t_shell *shell)
 {
-	signal_handler();
-	user_output(shell);
-	shell->input = readline(shell->cwd);
 	if (shell->input && shell->input[0] != '\0')
 		add_history(shell->input);
 	if (shell->input && input_validation(shell))
 	{
 		free_shell_part(shell);
-		control(shell, envp);
+		return (1);
 	}
 	if (!shell->input || !ft_strcmp(shell->input, "exit"))
 	{
 		print_exit();
-		return ;
+		return (2);
 	}
+	return (0);
+}
+
+static void	process_command(t_shell *shell)
+{
 	if (parsing(shell) == 0)
 		ft_execution(shell);
 	else
 		cleanup_parsing_error(shell);
 	if (shell->original_root != NULL)
 		free_shell_part(shell);
-	control(shell, envp);
+}
+
+void	control(t_shell *shell, char **envp)
+{
+	int	status;
+
+	signal_handler();
+	user_output(shell);
+	shell->input = readline(shell->cwd);
+	free(shell->cwd);
+	shell->cwd = NULL;
+	status = handle_input(shell);
+	if (status == 1)
+		control(shell, envp);
+	else if (status == 2)
+		return ;
+	else
+	{
+		process_command(shell);
+		control(shell, envp);
+	}
 }

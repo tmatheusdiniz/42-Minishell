@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 19:49:38 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/29 22:21:43 by alberto          ###   ########.fr       */
+/*   Updated: 2025/08/08 16:49:24 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,29 +38,39 @@ static int	complete_execution(t_fork *frk)
 	return (last_exit_code);
 }
 
+static void	close_all_pipes(t_fork *frk)
+{
+	int	i;
+
+	i = 0;
+	while (i < frk->nbr_cmds - 1)
+	{
+		close(frk->pipe[i][0]);
+		close(frk->pipe[i][1]);
+		i++;
+	}
+}
+
+static void	exec_with_pipes(t_shell *shell)
+{
+	t_fork	*frk;
+	int		last_exit_code;
+
+	frk = handle_pipe(shell, shell->root);
+	execute_tree_recur(shell, shell->root, frk, 0);
+	close_all_pipes(frk);
+	last_exit_code = complete_execution(frk);
+	exit_code(last_exit_code);
+	cleanup_fork(frk);
+}
+
 void	ft_execution(t_shell *shell)
 {
 	t_fork	*frk;
-	int		i;
-	int		last_exit_code;
 
-	i = 0;
-	last_exit_code = 0;
 	frk = NULL;
 	if (*(int *)shell->root == PIPE)
-	{
-		frk = handle_pipe(shell, shell->root);
-		execute_tree_recur(shell, shell->root, frk, 0);
-		while (i < frk->nbr_cmds - 1)
-		{
-			close (frk->pipe[i][0]);
-			close (frk->pipe[i][1]);
-			i ++;
-		}
-		last_exit_code = complete_execution(frk);
-		exit_code(last_exit_code);
-		cleanup_fork(frk);
-	}
+		exec_with_pipes(shell);
 	else
 		aux_no_pipe(shell, frk, shell->root);
 }
@@ -74,70 +84,8 @@ void	ft_execute_cmmd(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 	if (frk->pid[pipe_index] > 0)
 		return ;
 	if (*(int *)root == EXEC)
-	{
-		exec_node->argv = prepare_argv_for_exec(exec_node->argv);
-		if (find_executable(shell, (t_exec *)root, ((t_exec *)root)->argv[0]))
-		{
-			print_command_notf(((t_exec *)root)->argv[0]);
-			cleanup_fork(frk);
-			free_shell_final(shell);
-			exit(127);
-		}
-		else
-			execve(exec_node->cmd_path, exec_node->argv, shell->envp);
-		handle_errors(shell, "EXECV ERROR", 0);
-		exit(126);
-	}
+		handle_exec_child(shell, exec_node, frk);
 	else if (*(int *)root == BT)
-		check_bt(shell, exec_node, frk);
+		handle_builtin_child(shell, exec_node, frk);
 	exit(exit_code(-1));
-}
-
-void	execute_no_pipe(t_shell *shell, t_fork *frk)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		if (find_executable(shell, (t_exec *)shell->root,
-				((t_exec *)shell->root)->argv[0]) == 0)
-		{
-			execve(((t_exec *)shell->root)->cmd_path,
-				((t_exec *)shell->root)->argv, shell->envp);
-			handle_errors(shell, "EXECV ERROR", 0);
-			exit(126);
-		}
-		else
-		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(((t_exec *)shell->root)->argv[0], 2);
-			ft_putendl_fd(": command not found", 2);
-			cleanup_fork(frk);
-			free_shell_final(shell);
-			exit(127);
-		}
-	}
-	else if (pid > 0)
-		aux_fork(pid);
-}
-
-void	execute_tree_recur(t_shell *shell, void *root,
-		t_fork *frk, int pipe_index)
-{
-	t_pipe	*pipe_root;
-
-	if (!root)
-		return ;
-	if (*(int *)root == PIPE)
-	{
-		pipe_root = (t_pipe *)root;
-		execute_tree_recur(shell, pipe_root->left, frk, pipe_index);
-		execute_tree_recur(shell, pipe_root->right, frk, pipe_index + 1);
-	}
-	else if (*(int *)root == BT || *(int *)root == EXEC)
-		ft_execute_cmmd(shell, root, frk, pipe_index);
-	else if (*(int *)root == OUTREDIR || *(int *)root == INREDIR
-		|| *(int *)root == APPEND || *(int *)root == HEREDOC)
-		aux_execution(shell, root, frk, pipe_index);
 }
