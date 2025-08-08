@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 15:18:42 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/08/07 17:14:01 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/08/07 22:48:25 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ bool	only_pipe_validations(char *input)
 	{
 		print_error(NAME_SHELL,
 			": syntax error near unexpected token `|'", NULL, NULL);
+		exit_code(2);
 		return (false);
 	}
 	return (true);

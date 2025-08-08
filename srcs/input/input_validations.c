@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:27:54 by mreinald          #+#    #+#             */
-/*   Updated: 2025/08/06 23:08:13 by alberto          ###   ########.fr       */
+/*   Updated: 2025/08/07 22:45:35 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ bool	input_validation(t_shell *shell)
 	{
 		print_error(NAME_SHELL,
 			": syntax error near unexpected token `newline'", NULL, NULL);
-		return (free(trimmed_input), true);
+		return (free(trimmed_input), exit_code(2), true);
 	}
 	if (!only_pipe_validations(trimmed_input))
 		return (free(trimmed_input), true);
