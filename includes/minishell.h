@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 15:24:59 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/07/24 17:16:27 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/08/08 16:21:08 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,7 @@
 
 // Global Var
 extern volatile sig_atomic_t g_executing_command;
-extern volatile sig_atomic_t g_in_heredoc_or_pipe;
-
+int		g_in_heredoc_or_pipe(int nbr);
 // core
 
 int		main(int argc, char const **argv, char **envp);

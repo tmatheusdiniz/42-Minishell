@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_appnd_hd.c                                    :+:      :+:    :+:   */
+/*   exec_hered_append.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 14:17:37 by mreinald          #+#    #+#             */
-/*   Updated: 2025/07/20 16:42:27 by alberto          ###   ########.fr       */
+/*   Updated: 2025/08/08 16:22:09 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	exec_append(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 
 	current = root;
 	save_fdout = dup(STDOUT_FILENO);
-	g_in_heredoc_or_pipe = 1;
+	g_in_heredoc_or_pipe(1);
 	while (current && *(int *)current == APPEND)
 	{
 		redir = (t_append *)current;
@@ -56,7 +56,7 @@ int	exec_heredoc(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 
 	current = root;
 	save_fdhere = dup(STDIN_FILENO);
-	g_in_heredoc_or_pipe = 1;
+	g_in_heredoc_or_pipe(1);
 	while (current && *(int *)current == HEREDOC)
 	{
 		redir = (t_heredoc *)current;

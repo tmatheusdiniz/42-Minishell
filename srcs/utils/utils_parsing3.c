@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 15:18:42 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/08/07 22:48:25 by alberto          ###   ########.fr       */
+/*   Updated: 2025/08/08 15:39:08 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ bool	check_especial_caracters(char *input)
 		if (input[i] == '$')
 		{
 			i++;
-			if (input[i] == '$')
-				return (true);
 			if (input[i] == '_' || ((input[i] >= 'A' && input[i] <= 'Z')
 					|| (input[i] >= 'a' && input[i] <= 'z')))
 				return (false);

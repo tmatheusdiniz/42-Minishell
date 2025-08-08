@@ -6,7 +6,7 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 13:22:29 by alberto           #+#    #+#             */
-/*   Updated: 2025/08/07 17:11:04 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/08/08 16:09:45 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,14 @@ char	**prepare_argv_for_exec(char **argv)
 	}
 	clean_argv[i] = NULL;
 	return (clean_argv);
+}
+
+int	g_in_heredoc_or_pipe(int nbr)
+{
+	static int	code = 0;
+
+	if (nbr == -1)
+		return (code);
+	code = nbr;
+	return (code);
 }

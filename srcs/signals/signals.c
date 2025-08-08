@@ -6,14 +6,13 @@
 /*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 20:19:00 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/04/02 14:58:50 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/08/08 16:21:42 by cda-fons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 volatile sig_atomic_t g_executing_command = 0;
-volatile sig_atomic_t g_in_heredoc_or_pipe = 0;
 
 void	signal_ctrl(int signal)
 {
@@ -24,7 +23,7 @@ void	signal_ctrl(int signal)
 			write(2, "\n", 1);
 			return ;
 		}
-		if (g_in_heredoc_or_pipe)
+		if (g_in_heredoc_or_pipe(-1) == 1)
 		{
 			write(2, "\n", 1);
 			rl_replace_line("", 0);
@@ -33,7 +32,7 @@ void	signal_ctrl(int signal)
 			rl_done = 1;
 			rl_on_new_line();
 			exit_code(130);
-			g_in_heredoc_or_pipe = 0;
+			g_in_heredoc_or_pipe(0);
 			return ;
 		}
 		else
