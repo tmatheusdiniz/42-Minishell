@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<minishell.h>
+#include <minishell.h>
 
 void	exec_no_pipe_child(t_shell *shell, t_fork *frk)
 {

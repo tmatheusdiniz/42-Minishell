@@ -74,8 +74,8 @@
 # define EXIT_CMD 11
 
 // Global Var
-extern volatile sig_atomic_t g_executing_command;
-int		g_in_heredoc_or_pipe(int nbr);
+extern volatile sig_atomic_t	g_executing_command;
+
 // core
 
 int		main(int argc, char const **argv, char **envp);

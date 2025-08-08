@@ -20,4 +20,7 @@
 void	signal_handler(void);
 void	signal_ctrl(int signal);
 
+// Heredoc
+int		g_in_heredoc_or_pipe(int nbr);
+
 #endif

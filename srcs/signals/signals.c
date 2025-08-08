@@ -12,7 +12,16 @@
 
 #include <minishell.h>
 
-volatile sig_atomic_t g_executing_command = 0;
+volatile sig_atomic_t	g_executing_command = 0;
+
+static void	aux_signal(void)
+{
+	write(2, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	exit_code(130);
+}
 
 void	signal_ctrl(int signal)
 {
@@ -36,13 +45,7 @@ void	signal_ctrl(int signal)
 			return ;
 		}
 		else
-		{
-			write(2, "\n", 1);
-			rl_replace_line("", 0);
-			rl_on_new_line();
-			rl_redisplay();
-			exit_code(130);
-		}
+			aux_signal();
 	}
 }
 
