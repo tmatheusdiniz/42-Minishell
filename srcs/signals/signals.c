@@ -12,15 +12,38 @@
 
 #include <minishell.h>
 
+volatile sig_atomic_t g_executing_command = 0;
+volatile sig_atomic_t g_in_heredoc_or_pipe = 0;
+
 void	signal_ctrl(int signal)
 {
 	if (signal == SIGINT)
 	{
-		write(2, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-		exit_code(130);
+		if (g_executing_command)
+		{
+			write(2, "\n", 1);
+			return ;
+		}
+		if (g_in_heredoc_or_pipe)
+		{
+			write(2, "\n", 1);
+			rl_replace_line("", 0);
+			rl_point = 0;
+			rl_end = 0;
+			rl_done = 1;
+			rl_on_new_line();
+			exit_code(130);
+			g_in_heredoc_or_pipe = 0;
+			return ;
+		}
+		else
+		{
+			write(2, "\n", 1);
+			rl_replace_line("", 0);
+			rl_on_new_line();
+			rl_redisplay();
+			exit_code(130);
+		}
 	}
 }
 

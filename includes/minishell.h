@@ -73,6 +73,10 @@
 # define EXIT_EOF 10
 # define EXIT_CMD 11
 
+// Global Var
+extern volatile sig_atomic_t g_executing_command;
+extern volatile sig_atomic_t g_in_heredoc_or_pipe;
+
 // core
 
 int		main(int argc, char const **argv, char **envp);

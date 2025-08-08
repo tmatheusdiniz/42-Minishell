@@ -31,7 +31,11 @@ static void	aux_checkbt(t_shell *shell, t_exec *exec_node, t_fork *frk)
 void	aux_execution(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 {
 	if (*(int *)root == BT || *(int *)root == EXEC)
+	{
+		g_executing_command = 1;
 		ft_execute_cmmd(shell, root, frk, pipe_index);
+		g_executing_command = 0;
+	}
 	else if (*(int *)root == OUTREDIR)
 		exec_outredir(shell, shell->root, frk, pipe_index);
 	else if (*(int *)root == INREDIR)
@@ -50,7 +54,11 @@ void	aux_no_pipe(t_shell *shell, t_fork *frk, void *root)
 	if (!frk)
 		local_frk = handle_pipe(shell, shell->root);
 	if (*(int *)shell->root == EXEC)
+	{
+		g_executing_command = 1;
 		execute_no_pipe(shell, local_frk);
+		g_executing_command = 0;
+	}
 	else if (*(int *)shell->root == BT)
 		check_bt(shell, root, local_frk);
 	else if (*(int *)shell->root == OUTREDIR)
