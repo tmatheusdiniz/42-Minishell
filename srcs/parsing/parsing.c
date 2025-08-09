@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/08/09 20:37:39 by alberto          ###   ########.fr       */
+/*   Updated: 2025/08/09 23:56:54 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	**make_process(char **input_split, t_shell *mini, int i)
 	is_heredoc_delimiter = false;
 	while (input_split[i])
 	{
-		is_heredoc_delimiter = (i > 0 && ft_strcmp(input_split[i - 1], "<<") == 0);
+		is_heredoc_delimiter = check_delimiter_heredoc(input_split, i);
 		if (!is_heredoc_delimiter)
 		{
 			if (check_quotes(input_split[0], '"')
