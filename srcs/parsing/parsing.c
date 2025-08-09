@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 21:35:25 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/08/07 17:13:16 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/08/09 20:37:39 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,41 @@ bool	check_quotes(char *input_split, char quotes)
 	return (flag_quotes);
 }
 
-char	**make_process(char **input_split, t_shell *mini)
+static int	aux_make_process(char **input, t_shell *mini)
 {
-	int		i;
 	char	*temp;
 
-	i = 0;
+	temp = expand(*input, mini);
+	if (!temp)
+		return (0);
+	free(*input);
+	*input = temp;
+	return (1);
+}
+
+char	**make_process(char **input_split, t_shell *mini, int i)
+{
+	bool	is_heredoc_delimiter;
+
+	is_heredoc_delimiter = false;
 	while (input_split[i])
 	{
-		if (check_quotes(input_split[0], '"')
-			|| check_quotes(input_split[0], '\''))
-			input_split[0] = clean_quotes(input_split[0], 0, 0);
-		if (check_dollar(input_split[i]))
+		is_heredoc_delimiter = (i > 0 && ft_strcmp(input_split[i - 1], "<<") == 0);
+		if (!is_heredoc_delimiter)
 		{
-			temp = expand(input_split[i], mini);
-			if (!temp)
-				return (NULL);
-			free(input_split[i]);
-			input_split[i] = temp;
-		}
-		else
-		{
-			if (!check_heredoc_signal_on_input(mini->input))
-				input_split[i] = clean_quotes(input_split[i], 0, 0);
+			if (check_quotes(input_split[0], '"')
+				|| check_quotes(input_split[0], '\''))
+				input_split[0] = clean_quotes(input_split[0], 0, 0);
+			if (check_dollar(input_split[i]))
+			{
+				if (!aux_make_process(&input_split[i], mini))
+					return (NULL);
+			}
+			else
+			{
+				if (!check_heredoc_signal_on_input(mini->input))
+					input_split[i] = clean_quotes(input_split[i], 0, 0);
+			}
 		}
 		i++;
 	}
@@ -90,7 +102,7 @@ int	parsing(t_shell *mini)
 	input_split = split_token(mini->input);
 	if (!input_split)
 		return (-1);
-	if (make_process(input_split, mini) == NULL)
+	if (make_process(input_split, mini, 0) == NULL)
 		return (clean_matrix(input_split), -1);
 	create_token_list(input_split, mini, 0);
 	token_data = collect_all_tokens(mini->tokens);
