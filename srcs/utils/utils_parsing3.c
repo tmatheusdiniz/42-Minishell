@@ -6,7 +6,7 @@
 /*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 15:18:42 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/08/09 20:51:36 by alberto          ###   ########.fr       */
+/*   Updated: 2025/08/09 23:32:44 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	check_especial_caracters(char *input)
 		if (input[i] == '$')
 		{
 			i++;
-			if (input[i] == '?')
+			if (input[i] == '?' || input[i] == '$')
 				return (false);
 			if (input[i] == '_' || ((input[i] >= 'A' && input[i] <= 'Z')
 					|| (input[i] >= 'a' && input[i] <= 'z')))
