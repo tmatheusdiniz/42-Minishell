@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cda-fons <cda-fons@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alberto <alberto@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 15:18:42 by cda-fons          #+#    #+#             */
-/*   Updated: 2025/08/08 15:39:08 by cda-fons         ###   ########.fr       */
+/*   Updated: 2025/08/09 23:56:12 by alberto          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ bool	check_especial_caracters(char *input)
 		if (input[i] == '$')
 		{
 			i++;
+			if (input[i] == '?' || input[i] == '$')
+				return (false);
 			if (input[i] == '_' || ((input[i] >= 'A' && input[i] <= 'Z')
 					|| (input[i] >= 'a' && input[i] <= 'z')))
 				return (false);
@@ -89,4 +91,9 @@ bool	only_pipe_validations(char *input)
 		return (false);
 	}
 	return (true);
+}
+
+bool	check_delimiter_heredoc(char **input_split, int i)
+{
+	return ((i > 0 && ft_strcmp(input_split[i - 1], "<<") == 0));
 }
