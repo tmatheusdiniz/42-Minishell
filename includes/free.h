@@ -34,3 +34,5 @@ void	free_heredoc(void *root);
 void	clean_matrix(char **matrix);
 void	cleanup_parsing_error(t_shell *shell);
 void	cleanup_execution_error(t_shell *shell, t_fork *frk);
+int		aux_clean_parsing(t_tokens *token_data, t_shell *mini,
+			char **input_split);

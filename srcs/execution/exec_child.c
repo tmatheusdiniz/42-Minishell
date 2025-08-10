@@ -30,17 +30,22 @@ static void	exec_child_process(t_shell *shell, t_exec *exec_node, t_fork *frk)
 	exit(126);
 }
 
-static void	handle_exec_error(t_shell *shell, t_exec *exec_node, t_fork *frk)
+static void	handle_exec_error(t_shell *shell, t_exec *exec_node,
+		t_fork *frk, int error_code)
 {
-	print_command_notf(exec_node->argv[0]);
+	if (error_code == 127)
+		print_command_notf(exec_node->argv[0]);
 	child_cleanup(shell, frk);
 	exit(127);
 }
 
 void	handle_exec_child(t_shell *shell, t_exec *exec_node, t_fork *frk)
 {
-	if (find_executable(shell, exec_node, exec_node->argv[0]))
-		handle_exec_error(shell, exec_node, frk);
+	int	exec_result;
+
+	exec_result = find_executable(shell, exec_node, exec_node->argv[0]);
+	if (exec_result != 0)
+		handle_exec_error(shell, exec_node, frk, exec_result);
 	else
 		exec_child_process(shell, exec_node, frk);
 }

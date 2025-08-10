@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "utils.h"
 #include <minishell.h>
+
+static char	*cleanup_and_return_null(char *line, char *content,
+				char *delimiter, int free_delim);
 
 static char	*clean_delimiter(t_heredoc *heredoc, int *should_free)
 {
@@ -53,6 +57,18 @@ static char	*process_heredoc_line(char *line, int expd,
 	return (new_content);
 }
 
+static char	*cleanup_and_return_null(char *line, char *content,
+		char *delimiter, int free_delim)
+{
+	if (line)
+		free(line);
+	if (content)
+		free(content);
+	if (free_delim && delimiter)
+		free(delimiter);
+	return (NULL);
+}
+
 static char	*read_heredoc_content(t_heredoc *heredoc, t_shell *shell)
 {
 	char	*line;
@@ -64,18 +80,20 @@ static char	*read_heredoc_content(t_heredoc *heredoc, t_shell *shell)
 	should_expand = !has_quotes(heredoc->delimiter);
 	delimiter = clean_delimiter(heredoc, &free_delim);
 	content = NULL;
+	g_define_sign(2);
 	while (1)
 	{
 		line = readline("> ");
 		if (!line || strcmp(line, delimiter) == 0)
 			break ;
+		if (g_define_sign(-1) == 130)
+			return (cleanup_and_return_null(line, content,
+					delimiter, free_delim));
 		content = process_heredoc_line(line, should_expand, shell, content);
 		free(line);
 	}
-	if (line)
-		free(line);
-	if (free_delim)
-		free(delimiter);
+	g_define_sign(0);
+	aux_heredoc_content(line, delimiter, free_delim);
 	return (content);
 }
 
@@ -85,5 +103,7 @@ void	aux_read_hd(void *root, t_shell *shell)
 
 	heredoc = (t_heredoc *)root;
 	heredoc->content = read_heredoc_content(heredoc, shell);
+	if (!heredoc->content)
+		return ;
 	read_all_heredocs_with_shell(heredoc->next, shell);
 }

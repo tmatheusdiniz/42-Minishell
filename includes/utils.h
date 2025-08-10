@@ -57,6 +57,7 @@ bool		check_closed_quotes(char *input_split, char quotes);
 bool		check_heredoc_signal_on_input(char *input);
 bool		only_pipe_validations(char *input);
 bool		check_especial_caracters(char *input);
+void		aux_heredoc_content(char *line, char *delimiter, int free_delim);
 
 //tree_utils.c
 void		*create_exec_node(t_token *exec_token, int i);

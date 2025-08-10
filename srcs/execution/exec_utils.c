@@ -32,9 +32,9 @@ void	aux_execution(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 {
 	if (*(int *)root == BT || *(int *)root == EXEC)
 	{
-		g_executing_command = 1;
+		g_executing(1);
 		ft_execute_cmmd(shell, root, frk, pipe_index);
-		g_executing_command = 0;
+		g_executing(0);
 	}
 	else if (*(int *)root == OUTREDIR)
 		exec_outredir(shell, shell->root, frk, pipe_index);
@@ -55,9 +55,9 @@ void	aux_no_pipe(t_shell *shell, t_fork *frk, void *root)
 		local_frk = handle_pipe(shell, shell->root);
 	if (*(int *)shell->root == EXEC)
 	{
-		g_executing_command = 1;
+		g_executing(1);
 		execute_no_pipe(shell, local_frk);
-		g_executing_command = 0;
+		g_executing(0);
 	}
 	else if (*(int *)shell->root == BT)
 		check_bt(shell, root, local_frk);
@@ -71,6 +71,21 @@ void	aux_no_pipe(t_shell *shell, t_fork *frk, void *root)
 		exec_heredoc(shell, root, local_frk, -4);
 	if (!frk && local_frk)
 		cleanup_fork(local_frk);
+}
+
+void	check_lastcmd(t_shell *shell, void *root,
+			t_fork *frk, int pipe_index)
+{
+	if (*(int *)root == BT || *(int *)root == EXEC)
+		ft_execute_cmmd(shell, root, frk, pipe_index);
+	else if (*(int *)root == OUTREDIR)
+		exec_outredir(shell, shell->root, frk, pipe_index);
+	else if (*(int *)root == INREDIR)
+		exec_inredir(shell, shell->root, frk, pipe_index);
+	else if (*(int *)root == APPEND)
+		exec_append(shell, root, frk, pipe_index);
+	else if (*(int *)root == HEREDOC)
+		exec_heredoc(shell, root, frk, pipe_index);
 }
 
 void	check_bt(t_shell *shell, t_exec *exec_node, t_fork *frk)

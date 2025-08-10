@@ -12,6 +12,16 @@
 
 #include <minishell.h>
 
+int	aux_clean_parsing(t_tokens *token_data, t_shell *mini, char **input_split)
+{
+	if (token_data)
+		free_all_collected_tokens(token_data);
+	mini->tokens = NULL;
+	clean_matrix(input_split);
+	g_define_sign(0);
+	return (-1);
+}
+
 void	clean_matrix(char **matrix)
 {
 	int	i;

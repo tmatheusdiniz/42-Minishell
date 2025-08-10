@@ -31,7 +31,7 @@ int	exec_append(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 
 	current = root;
 	save_fdout = dup(STDOUT_FILENO);
-	g_in_heredoc_or_pipe(1);
+	g_define_sign(1);
 	while (current && *(int *)current == APPEND)
 	{
 		redir = (t_append *)current;
@@ -66,7 +66,6 @@ int	exec_heredoc(t_shell *shell, void *root, t_fork *frk, int pipe_index)
 
 	current = root;
 	save_fdhere = dup(STDIN_FILENO);
-	g_in_heredoc_or_pipe(1);
 	while (current && *(int *)current == HEREDOC)
 	{
 		redir = (t_heredoc *)current;

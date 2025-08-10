@@ -100,6 +100,8 @@ int	parsing(t_shell *mini)
 		mini->root = build_tree(mini->tokens);
 	mini->original_root = mini->root;
 	read_all_heredocs_with_shell(mini->root, mini);
+	if (g_define_sign(-1) == 130)
+		return (aux_clean_parsing(token_data, mini, input_split));
 	if (token_data)
 		free_all_collected_tokens(token_data);
 	mini->tokens = NULL;

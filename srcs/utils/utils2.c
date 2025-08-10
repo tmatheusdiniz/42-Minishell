@@ -41,7 +41,17 @@ char	**prepare_argv_for_exec(char **argv)
 	return (clean_argv);
 }
 
-int	g_in_heredoc_or_pipe(int nbr)
+int	g_define_sign(int nbr)
+{
+	static int	code = 0;
+
+	if (nbr == -1)
+		return (code);
+	code = nbr;
+	return (code);
+}
+
+int	g_executing(int nbr)
 {
 	static int	code = 0;
 
