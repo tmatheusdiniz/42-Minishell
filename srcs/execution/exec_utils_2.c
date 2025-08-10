@@ -81,7 +81,7 @@ static int	aux_find_executable(t_shell *shell, t_exec *exec_node,
 	if (path_check > 1)
 		return (path_check);
 	*path = find_path(shell->envp);
-	if (!path)
+	if (!*path)
 		return (127);
 	return (-1);
 }
@@ -95,7 +95,7 @@ int	find_executable(t_shell *shell, t_exec *exec_node, char *command)
 
 	path = NULL;
 	i = aux_find_executable(shell, exec_node, command, &path);
-	if (i >= 1)
+	if (i >= 0)
 		return (i);
 	i = 0;
 	directories = ft_split(path, ':');
