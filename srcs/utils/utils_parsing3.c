@@ -12,14 +12,6 @@
 
 #include <minishell.h>
 
-void	aux_heredoc_content(char *line, char *delimiter, int free_delim)
-{
-	if (line)
-		free(line);
-	if (free_delim)
-		free(delimiter);
-}
-
 bool	check_especial_caracters(char *input)
 {
 	int	i;

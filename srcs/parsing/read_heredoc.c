@@ -74,3 +74,11 @@ void	read_all_heredocs(void *root)
 {
 	read_all_heredocs_with_shell(root, NULL);
 }
+
+void	aux_heredoc_content(char *line, char *delimiter, int free_delim)
+{
+	if (line)
+		free(line);
+	if (free_delim)
+		free(delimiter);
+}
