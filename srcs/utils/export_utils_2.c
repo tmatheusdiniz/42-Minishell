@@ -27,8 +27,7 @@ static void	update_envp(t_shell *shell, char *key)
 		malloc_failure(shell, "update_envp");
 	while (shell->envp[i])
 	{
-		if (!ft_strncmp(shell->envp[i], key, ft_strlen(key))
-			&& key[ft_strlen(key)] == '=')
+		if (!ft_strncmp(shell->envp[i], splt[0], ft_strlen(splt[0])))
 		{
 			free(shell->envp[i]);
 			shell->envp[i] = ft_strdup(key);
