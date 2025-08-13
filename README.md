@@ -13,7 +13,7 @@
     <span> · </span>
     <a href="#-features">Features</a>
     <span> · </span>
-    <a href="#%EF%B8%8F-usage">Usage</a>
+    <a href="#-usage">Usage</a>
     <span> · </span>
     <a href="#-architecture">Architecture</a>
     <span> · </span>
