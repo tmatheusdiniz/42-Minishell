@@ -24,6 +24,8 @@
 
 The goal of minishell is to write a simple shell that behaves like bash for a subset of features. You’ll learn process creation/termination, file descriptors, signal handling, tokenization, parsing, and building a small but robust command interpreter.
 
+In addition, It's worth  mentioning that I was able to work in a group on this project and, as a result, i learned several git tools.
+
 🧐 Project Highlights
 
 A prompt that displays while waiting for a new command.
