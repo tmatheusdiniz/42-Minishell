@@ -223,7 +223,7 @@ minishell/
 │   ├── main.c              # init, loop, cleanup
 │   ├── control.c            # display prompt, read line
 │   ├── parser/             # build AST / pipeline structures
-|    ├── execution/         # to treat the execution part
+|   ├── execution/         # to treat the execution part
 |       ├── redirect.c           # manage temporary files / pipes
 │   ├── expander/           # env, tilde(optional), quotes
 │   ├── exec/               # pipelines, redirs, execve
