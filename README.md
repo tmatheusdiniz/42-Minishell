@@ -223,10 +223,9 @@ minishell/
 │   ├── main.c              # init, loop, cleanup
 │   ├── control.c            # display prompt, read line
 │   ├── parser/             # build AST / pipeline structures
-|   ├── execution/         # to treat the execution part
+|   ├── execution/         # to treat the execution part: pipelines, redirs, execve
 |       ├── redirect.c           # manage temporary files / pipes
 │   ├── expander/           # env, tilde(optional), quotes
-│   ├── exec/               # pipelines, redirs, execve
 │   ├── builtins/           # echo, cd, pwd, export, unset, env, exit
 │   ├── signals.c           # handlers for interactive vs child
 │   └── utils/              # strings, lists, fd helpers, errors
