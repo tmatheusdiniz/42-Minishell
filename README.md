@@ -220,14 +220,14 @@ Close all file descriptors; avoid leaks on parse/exec errors.
 ```markdown
 minishell/
 ├── src/
-│   ├── main.c              # init, loop, cleanup
-│   ├── control.c            # display prompt, read line
+│   ├── main                # init, loop, cleanup
+│   ├── control             # display prompt, read line
 │   ├── parser/             # build AST / pipeline structures
-|   ├── execution/         # to treat the execution part: pipelines, redirs, execve
-|       ├── redirect.c           # manage temporary files / pipes
+|   ├── execution/          # to treat the execution part: pipelines, redirs, execve
+|       ├── redirect.c      # manage temporary files / pipes
 │   ├── expander/           # env, tilde(optional), quotes
 │   ├── builtins/           # echo, cd, pwd, export, unset, env, exit
-│   ├── signals.c           # handlers for interactive vs child
+│   ├── signals             # handlers for interactive vs child
 │   └── utils/              # strings, lists, fd helpers, errors
 ├── include/
 │   ├── minishell.h
