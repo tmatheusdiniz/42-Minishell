@@ -129,7 +129,7 @@ Run ↙️
 
 After the make command, dependencies (like readline) must be available on your system. On macOS you may need brew install readline and update include/library paths in the Makefile.
 
-🛠️ Usage
+🛠️ Tools
 
 Action
 
