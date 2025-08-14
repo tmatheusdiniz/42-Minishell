@@ -261,9 +261,3 @@ execve(2), fork(2), pipe(2), dup2(2), waitpid(2), signal(2)
 
 termios(3) — terminal attributes (optional advanced prompt)
 
-🏁 Acknowledgements
-
-Inspired by the structure and presentation of my FdF project README.
-
-Thanks to peers and 42 community for discussions, tests and reviews.
-
