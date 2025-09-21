@@ -44,13 +44,11 @@ Signal behavior that matches bash (as required by the subject).
 
 ## ✨ Features
 
-
 Prompt & Loop
 
 Interactive prompt, EOF handling
 
 Colored prompt, fancy modes
-
 
 Parsing
 
@@ -58,13 +56,11 @@ Tokenization, quotes '", escapes, $-expansion
 
 Parentheses, logical ops && `
 
-
 Redirections
 
 <, >, >>, << (here-doc)
 
 Aggregation, advanced error messages
-
 
 Pipes
 
@@ -76,13 +72,11 @@ cmd3`
 
 N‑ary pipelines with robust cleanup
 
-
 Builtins
 
 echo, cd, pwd, export, unset, env, exit
 
 alias (optional), history wrapper
-
 
 Env
 
@@ -90,20 +84,17 @@ Inherit + modify env, SHLVL, $?
 
 Export formatting alignment
 
-
 Signals
 
 SIGINT (Ctrl‑C), SIGQUIT (Ctrl-), SIGTERM
 
 Custom handlers per context
 
-
 Exec
 
 PATH search, execve, status codes
 
 Hash table cache for PATH lookups
-
 
 ## 🧱 Usage
 
@@ -248,7 +239,6 @@ Here-docs: read with proper signal handling and optional temporary files.
 
 Memory: clear all allocations between prompts; use a global context only if necessary and guarded.
 
-
 ## 📚 References
 
 bash manual (for behavior reference within subject scope)
@@ -260,4 +250,3 @@ GNU Readline — history & line editing
 execve(2), fork(2), pipe(2), dup2(2), waitpid(2), signal(2)
 
 termios(3) — terminal attributes (optional advanced prompt)
-
