@@ -1,12 +1,12 @@
 <h1 align="center">
-  Common Core 42 - FdF
+  Common Core 42 - Minishell
 </h1>
 
 <p align="center">
 <img src="https://github.com/Albertoocosta/42-Minishell/releases/download/img/prompt" width="900" hidth="150">
 </P>
 <p align="center">
-    <b><i>This project is part of third milestone of the 42 cursus</i></b>
+    <b><i>This project is part of fourth milestone of the 42 cursus</i></b>
 </p>
 <h3 align="center">
     <a href="#-about">About</a>
