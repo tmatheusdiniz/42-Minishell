@@ -63,20 +63,14 @@ Redirections
 Aggregation, advanced error messages
 
 Pipes
-
-`cmd1
-
-cmd2
-
-cmd3`
-
+```markdown
+cmd1 | cmd2 | cmd3 | ... | cmdn
+```
 N‑ary pipelines with robust cleanup
 
 Builtins
 
 echo, cd, pwd, export, unset, env, exit
-
-alias (optional), history wrapper
 
 Env
 
@@ -101,25 +95,28 @@ Hash table cache for PATH lookups
 Works on Linux and macOS.
 
 To pull files ↙️
+```markdown
+git clone https://github.com/tmatheusdiniz/42-Minishell
 
-git clone https://github.com/<your-user>/<your-minishell-repo>.git
-cd <your-minishell-repo>
-
+cd 42-Minishell
+```
 To compile ↙️
-
+```markdown
 make        # builds minishell
-make bonus  # (if you separate bonus sources)
 
+```
 Cleanup ↙️
-
+```markdown
 make clean   # remove objects
+
 make fclean  # remove binaries
+
 make re      # rebuild from scratch
-
+```
 Run ↙️
-
+```markdown
 ./minishell
-
+```
 After the make command, dependencies (like readline) must be available on your system. On macOS you may need brew install readline and update include/library paths in the Makefile.
 
 🛠️ Tools
@@ -159,14 +156,10 @@ Redirections
 < read from file, > truncate write, >> append, << here-doc with delimiter
 
 
-Pipes
-
-Combine commands: `ls -l
-
-grep ".c"
-
-wc -l`
-
+Combine commands using pipes:
+```markdown
+ls -l | grep .c | wc -l
+```
 Builtins
 
 echo [-n], cd [dir], pwd, export [KEY=VAL], unset [KEY], env, exit [status]
